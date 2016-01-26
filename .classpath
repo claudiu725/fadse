@@ -6,11 +6,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/ctg-xml.jar"/>
-	<classpathentry kind="lib" path="lib/jFuzzyLogic-2.0.9.jar"/>
-	<classpathentry kind="lib" path="lib/jgraphx.jar"/>
-	<classpathentry kind="lib" path="lib/Stepstep_ConfigurationAnalysis.jar"/>
-	<classpathentry kind="lib" path="lib/Stepstep_GUI.jar"/>
 	<classpathentry kind="src" output="target/classes" path="FADSE/src">
 		<attributes>
 			<attribute name="optional" value="true"/>
@@ -28,5 +23,10 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="lib/ctg-xml/ctg-xml-api/1.0.0/ctg-xml-api-1.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/jfuzzylogic/jfuzzylogic-api/2.0.9/jfuzzylogic-api-2.0.9.jar"/>
+	<classpathentry kind="lib" path="lib/jgraphx/jgraphx-api/1.0.0/jgraphx-api-1.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/stepstep-configuration-analysys/stepstep-configuration-analysys-api/1.0.0/stepstep-configuration-analysys-api-1.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/stepstep-gui/stepstep-gui-api/1.0.0/stepstep-gui-api-1.0.0.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
