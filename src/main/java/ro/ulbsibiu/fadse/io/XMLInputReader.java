@@ -83,30 +83,48 @@ public class XMLInputReader {
                 inputDoc.setBenchmarks(values);
             }
 //DATABASE
-            //<database ip="127.0.0.1" port="1527" name="FADS_DB" user="fadse" password="fadse"/>
-            NodeList databaseNode = doc.getElementsByTagName("database");            
-            NamedNodeMap databaseattributes = databaseNode.item(0).getAttributes();
-            String databaseIp = databaseattributes.getNamedItem("ip").getNodeValue();
-            String databasePort = databaseattributes.getNamedItem("port").getNodeValue();
-            String databaseName = databaseattributes.getNamedItem("name").getNodeValue();
-            String databaseUser = databaseattributes.getNamedItem("user").getNodeValue();
-            String databasePassword = databaseattributes.getNamedItem("password").getNodeValue();
-            inputDoc.setDatabaseIp(databaseIp);
-            inputDoc.setDatabaseName(databaseName);
-            inputDoc.setDatabasePassword(databasePassword);
-            inputDoc.setDatabasePort(databasePort);
-            inputDoc.setDatabaseUser(databaseUser);
+            //<database ip="127.0.0.1" port="1527" name="FADS_DB" user="fadse" password="fadse"/>            
+        	NodeList databaseNode = doc.getElementsByTagName("database");
+        	Node databaseRootNode = databaseNode.item(0);
+        	if (databaseRootNode != null)
+        	{
+	            NamedNodeMap databaseattributes = databaseRootNode.getAttributes();
+	            String databaseIp = databaseattributes.getNamedItem("ip").getNodeValue();
+	            String databasePort = databaseattributes.getNamedItem("port").getNodeValue();
+	            String databaseName = databaseattributes.getNamedItem("name").getNodeValue();
+	            String databaseUser = databaseattributes.getNamedItem("user").getNodeValue();
+	            String databasePassword = databaseattributes.getNamedItem("password").getNodeValue();
+	            inputDoc.setDatabaseIp(databaseIp);
+	            inputDoc.setDatabaseName(databaseName);
+	            inputDoc.setDatabasePassword(databasePassword);
+	            inputDoc.setDatabasePort(databasePort);
+	            inputDoc.setDatabaseUser(databaseUser);
+        	}
+            else
+            {
+            	System.out.println("Not using the database");
+            }
 //METAHEURISTIC
             NodeList metaheuristicNode = doc.getElementsByTagName("metaheuristic");
-            NamedNodeMap metaheuristicattributes = metaheuristicNode.item(0).getAttributes();
-            String metaheuristicName = metaheuristicattributes.getNamedItem("name").getNodeValue();
-            String metaheuristicConfigPath = metaheuristicattributes.getNamedItem("config_path").getNodeValue();
-            inputDoc.setMetaheuristicName(metaheuristicName);
-            if(Paths.get(metaheuristicConfigPath).isAbsolute()) { //
-            	inputDoc.setMetaheuristicConfigPath(metaheuristicConfigPath);
-            } else {
-            	inputDoc.setMetaheuristicConfigPath(metaheuristicConfigBasePath + metaheuristicConfigPath);            	
-            }     
+            Node metaheuristicRootNode = metaheuristicNode.item(0);
+            if (metaheuristicRootNode != null)
+            {
+	            NamedNodeMap metaheuristicattributes = metaheuristicRootNode.getAttributes();
+	            String metaheuristicName = metaheuristicattributes.getNamedItem("name").getNodeValue();
+	            String metaheuristicConfigPath = metaheuristicattributes.getNamedItem("config_path").getNodeValue();
+	            inputDoc.setMetaheuristicName(metaheuristicName);
+	            if(Paths.get(metaheuristicConfigPath).isAbsolute()) { //
+	            	inputDoc.setMetaheuristicConfigPath(metaheuristicConfigPath);
+	            } else {
+	            	inputDoc.setMetaheuristicConfigPath(metaheuristicConfigBasePath + metaheuristicConfigPath);            	
+	            }
+            }
+            else
+            {
+            	System.out.println("Didn't find metaheuristic in config file. Using NSGA-II by default.");
+            	inputDoc.setMetaheuristicName("NSGAII");
+            	inputDoc.setMetaheuristicConfigPath(metaheuristicConfigBasePath + "nsgaii.properties");
+            }
 //PARAMETERS
 
             NodeList parameters = ((Element) doc.getElementsByTagName("parameters").item(0)).getElementsByTagName("parameter");
@@ -145,9 +163,11 @@ public class XMLInputReader {
             }
             inputDoc.setParameters(params);
 //VIRTUAL PARAMETERS
-            try {
+            Node virtualParametersRootNode = doc.getElementsByTagName("virtual_parameters").item(0);
+            if (virtualParametersRootNode != null)
+            {
+                NodeList virtualParameters = ((Element) virtualParametersRootNode).getElementsByTagName("parameter");
                 System.out.println("EXTRACTING THE VIRTUAL PARAMS");
-                NodeList virtualParameters = ((Element) doc.getElementsByTagName("virtual_parameters").item(0)).getElementsByTagName("parameter");
                 Parameter[] virtualParams = new Parameter[virtualParameters.getLength()];
                 for (int i = 0; i < virtualParameters.getLength(); i++) {
                     Node parameter = virtualParameters.item(i);
@@ -167,8 +187,10 @@ public class XMLInputReader {
                 System.arraycopy(virtualParams, 0, paramsTemp, params.length, virtualParams.length);
                 params = paramsTemp;
                 System.out.println("NORMAL PARAMS (after): "+params.length);
-            } catch (Exception e) {
-                System.out.println("Problem at the virtual parameters (not fatal if you are not using them): " + e.getMessage());
+            }
+            else
+            {
+                System.out.println("Not using virtual parameters");
             }
 //SYSTEM METRICS
             NodeList systemMetrics = ((Element) doc.getElementsByTagName("system_metrics").item(0)).getElementsByTagName("system_metric");
@@ -233,49 +255,69 @@ public class XMLInputReader {
             inputDoc.setRules(rulesList);
 
 //RELATIONS
-            NodeList relations = ((Element) doc.getElementsByTagName("relations").item(0)).getElementsByTagName("relation");
-            List<Relation> relationsList = new LinkedList<Relation>();
-            for (int i = 0; i < relations.getLength(); i++) {//takes each relation
-                Element relationNode = (Element) relations.item(i);//relation node repesents a <relation> element
-                Relation relation = getIfRelation(relationNode, params);//find relations of type<if>
-                relationsList.add(relation);
-                System.out.println(relation);
+            Node relationsRootNode = doc.getElementsByTagName("relations").item(0);
+            if (relationsRootNode != null)
+            {
+	            NodeList relations = ((Element) relationsRootNode).getElementsByTagName("relation");
+	            List<Relation> relationsList = new LinkedList<Relation>();
+	            for (int i = 0; i < relations.getLength(); i++) {//takes each relation
+	                Element relationNode = (Element) relations.item(i);//relation node repesents a <relation> element
+	                Relation relation = getIfRelation(relationNode, params);//find relations of type<if>
+	                relationsList.add(relation);
+	                System.out.println(relation);
+	            }
+	            //build the trees using the paramters and the relations
+	            RelationTree relationTree = new RelationTree();
+	            RelationTree relationTreeCopy = new RelationTree();
+	            //detect the root nodes
+	            for (int i = 0; i < params.length; i++) {
+	                boolean isRoot = true;
+	                for (int j = 0; j < relationsList.size(); j++) {
+	                    String[] dependentParams = relationsList.get(j).getChildrenNames();
+	                    for (int k = 0; k < dependentParams.length; k++) {
+	                        if (params[i].getName().equals(dependentParams[k])) {
+	                            isRoot = false;
+	                        }
+	                    }
+	                }
+	                if (isRoot) {
+	                    System.out.println("ADD ROOT: " + i);
+	                    relationTree.addRootNode(i);
+	                    relationTreeCopy.addRootNode(i);
+	                }
+	                //add the subnodes
+	                addSubNodesToRelationTrees(relationTree, params, relationsList, i);
+	                addSubNodesToRelationTrees(relationTreeCopy, params, relationsList, i);
+	            }
+	            System.out.println("RelationTree: " + relationTree);
+	            inputDoc.setRelationTree1(relationTree);
+	            inputDoc.setRelationTree2(relationTreeCopy);
             }
-            //build the trees using the paramters and the relations
-            RelationTree relationTree = new RelationTree();
-            RelationTree relationTreeCopy = new RelationTree();
-            //detect the root nodes
-            for (int i = 0; i < params.length; i++) {
-                boolean isRoot = true;
-                for (int j = 0; j < relationsList.size(); j++) {
-                    String[] dependentParams = relationsList.get(j).getChildrenNames();
-                    for (int k = 0; k < dependentParams.length; k++) {
-                        if (params[i].getName().equals(dependentParams[k])) {
-                            isRoot = false;
-                        }
-                    }
-                }
-                if (isRoot) {
-                    System.out.println("ADD ROOT: " + i);
-                    relationTree.addRootNode(i);
-                    relationTreeCopy.addRootNode(i);
-                }
-                //add the subnodes
-                addSubNodesToRelationTrees(relationTree, params, relationsList, i);
-                addSubNodesToRelationTrees(relationTreeCopy, params, relationsList, i);
+            else
+            {
+            	System.out.println("Not using relations.");
             }
-            System.out.println("RelationTree: " + relationTree);
-            inputDoc.setRelationTree1(relationTree);
-            inputDoc.setRelationTree2(relationTreeCopy);
 
 			// Uncomment this to see graphical representation
             // relationTree.printToScreen();
 
             //OUTPUT
             NodeList outputNode = doc.getElementsByTagName("output");
-            NamedNodeMap outputAttributes = outputNode.item(0).getAttributes();
-            String outputPath = outputAttributes.getNamedItem("output_path").getNodeValue();           
-            inputDoc.setOutputPath(outputPath);                        
+            Node outputRootNode = outputNode.item(0);
+            if (outputRootNode != null)
+            {
+		        NamedNodeMap outputAttributes = outputRootNode.getAttributes();
+		        String outputPath = outputAttributes.getNamedItem("output_path").getNodeValue();           
+		        inputDoc.setOutputPath(outputPath);
+		        System.out.println("Using output path:");
+		        System.out.println(outputPath);
+            }
+            else
+            {
+            	String outputPath = System.getProperty("user.home") + System.getProperty("file.separator") + "default";
+            	System.out.println("Using default output path:");
+            	System.out.println(outputPath);
+            }
             
             return inputDoc;
         } catch (SAXParseException err) {
