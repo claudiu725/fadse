@@ -15,7 +15,7 @@ import jmetal.base.Solution;
  * solution set. This distances are obtained through the method 
  * <code>getDistanceToPopulation<code>.
  */
-public class DistanceToPopulationComparator implements Comparator{
+public class DistanceToPopulationComparator implements Comparator<Solution> {
     
  /**
   * Compares two solutions.
@@ -24,14 +24,14 @@ public class DistanceToPopulationComparator implements Comparator{
   * @return -1, or 0, or 1 if o1 is less than, equal, or greater than o2,
   * respectively.
   */
-  public int compare(Object o1, Object o2) {
+  public int compare(Solution o1, Solution o2) {
     if (o1==null)
       return 1;
     else if (o2 == null)
       return -1;
     
-    double distance1 = ((Solution)o1).getDistanceToSolutionSet();
-    double distance2 = ((Solution)o2).getDistanceToSolutionSet();
+    double distance1 = o1.getDistanceToSolutionSet();
+    double distance2 = o2.getDistanceToSolutionSet();
     if (distance1 < distance2) {
       return -1;
     } else if (distance1 > distance2) {

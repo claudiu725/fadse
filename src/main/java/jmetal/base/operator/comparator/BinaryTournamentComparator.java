@@ -12,12 +12,13 @@ import jmetal.base.Solution;
 /**
  * This class implements a <code>Comparator</code> for <code>Solution</code>
  */
-public class BinaryTournamentComparator implements Comparator{
+public class BinaryTournamentComparator implements Comparator<Solution> {
   
   /**
    * stores a dominance comparator
    */
-  private static final Comparator dominance_ = new DominanceComparator();
+  private static final Comparator<Solution> dominance_ = new DominanceComparator();
+  private static final Comparator<Solution> crowding_ = new CrowdingDistanceComparator();
   
   /**
    * Compares two solutions.
@@ -28,22 +29,12 @@ public class BinaryTournamentComparator implements Comparator{
    * @return -1, or 0, or 1 if o1 is less than, equals, or greater than o2,
    * respectively.
    */
-  public int compare(Object o1, Object o2) {
+  public int compare(Solution o1, Solution o2) {
     int flag = dominance_.compare(o1,o2);
     if (flag!=0) {
       return flag;
     }
     
-    double crowding1, crowding2;
-    crowding1 = ((Solution)o1).getCrowdingDistance();
-    crowding2 = ((Solution)o2).getCrowdingDistance();
-    
-    if (crowding1 > crowding2) {
-      return -1;
-    } else if (crowding2 > crowding1) {
-      return 1;
-    } else {
-      return 0;
-    }
+    return crowding_.compare(o1, o2);
   } // compare
 } // BinaryTournamentComparator.

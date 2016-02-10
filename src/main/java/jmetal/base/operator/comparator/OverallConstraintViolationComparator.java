@@ -14,7 +14,7 @@ import java.util.Comparator;
  * <code>Solution</code> objects) based on the overall constraint violation of
  * the solucions, as in NSGA-II.
  */
-public class OverallConstraintViolationComparator implements Comparator {
+public class OverallConstraintViolationComparator implements Comparator<Solution> {
    
  /** 
   * Compares two solutions.
@@ -23,10 +23,10 @@ public class OverallConstraintViolationComparator implements Comparator {
   * @return -1, or 0, or 1 if o1 is less than, equal, or greater than o2,
   * respectively.
   */
-  public int compare(Object o1, Object o2) {    
+  public int compare(Solution o1, Solution o2) {    
     double overall1, overall2;
-    overall1 = ((Solution)o1).getOverallConstraintViolation();
-    overall2 = ((Solution)o2).getOverallConstraintViolation();
+    overall1 = o1.getOverallConstraintViolation();
+    overall2 = o2.getOverallConstraintViolation();
         
     if ((overall1 < 0) && (overall2 < 0)) {
       if (overall1 > overall2){

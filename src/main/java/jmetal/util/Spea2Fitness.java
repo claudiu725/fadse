@@ -34,12 +34,12 @@ public class Spea2Fitness {
   /**
    * stores a <code>Comparator</code> for distance between nodes checking
    */
-  private static final Comparator distanceNodeComparator = new DistanceNodeComparator();      
+  private static final Comparator<DistanceNode> distanceNodeComparator = new DistanceNodeComparator();      
   
   /**
    * stores a <code>Comparator</code> for dominance checking
    */
-  private static final Comparator dominance_ = new DominanceComparator();
+  private static final Comparator<Solution> dominance_ = new DominanceComparator();
   
   /** 
    * Constructor.

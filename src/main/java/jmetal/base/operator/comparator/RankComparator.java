@@ -13,7 +13,7 @@ import java.util.Comparator;
  * This class implements a <code>Comparator</code> (a method for comparing
  * <code>Solution</code> objects) based on the rank of the solutions.
  */
-public class RankComparator implements Comparator{
+public class RankComparator implements Comparator<Solution>{
   /**
    * Compares two solutions.
    * @param o1 Object representing the first <code>Solution</code>. 
@@ -21,15 +21,13 @@ public class RankComparator implements Comparator{
    * @return -1, or 0, or 1 if o1 is less than, equal, or greater than o2,
    * respectively.
    */
-  public int compare(Object o1, Object o2) {
+  public int compare(Solution solution1, Solution solution2) {
     
-    if (o1==null)
+    if (solution1==null)
       return 1;
-    else if (o2 == null)
+    else if (solution2 == null)
       return -1;
-      
-    Solution solution1 = (Solution)o1;
-    Solution solution2 = (Solution)o2;
+
     if (solution1.getRank()<solution2.getRank()) {
       return -1;
     }
