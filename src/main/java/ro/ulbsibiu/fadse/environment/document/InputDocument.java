@@ -5,6 +5,7 @@
 package ro.ulbsibiu.fadse.environment.document;
 
 import java.io.Serializable;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -39,7 +40,7 @@ public class InputDocument implements Serializable {
     private LinkedList<String> benchmarks;
     private RelationTree relationTree1;
     private RelationTree relationTree2;
-    private String outputPath;
+    private Path outputPath;
 
     public InputDocument() {
         this.simulatorParameters = new HashMap<String, String>();
@@ -197,11 +198,11 @@ public class InputDocument implements Serializable {
         this.virtualParameters = virtualParameters;
     }
     
-    public String getOutputPath() {
+    public Path getOutputPath() {
         return outputPath;
     }
 
-    public void setOutputPath(String outputPath) {
+    public void setOutputPath(Path outputPath) {
         this.outputPath = outputPath;
     }
     

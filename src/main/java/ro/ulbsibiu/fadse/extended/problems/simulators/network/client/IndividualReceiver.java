@@ -18,6 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.ini4j.Wini;
+import org.jfree.util.Log;
 
 import ro.ulbsibiu.fadse.environment.document.InputDocument;
 import ro.ulbsibiu.fadse.extended.problems.SimulatorWrapper;
@@ -51,7 +52,6 @@ public class IndividualReceiver implements Runnable {
 
     private void init(int port) throws IOException {
         try {
-            Thread.sleep(r.nextInt(10000));
             serverSocket = new ServerSocket(port);
             InetAddress ip;
             try {
@@ -59,7 +59,6 @@ public class IndividualReceiver implements Runnable {
                 System.out.println("<neighbor ip=\"" + ip.getHostAddress() + "\" listenPort=\"" + port + "\" availableSlots = \"1\" />");
             } catch (UnknownHostException e) {
                 System.out.println("Client started on port:" + port);
-                e.printStackTrace();
             }
         } catch (BindException ex) {
             if (retries < 1000) {
@@ -68,11 +67,7 @@ public class IndividualReceiver implements Runnable {
             } else {
                 throw ex;
             }
-        } catch (InterruptedException ex) {
-            Logger.getLogger(IndividualReceiver.class.getName()).log(Level.SEVERE, "thread was intrerupted", ex);
         }
-
-
     }
 
     public void run() {

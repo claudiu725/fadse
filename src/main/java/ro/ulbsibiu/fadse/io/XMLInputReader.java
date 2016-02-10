@@ -5,6 +5,7 @@
 package ro.ulbsibiu.fadse.io;
 
 import java.io.File;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -48,13 +49,13 @@ public class XMLInputReader {
     		+ System.getProperty("file.separator") + "metaheuristicConfig"
     		+ System.getProperty("file.separator");
 	
-    public InputDocument parse(String xmlFilePath) {
+    public InputDocument parse(Path xmlFilePath) {
         try {
         	System.out.println("Using xml config: " + xmlFilePath);
             InputDocument inputDoc = new InputDocument();
             DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
-            Document doc = docBuilder.parse(new File(xmlFilePath));
+            Document doc = docBuilder.parse(xmlFilePath.toFile());
 
             // normalize text representation
             doc.getDocumentElement().normalize();
@@ -307,7 +308,7 @@ public class XMLInputReader {
             if (outputRootNode != null)
             {
 		        NamedNodeMap outputAttributes = outputRootNode.getAttributes();
-		        String outputPath = outputAttributes.getNamedItem("output_path").getNodeValue();           
+		        Path outputPath = Paths.get(outputAttributes.getNamedItem("output_path").getNodeValue());           
 		        inputDoc.setOutputPath(outputPath);
 		        System.out.println("Using output path:");
 		        System.out.println(outputPath);
@@ -416,7 +417,7 @@ public class XMLInputReader {
 
     public static void main(String args[]) {
         XMLInputReader inputReader = new XMLInputReader();
-        InputDocument id = inputReader.parse("configs/falsesimin.xml");
+        InputDocument id = inputReader.parse(Paths.get("configs/falsesimin.xml"));
         System.out.println(id.getRelationTree1().findNode(0));
         System.out.println(id.getRelationTree1().findNode(1));
 

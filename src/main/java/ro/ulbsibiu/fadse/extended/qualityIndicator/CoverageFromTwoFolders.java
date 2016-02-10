@@ -66,6 +66,7 @@ public class CoverageFromTwoFolders {
 //        nrOfobejctives2 = Integer.parseInt((new BufferedReader(new InputStreamReader(System.in))).readLine());
 //        System.out.println("Specify the population size");
 //        populationSize2 = Integer.parseInt((new BufferedReader(new InputStreamReader(System.in))).readLine());
+    	/*
         int nrObjectives = 2 ;
         int populationSize = 100;
         String folderPath1 = "D:\\Work\\Doctorat\\Output\\FADSE\\ServerSimulator\\RaduResults\\cnsgaii0.1";
@@ -100,6 +101,6 @@ public class CoverageFromTwoFolders {
             outCov.close();
         } else {
             System.out.println("Directory was not created");
-        }
+        }*/
     }
 }

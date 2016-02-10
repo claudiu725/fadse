@@ -6,7 +6,7 @@
 package ro.ulbsibiu.fadse.extended.qualityIndicator;
 
 import java.io.File;
-import java.util.LinkedList;
+import java.util.List;
 
 /**
  *
@@ -18,5 +18,5 @@ public class HypervolumeHelperResult {
     public int[] PopulationSizeN;
     public double[] MaxObjectives;
     public File MetricsFolder;
-    LinkedList<LinkedList> ParsedFilesN;
+    List<List<double[][]>> ParsedFilesN;
 }

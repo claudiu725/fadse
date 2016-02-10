@@ -46,7 +46,7 @@ import java.util.LinkedList;
 public class HypervolumeFromTwoFolders {
 
     public static void main(String[] args) throws IOException {
-        String folderPath1;
+        /*String folderPath1;
         int nrOfobejctives1 = 2;
         int populationSize1 = 100;
         System.out.println("Specify path to folder 1");
@@ -86,6 +86,6 @@ public class HypervolumeFromTwoFolders {
             MetricsUtil.computeHypervolumeAndSevenPoint(nrOfobejctives2, populationSize2, maxObjectives, metricsFolder, "hypervolume2.csv", "7point2.csv", parsedFiles2);
         } else {
             System.out.println("Directory was not created");
-        }
+        }*/
     }
 }

@@ -7,15 +7,16 @@
 package jmetal.base;
 
 import java.io.*;
-import java.util.*; 
+import java.util.*;
 
-import jmetal.util.Configuration;
+import org.apache.log4j.Logger;
 
 /** 
  * Class representing a SolutionSet (a set of solutions)
  */
 public class SolutionSet implements Serializable {
-    
+  
+  static Logger logger = Logger.getLogger(SolutionSet.class.getName());
   /**
    * Stores a list of <code>solution</code> objects.
    */
@@ -51,9 +52,9 @@ public class SolutionSet implements Serializable {
   */
   public boolean add(Solution solution) {
     if (solutionsList_.size() == capacity_) {
-      Configuration.logger_.severe("The population is full");
-      Configuration.logger_.severe("Capacity is : "+capacity_);
-      Configuration.logger_.severe("\t Size is: "+ this.size());
+      logger.error("The population is full");
+      logger.error("Capacity is : "+capacity_);
+      logger.error("\t Size is: "+ this.size());
       return false;
     } // if
     
@@ -88,7 +89,7 @@ public class SolutionSet implements Serializable {
    */
   public void sort(Comparator<Solution> comparator){
     if (comparator == null) {
-      Configuration.logger_.severe("No criterium for compare exist");
+      logger.error("No criterium for compare exist");
       return ;
     } // if
     Collections.sort(solutionsList_,comparator);
@@ -124,8 +125,7 @@ public class SolutionSet implements Serializable {
       /* Close the file */
       bw.close();
     }catch (IOException e) {
-      Configuration.logger_.severe("Error acceding to the file");
-      e.printStackTrace();
+      logger.error("Error accessing the file", e);
     }
   } // printObjectivesToFile
  
@@ -151,8 +151,7 @@ public class SolutionSet implements Serializable {
       /* Close the file */
       bw.close();
     }catch (IOException e) {
-      Configuration.logger_.severe("Error acceding to the file");
-      e.printStackTrace();
+      logger.error("Error accessing the file", e);
     }       
   } // printVariablesToFile
      
@@ -169,7 +168,7 @@ public class SolutionSet implements Serializable {
    */
   public void remove(int i){        
     if (i > solutionsList_.size()-1) {            
-      Configuration.logger_.severe("Size is: "+this.size());
+      logger.error("Size is: "+this.size());
     } // if
     solutionsList_.remove(i);    
   } // remove

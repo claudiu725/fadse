@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -28,9 +29,9 @@ import jmetal.util.JMException;
  */
 public class SolutionSetHelper {
 
-    public static SolutionSetHelperResult ReadPopulationsFromFolder(String folder, String xmlFileName) throws JMException {
+    public static SolutionSetHelperResult ReadPopulationsFromFolder(Path folder, String xmlFileName) throws JMException {
 
-        String environmentConfigFile = folder + System.getProperty("file.separator") + xmlFileName;
+        Path environmentConfigFile = folder.resolve(xmlFileName);
 
         String currentdir = System.getProperty("user.dir");
         File dir = new File(currentdir);
@@ -44,13 +45,13 @@ public class SolutionSetHelper {
         Object[] problemParams = {env};
         Problem problem_ = (new ProblemFactory()).getProblem(problemName, problemParams);
 
-        LinkedList<File> files = MetricsUtil.getListOfFiles(folder, "filled");
+        List<Path> files = MetricsUtil.getListOfFiles(folder, "filled");
 
         List<SolutionSet> solutionSets = new LinkedList<SolutionSet>();
-        for (File file : files) {
+        for (Path file : files) {
             try {
                 List<Solution> currentPopulations = new LinkedList<Solution>();
-                BufferedReader input = new BufferedReader(new FileReader(file));
+                BufferedReader input = new BufferedReader(new FileReader(file.toFile()));
 
                 String line = null; //not declared within while loop
                 line = input.readLine();//skip the headder

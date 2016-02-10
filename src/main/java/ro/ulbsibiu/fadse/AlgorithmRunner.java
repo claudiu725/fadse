@@ -5,13 +5,19 @@ import java.io.FileInputStream;
 
 import jmetal.base.*;
 import jmetal.problems.*;
-import jmetal.util.Configuration;
 import jmetal.util.JMException;
 
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.Properties;
-import java.util.logging.FileHandler;
-import java.util.logging.Logger;
+
+import org.apache.log4j.Appender;
+import org.apache.log4j.FileAppender;
+import org.apache.log4j.Layout;
+import org.apache.log4j.Logger;
+import org.apache.log4j.spi.ErrorHandler;
+import org.apache.log4j.spi.Filter;
+import org.apache.log4j.spi.LoggingEvent;
 
 import ro.ulbsibiu.fadse.environment.Environment;
 import ro.ulbsibiu.fadse.extended.problems.simulators.network.server.status.SimulationStatus;
@@ -59,8 +65,7 @@ import jmetal.experiments.SettingsFactory;
  */
 public class AlgorithmRunner {
 
-    public static Logger logger_; // Logger object
-    public static FileHandler fileHandler_; // FileHandler object
+    public static Logger logger = Logger.getLogger(AlgorithmRunner.class.getName()); // Logger object
     private Algorithm algorithm = null; // The algorithm to use
 
     public void run(Environment env) throws JMException, SecurityException,
@@ -86,10 +91,11 @@ public class AlgorithmRunner {
             System.out.println("BAD properties file [" + path + "]. going with default values");
         }
         long initTime = System.currentTimeMillis();
-        // Logger object and file to store log messages
-        logger_ = Configuration.logger_;
-        fileHandler_ = new FileHandler(algorithmName + ".log");
-        logger_.addHandler(fileHandler_);
+        
+        FileAppender fileAppender = new FileAppender();
+        fileAppender.setFile(env.getAlgorithmFolder(algorithmName).toString());
+        logger.addAppender(fileAppender);
+        
         SolutionSet population = null;
         System.out.println(env.getInputDocument().getSimulatorType());
         if (env.getInputDocument().getSimulatorType().equalsIgnoreCase("synthetic")) {
@@ -152,7 +158,7 @@ public class AlgorithmRunner {
                     "forceMinimumPercentageFeasibleIndividuals", "0");
         }
 
-        String outputPath = env.getInputDocument().getOutputPath();
+        Path outputPath = env.getInputDocument().getOutputPath();
         env.setResultsFolder(outputPath);
 
         algorithm.setInputParameter("outputPath", outputPath);
@@ -162,13 +168,13 @@ public class AlgorithmRunner {
         // Execute the Algorithm
         population = algorithm.execute();
 
-        population.printObjectivesToFile((new File(outputPath, "FUN")).getPath());
-        population.printVariablesToFile((new File(outputPath, "VAR")).getPath());
+        population.printObjectivesToFile(outputPath.resolve("FUN").toString());
+        population.printVariablesToFile(outputPath.resolve("VAR").toString());
         long estimatedTime = System.currentTimeMillis() - initTime;
         // Result messages
-        logger_.info("Total execution time: " + estimatedTime + "ms");
-        logger_.info("Objectives values have been writen to file FUN");
-        logger_.info("Variables values have been writen to file VAR");
+        logger.info("Total execution time: " + estimatedTime + "ms");
+        logger.info("Objectives values have been writen to file FUN");
+        logger.info("Variables values have been writen to file VAR");
     } // main
 } // main
 

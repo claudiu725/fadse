@@ -61,6 +61,7 @@ Specify the population size
 Specify path to input XML
 C:\Users\Horia\Documents\My Dropbox\joint work\Towards Adaptive Code-Optimization\results of adaptive optimization for GAP\1 Benchmark HW+SW\combination_9bench_hwsw_1.xml
  */
+    	/*
         String folderPath;
         int nrOfobejctives = 2;
         int populationSize = 100;
@@ -103,6 +104,7 @@ C:\Users\Horia\Documents\My Dropbox\joint work\Towards Adaptive Code-Optimizatio
         } else {
             System.out.println("Directory was not created");
         }
+      */  
     }
 
    

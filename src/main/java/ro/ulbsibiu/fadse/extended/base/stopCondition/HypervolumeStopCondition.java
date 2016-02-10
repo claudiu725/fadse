@@ -7,7 +7,10 @@ package ro.ulbsibiu.fadse.extended.base.stopCondition;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.LinkedList;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,7 +30,7 @@ public class HypervolumeStopCondition extends StopCondition {
         super(environment);
     }
 
-    public boolean stopConditionFulfilled(List<File> listOfPopulationFiles) {
+    public boolean stopConditionFulfilled(List<Path> listOfPopulationFiles) {
         boolean result = false;
         InputDocument id = environment.getInputDocument();
         //***********INITIALIZATION*************
@@ -43,10 +46,10 @@ public class HypervolumeStopCondition extends StopCondition {
         HypervolumeNoTruePareto hypervolume = new HypervolumeNoTruePareto();
 
         try {
-            LinkedList<Double> hypValues = new LinkedList<Double>();
-            LinkedList parsedFiles = MetricsUtil.parseFiles(nrOfobejctives, populationSize, listOfPopulationFiles);//TODO repalce 100 with real size of pop
+            List<Double> hypValues = new ArrayList<Double>();
+            List<double[][]> parsedFiles = MetricsUtil.parseFiles(nrOfobejctives, populationSize, listOfPopulationFiles);//TODO repalce 100 with real size of pop
             double[] maxObjectives = MetricsUtil.getmaxObjectives(nrOfobejctives, parsedFiles);
-            for (double[][] parsedFile : (LinkedList<double[][]>) parsedFiles) {
+            for (double[][] parsedFile : parsedFiles) {
                 //repairing Pareto optimal set = removing objectives with the value 0 and replacing them with the first individual of the current pop
                 MetricsUtil.repairParetoOptimalSet(parsedFile, populationSize, nrOfobejctives);
                 double value = hypervolume.hypervolume(parsedFile, maxObjectives, nrOfobejctives);
@@ -72,24 +75,21 @@ public class HypervolumeStopCondition extends StopCondition {
     }
 
     public static void main(String[] args) {
-        String currentdir = System.getProperty("user.dir");
-        File dir = new File(currentdir);
+        Path currentdir = Paths.get(System.getProperty("user.dir"));
+        File dir = currentdir.toFile();
         String xmlFileName = "falsesimin.xml";
         Environment env = new Environment(dir + System.getProperty("file.separator") + "configs" + System.getProperty("file.separator") + xmlFileName);
-        env.setResultsFolder(currentdir + System.getProperty("file.separator") + "test");
+        env.setResultsFolder(currentdir.resolve("test"));
         HypervolumeStopCondition condition = new HypervolumeStopCondition(env);
-        String resultsFolder = env.getResultsFolder();
-        LinkedList<File> listOfPopulationFiles = MetricsUtil.getListOfFiles(resultsFolder, "filled");
+        Path resultsFolder = env.getResultsFolder();
+        List<Path> listOfPopulationFiles = MetricsUtil.getListOfFiles(resultsFolder, "filled");
         for (int i = 0; i < listOfPopulationFiles.size(); i++) {
-            List<File> subLsit = listOfPopulationFiles.subList(0, i);
+            List<Path> subLsit = listOfPopulationFiles.subList(0, i);
             if (condition.stopConditionFulfilled(subLsit)) {
                 System.out.println("["+i+"]"+"Fullfilled");
             } else {
                 System.out.println("["+i+"]"+"NOT fulfiled");
             }
         }
-
-
-
     }
 }

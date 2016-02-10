@@ -5,7 +5,7 @@
 
 package ro.ulbsibiu.fadse.extended.base.stopCondition;
 
-import java.io.File;
+import java.nio.file.Path;
 import java.util.List;
 
 import ro.ulbsibiu.fadse.environment.Environment;
@@ -20,6 +20,6 @@ protected Environment environment;
         this.environment = environment;
     }
     
-    abstract public boolean stopConditionFulfilled(List<File> listOfPopulationFiles);
+    abstract public boolean stopConditionFulfilled(List<Path> listOfPopulationFiles);
 
 }

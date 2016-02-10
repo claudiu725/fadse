@@ -41,9 +41,11 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -214,7 +216,7 @@ public class MetricsUtil {
         computeHypervolumeAndSevenPoint(nrOfobejctives, populationSize, maxObjectives, metricsFolder, "hypervolume.csv", "7point.csv", parsedFiles);
     }
 
-    public static void computeHypervolumeAndSevenPoint(int nrOfobejctives, int populationSize, double[] maxObjectives, File metricsFolder, String hypervolumeFileName, String sevenPointFileName, LinkedList parsedFiles) {
+    public static void computeHypervolumeAndSevenPoint(int nrOfobejctives, int populationSize, double[] maxObjectives, File metricsFolder, String hypervolumeFileName, String sevenPointFileName, List<double[][]> parsedFiles) {
         long StartTime = System.currentTimeMillis();
         HypervolumeNoTruePareto hypervolume = new HypervolumeNoTruePareto();
         SevenPointAverageDistance sevenPointAverageDistance = new SevenPointAverageDistance();
@@ -283,7 +285,7 @@ public class MetricsUtil {
         }
     }
 
-    public static void computeHypervolumeTwoSetDifference(int nrOfobejctives, int[] populationSize, double[] maxObjectives, File metricsFolder, LinkedList<LinkedList> parsedFiles) {
+    public static void computeHypervolumeTwoSetDifference(int nrOfobejctives, int[] populationSize, double[] maxObjectives, File metricsFolder, List<List<double[][]>> parsedFiles) {
         long StartTime = System.currentTimeMillis();
         HypervolumeTwoSetDiference hypervolume = new HypervolumeTwoSetDiference();
         String fPath = metricsFolder.getAbsolutePath() + System.getProperty("file.separator");
@@ -308,8 +310,8 @@ public class MetricsUtil {
                         outHyp.write("Hypervolume per generation (" + fPath + hypervolumeFileName + ")");
                         outHyp.newLine();
 
-                        LinkedList<double[][]> firstLinkedList = parsedFiles.get(i);
-                        LinkedList<double[][]> secondLinkedList = parsedFiles.get(j);
+                        List<double[][]> firstLinkedList = parsedFiles.get(i);
+                        List<double[][]> secondLinkedList = parsedFiles.get(j);
 
                         int minSize = 0;
                         if (firstLinkedList.size() < secondLinkedList.size()) {
@@ -403,16 +405,16 @@ public class MetricsUtil {
         return result;
     }
 
-    public static LinkedList<double[][]> parseFiles(int nrOfobejctives, int populationSize, List<File> listOfPopulationFiles) throws FileNotFoundException, IOException {
+    public static List<double[][]> parseFiles(int nrOfobejctives, int populationSize, List<Path> listOfPopulationFiles) throws FileNotFoundException, IOException {
         boolean skipFile = false;
         double[] objectives;
         LinkedList<double[][]> parsedFiles = new LinkedList<>();
         for (int i = 0; i < listOfPopulationFiles.size(); i++) {
             skipFile = false;
-            if (listOfPopulationFiles.get(i).isFile()) {// one file
+            if (listOfPopulationFiles.get(i).toFile().isFile()) {// one file
 //                System.out.println("Computing metrics for: " + listOfFiles[i].getName());
                 double[][] paretoOptimalSet = new double[populationSize][nrOfobejctives];//TODO
-                BufferedReader input = new BufferedReader(new FileReader(listOfPopulationFiles.get(i)));
+                BufferedReader input = new BufferedReader(new FileReader(listOfPopulationFiles.get(i).toFile()));
                 String line = null; //not declared within while loop
                 line = input.readLine();//skip the headder
                 int lineCounter = 0;
@@ -460,14 +462,14 @@ public class MetricsUtil {
                 if (!skipFile) {
                     parsedFiles.add(paretoOptimalSet);
                 } else {
-                    System.out.println("Skiped file " + listOfPopulationFiles.get(i).getName() + " it contained values of 0 for objectives");
+                    System.out.println("Skiped file " + listOfPopulationFiles.get(i).getFileName() + " it contained values of 0 for objectives");
                 }
             }
         }
         return parsedFiles;
     }
 
-    public static double[] getmaxObjectives(int nrOfObjectives, LinkedList parsedFiles) {
+    public static double[] getmaxObjectives(int nrOfObjectives, List<double[][]> parsedFiles) {
         double[] maxObjectives = new double[nrOfObjectives];
         for (int i = 0; i < parsedFiles.size(); i++) {
             for (double[] objectives : ((double[][]) parsedFiles.get(i))) {
@@ -576,18 +578,22 @@ public class MetricsUtil {
         return pop;
     }
 
-    public static LinkedList<File> getListOfFiles(String folderPath, String prefix) {
-        File folder = new File(folderPath);
-        File[] listOfFilesTemp = folder.listFiles();
-        //sort the files
-        Arrays.sort(listOfFilesTemp);
-        System.out.println(listOfFilesTemp);
-        LinkedList<File> listOfPopulationFiles = new LinkedList<File>();
-        for (int i = 0; i < listOfFilesTemp.length; i++) {
-            if (listOfFilesTemp[i].isFile() && listOfFilesTemp[i].getName().startsWith(prefix) && listOfFilesTemp[i].getName().endsWith(".csv")) {
-                listOfPopulationFiles.add(listOfFilesTemp[i]);
+    public static List<Path> getListOfFiles(Path folderPath, String prefix) {
+        List<Path> listOfPopulationFiles = new ArrayList<>();
+        for (Path file : folderPath) {
+            if (file.toFile().isFile() 
+            		&& file.getFileName().startsWith(prefix) 
+            		&& file.getFileName().endsWith(".csv")) {
+                listOfPopulationFiles.add(file);
             }
         }
+        listOfPopulationFiles.sort(new Comparator<Path>() {
+        	@Override
+        	public int compare(Path o1, Path o2) {
+        		o1.getFileName().compareTo(o2.getFileName());
+        		return 0;
+        	}
+		});
         return listOfPopulationFiles;
     }
 }

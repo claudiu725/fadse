@@ -44,10 +44,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Properties;
 
+import org.apache.log4j.Logger;
+
 import ro.ulbsibiu.fadse.environment.Environment;
 import ro.ulbsibiu.fadse.extended.base.relation.RelationTree;
 import jmetal.base.Solution;
-import jmetal.util.Configuration;
 import jmetal.util.JMException;
 import jmetal.util.PseudoRandom;
 import jmetal.base.operator.mutation.Mutation;
@@ -63,6 +64,7 @@ import jmetal.base.operator.mutation.Mutation;
  */
 public class RelationalBitFlipMutation extends Mutation {
 
+	Logger logger = Logger.getLogger(RelationalBitFlipMutation.class.getName());
     /**
      * INT_SOLUTION represents class jmetal.base.solutionType.IntSolutionType
      */
@@ -110,11 +112,7 @@ public class RelationalBitFlipMutation extends Mutation {
                 }
             }
         } catch (ClassCastException e1) {
-            Configuration.logger_.severe("RelationalBitFlipMutation.doMutation: "
-                    + "ClassCastException error" + e1.getMessage());
-            Class<String> cls = java.lang.String.class;
-            String name = cls.getName();
-            throw new JMException("Exception in " + name + ".doMutation()");
+            logger.fatal("ClassCastException error", e1);
         }
     } // doMutation
 
@@ -128,22 +126,14 @@ public class RelationalBitFlipMutation extends Mutation {
         Solution solution = (Solution) object;
 
         if ((solution.getType().getClass() != INT_SOLUTION)) {
-            Configuration.logger_.severe("RelationalBitFlipMutation.execute: the solution "
+            logger.fatal("The solution "
                     + "is not of the right type. The type should be "
                     + "'Int', but " + solution.getType() + " is obtained");
-
-            Class<String> cls = java.lang.String.class;
-            String name = cls.getName();
-            throw new JMException("Exception in " + name + ".execute()");
         } // if
         Environment environment  = (Environment) getParameter("environment");
         Double probability = (Double) getParameter("probability");
         if (probability == null) {
-            Configuration.logger_.severe("RelationalBitFlipMutation.execute: probability not "
-                    + "specified");
-            Class<String> cls = java.lang.String.class;
-            String name = cls.getName();
-            throw new JMException("Exception in " + name + ".execute()");
+        	logger.fatal("probability not specified");
         }
         doMutation(probability.doubleValue(), solution, environment.getInputDocument().getRelationTree1());
         return solution;

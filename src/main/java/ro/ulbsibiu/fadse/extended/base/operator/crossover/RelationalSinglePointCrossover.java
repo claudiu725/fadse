@@ -42,12 +42,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Properties;
 
+import org.apache.log4j.Logger;
+
 import ro.ulbsibiu.fadse.environment.Environment;
 import ro.ulbsibiu.fadse.extended.base.relation.RelationNode;
 import ro.ulbsibiu.fadse.extended.base.relation.RelationTree;
 import jmetal.base.*;
 import jmetal.base.operator.crossover.Crossover;
-import jmetal.util.Configuration;
 import jmetal.util.JMException;
 import jmetal.util.PseudoRandom;
 
@@ -59,6 +60,7 @@ import jmetal.util.PseudoRandom;
  */
 public class RelationalSinglePointCrossover extends Crossover {
 
+	Logger logger = Logger.getLogger(RelationalSinglePointCrossover.class.getName());
     /**
      * BINARY_SOLUTION represents class jmetal.base.solutionType.RealSolutionType
      */
@@ -183,11 +185,7 @@ public class RelationalSinglePointCrossover extends Crossover {
                 }
             }
         } catch (ClassCastException e1) {
-            Configuration.logger_.severe("RelationalSinglePointCrossover.doCrossover: Cannot perfom "
-                    + "RelationalSinglePointCrossover");
-            Class<String> cls = java.lang.String.class;
-            String name = cls.getName();
-            throw new JMException("Exception in " + name + ".doCrossover()");
+            logger.fatal("Cannot perfom RelationalSinglePointCrossover");
         }
         return offSpring;
     } // doCrossover
@@ -204,30 +202,18 @@ public class RelationalSinglePointCrossover extends Crossover {
         if (((parents[0].getType().getClass() != INT_SOLUTION)
                 || (parents[1].getType().getClass() != INT_SOLUTION))) {
 
-            Configuration.logger_.severe("RelationalSinglePointCrossover.execute: the solutions "
-                    + "are not of the right type. The type should be 'Int', but "
+            logger.fatal(" The solutions are not of the right type. "
+            		+ "The type should be 'Int', but "
                     + parents[0].getType() + " and "
                     + parents[1].getType() + " are obtained");
-
-            Class<String> cls = java.lang.String.class;
-            String name = cls.getName();
-            throw new JMException("Exception in " + name + ".execute()");
         } // if
 
         Double probability = (Double) getParameter("probability");
         Environment environment = (Environment) getParameter("environment");
         if (parents.length < 2) {
-            Configuration.logger_.severe("RelationalSinglePointCrossover.execute: operator "
-                    + "needs two parents");
-            Class<String> cls = java.lang.String.class;
-            String name = cls.getName();
-            throw new JMException("Exception in " + name + ".execute()");
+            logger.fatal("Operator needs two parents");
         } else if (probability == null) {
-            Configuration.logger_.severe("RelationalSinglePointCrossover.execute: probability "
-                    + "not specified");
-            Class<String> cls = java.lang.String.class;
-            String name = cls.getName();
-            throw new JMException("Exception in " + name + ".execute()");
+            logger.fatal("Probability not specified");
         }
 
         Solution[] offSpring;

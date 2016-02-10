@@ -8,6 +8,9 @@
  */
 package jmetal.util.wrapper;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.Priority;
+
 import jmetal.base.Solution;
 import jmetal.base.SolutionType;
 import jmetal.base.variable.ArrayReal;
@@ -15,6 +18,8 @@ import jmetal.util.Configuration;
 import jmetal.util.JMException;
 
 public class XReal {
+	static Logger logger = Logger.getLogger(XReal.class.getName());
+	
 	Solution solution_ ;
 	SolutionType type_ ;
 
@@ -66,8 +71,7 @@ public class XReal {
 			return ((ArrayReal)(solution_.getDecisionVariables()[0])).array_[index] ;
 		}
 		else {
-			Configuration.logger_.severe("jmetal.util.wrapper.XReal.getValue, solution type " +
-					type_ + "+ invalid") ;		
+			logger.error("solution type " + type_ + "+ invalid");		
 		}
 		return 0.0 ;
 	}

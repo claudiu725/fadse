@@ -9,10 +9,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.List;
 import jmetal.base.SolutionSet;
 
 /**
@@ -28,7 +30,7 @@ public class HypervolumeHelper {
         int nrOfobejctives = 0;
         int[] populationSizeN = new int[n];
         String[] folderPathN = new String[n];
-        LinkedList<LinkedList<File>> listOfPopulationFilesN = new LinkedList<LinkedList<File>>();
+        List<List<Path>> listOfPopulationFilesN = new ArrayList<List<Path>>();
         System.out.println("Specify nr of objectives ");
         nrOfobejctives = Integer.parseInt((new BufferedReader(new InputStreamReader(System.in))).readLine());
         System.out.println("Specify the population size ");
@@ -38,13 +40,13 @@ public class HypervolumeHelper {
             folderPathN[i] = (new BufferedReader(new InputStreamReader(System.in))).readLine();
 //                System.out.println("Specify the population size " + (i+1));
             populationSizeN[i] = populationSizeN_temp;
-            listOfPopulationFilesN.add(MetricsUtil.getListOfFiles(folderPathN[i], "filled"));
+            listOfPopulationFilesN.add(MetricsUtil.getListOfFiles(FileSystems.getDefault().getPath(folderPathN[i]), "filled"));
         }
 
         File metricsFolder = new File(folderPathN[0] + System.getProperty("file.separator") + "metricsComposed" + System.currentTimeMillis());
         if (metricsFolder.mkdir()) {
-            LinkedList<LinkedList> parsedFilesN = new LinkedList<LinkedList>();
-            LinkedList<double[]> maxObjectivesN = new LinkedList<double[]>();
+        	List<List<double[][]>> parsedFilesN = new ArrayList<>();
+            List<double[]> maxObjectivesN = new ArrayList<>();
             for (int i = 0; i < n; i++) {
                 parsedFilesN.add(MetricsUtil.parseFiles(nrOfobejctives, populationSizeN[i], listOfPopulationFilesN.get(i)));
                 System.out.println("Files found for folder " + i + ":" + parsedFilesN.get(i).size());
@@ -72,7 +74,7 @@ public class HypervolumeHelper {
         }
     }        
 
-    public static double max(LinkedList<double[]> maxObjectivesN, int i) {
+    public static double max(List<double[]> maxObjectivesN, int i) {
         double max = 0;
         for (double[] currentVec : maxObjectivesN) {
             if (currentVec[i] > max) {
@@ -83,6 +85,7 @@ public class HypervolumeHelper {
     }        
     
     public static void main(String[] args){
+    	/*
         String folder = "D:\\Work\\Doctorat\\Output\\FADSE\\ServerSimulator\\MOCHC Scoala\\1345563456000";
         LinkedList<File> files = MetricsUtil.getListOfFiles(folder, "filled");
         LinkedList<SolutionSet> solutions = new LinkedList<SolutionSet>();
@@ -114,6 +117,6 @@ public class HypervolumeHelper {
                 hyperVolumecount = 0;
             }
             System.out.println("12: "+p.CombinedHyperVolume12 + "21: "+p.CombinedHyperVolume21 + "   2: "+ p.FirstHyperVolume + "  3:" + p.SecondHyperVolume);
-        }
+        }*/
     }
 }
