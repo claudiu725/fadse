@@ -22,7 +22,7 @@ import jmetal.util.PseudoRandom;
  * the type of those variables must be VariableType_.Permutation.
  */
 public class PMXCrossover extends Crossover {
-	private static Class PERMUTATION_SOLUTION ; 
+	private static Class<?> PERMUTATION_SOLUTION ; 
 
 
 	/**
@@ -132,7 +132,7 @@ public class PMXCrossover extends Crossover {
 		} // if
 		else {	      	
 			Configuration.logger_.severe("PMXCrossover.doCrossover: invalid type") ;
-			Class cls = java.lang.String.class;
+			Class<String> cls = java.lang.String.class;
 			String name = cls.getName(); 
 			throw new JMException("Exception in " + name + ".doCrossover()") ; 
 		} // else
@@ -164,7 +164,7 @@ public class PMXCrossover extends Crossover {
 		{
 			Configuration.logger_.severe("PMXCrossover.execute: operator needs two " +
 			"parents");
-			Class cls = java.lang.String.class;
+			Class<String> cls = java.lang.String.class;
 			String name = cls.getName(); 
 			throw new JMException("Exception in " + name + ".execute()") ;      
 		}
@@ -172,7 +172,7 @@ public class PMXCrossover extends Crossover {
 		{
 			Configuration.logger_.severe("PMXCrossover.execute: probability not " +
 			"specified");
-			Class cls = java.lang.String.class;
+			Class<String> cls = java.lang.String.class;
 			String name = cls.getName(); 
 			throw new JMException("Exception in " + name + ".execute()") ;  
 		}          

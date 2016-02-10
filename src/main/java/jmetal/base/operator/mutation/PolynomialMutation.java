@@ -37,12 +37,12 @@ public class PolynomialMutation extends Mutation {
   /**
    * REAL_SOLUTION represents class jmetal.base.solutionType.RealSolutionType
    */
-  private static Class REAL_SOLUTION ; 
+  private static Class<?> REAL_SOLUTION ; 
 
   /**
    * REAL_SOLUTION represents class jmetal.base.solutionType.ArrayRealSolutionType
    */
-  private static Class ARRAY_REAL_SOLUTION ; 
+  private static Class<?> ARRAY_REAL_SOLUTION ; 
 
 	/**
 	 * Constructor
@@ -135,7 +135,7 @@ public class PolynomialMutation extends Mutation {
 			Configuration.logger_.severe("PolynomialMutation.execute: the solution " +
 					"type " + solution.getType() + " is not allowed with this operator");
 
-			Class cls = java.lang.String.class;
+			Class<String> cls = java.lang.String.class;
 			String name = cls.getName(); 
 			throw new JMException("Exception in " + name + ".execute()") ;
 		} // if 
@@ -145,7 +145,7 @@ public class PolynomialMutation extends Mutation {
 		{
 			Configuration.logger_.severe("PolynomialMutation.execute: probability " +
 			"not specified");
-			Class cls = java.lang.String.class;
+			Class<String> cls = java.lang.String.class;
 			String name = cls.getName(); 
 			throw new JMException("Exception in " + name + ".execute()") ;  
 		}

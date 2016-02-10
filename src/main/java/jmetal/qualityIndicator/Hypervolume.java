@@ -7,7 +7,6 @@
 package jmetal.qualityIndicator;
 
 import java.util.*;
-import java.io.*;
 
 /**
  * This class implements the hypervolume metric. The code is the a Java version

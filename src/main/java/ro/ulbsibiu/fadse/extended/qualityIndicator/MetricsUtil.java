@@ -191,6 +191,7 @@ public class MetricsUtil {
             outUnique.write(String.valueOf(uniqueInd.size() - previousSize));
             outUnique.newLine();
             previousSize = uniqueInd.size();
+            input.close();
         }
         outUnique.flush();
         outUnique.close();
@@ -573,6 +574,7 @@ public class MetricsUtil {
                 pop.add(sPop1);
             }
         }
+        input.close();
         return pop;
     }
 

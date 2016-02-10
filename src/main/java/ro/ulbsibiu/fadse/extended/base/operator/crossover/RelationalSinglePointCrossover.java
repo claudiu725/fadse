@@ -66,15 +66,15 @@ public class RelationalSinglePointCrossover extends Crossover {
     /**
      * BINARY_SOLUTION represents class jmetal.base.solutionType.RealSolutionType
      */
-    private static Class BINARY_SOLUTION;
+    private static Class<?> BINARY_SOLUTION;
     /**
      * BINARY_REAL_SOLUTION represents class jmetal.base.solutionType.BinaryRealSolutionType
      */
-    private static Class BINARY_REAL_SOLUTION;
+    private static Class<?> BINARY_REAL_SOLUTION;
     /**
      * INT_SOLUTION represents class jmetal.base.solutionType.IntSolutionType
      */
-    private static Class INT_SOLUTION;
+    private static Class<?> INT_SOLUTION;
 
     /**
      * Constructor
@@ -189,7 +189,7 @@ public class RelationalSinglePointCrossover extends Crossover {
         } catch (ClassCastException e1) {
             Configuration.logger_.severe("RelationalSinglePointCrossover.doCrossover: Cannot perfom "
                     + "RelationalSinglePointCrossover");
-            Class cls = java.lang.String.class;
+            Class<String> cls = java.lang.String.class;
             String name = cls.getName();
             throw new JMException("Exception in " + name + ".doCrossover()");
         }
@@ -213,7 +213,7 @@ public class RelationalSinglePointCrossover extends Crossover {
                     + parents[0].getType() + " and "
                     + parents[1].getType() + " are obtained");
 
-            Class cls = java.lang.String.class;
+            Class<String> cls = java.lang.String.class;
             String name = cls.getName();
             throw new JMException("Exception in " + name + ".execute()");
         } // if
@@ -223,13 +223,13 @@ public class RelationalSinglePointCrossover extends Crossover {
         if (parents.length < 2) {
             Configuration.logger_.severe("RelationalSinglePointCrossover.execute: operator "
                     + "needs two parents");
-            Class cls = java.lang.String.class;
+            Class<String> cls = java.lang.String.class;
             String name = cls.getName();
             throw new JMException("Exception in " + name + ".execute()");
         } else if (probability == null) {
             Configuration.logger_.severe("RelationalSinglePointCrossover.execute: probability "
                     + "not specified");
-            Class cls = java.lang.String.class;
+            Class<String> cls = java.lang.String.class;
             String name = cls.getName();
             throw new JMException("Exception in " + name + ".execute()");
         }

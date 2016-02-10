@@ -29,7 +29,7 @@ public class FPGAFitness {
   /**
    * stores a <code>Comparator</code> for dominance checking
    */
-  private static final Comparator dominance_ = new DominanceComparator();
+  private static final Comparator<Solution> dominance_ = new DominanceComparator();
   
   /**
    * Constructor.

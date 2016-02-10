@@ -86,7 +86,7 @@ public class SolutionSet implements Serializable {
    * Sorts a SolutionSet using a <code>Comparator</code>.
    * @param comparator <code>Comparator</code> used to sort.
    */
-  public void sort(Comparator comparator){
+  public void sort(Comparator<Solution> comparator){
     if (comparator == null) {
       Configuration.logger_.severe("No criterium for compare exist");
       return ;

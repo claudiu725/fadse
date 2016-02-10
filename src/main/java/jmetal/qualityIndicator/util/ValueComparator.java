@@ -14,7 +14,7 @@ import java.util.Comparator;
  * to compare points given as <code>double</code>. The points are compared
  * taken account the value of a index
  */
-public class ValueComparator implements Comparator {
+public class ValueComparator implements Comparator<Object> {
   
   /**
    * Stores the value of the index to compare

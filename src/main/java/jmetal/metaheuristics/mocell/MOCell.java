@@ -35,8 +35,8 @@ public class MOCell extends Algorithm{
     CrowdingArchive archive;
     SolutionSet [] neighbors;    
     Neighborhood neighborhood;
-    Comparator dominance = new DominanceComparator();  
-    Comparator crowdingComparator = new CrowdingComparator();
+    Comparator<Solution> dominance = new DominanceComparator();  
+    Comparator<Solution> crowdingComparator = new CrowdingComparator();
     Distance distance = new Distance();
 
     // Read the parameters

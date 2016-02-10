@@ -7,6 +7,7 @@ package jmetal.base.operator.selection;
 
 import jmetal.base.Operator;
 import jmetal.base.Problem;
+import jmetal.base.Solution;
 import jmetal.base.SolutionSet;
 import jmetal.util.Configuration;
 import jmetal.util.Distance;
@@ -32,7 +33,7 @@ public class RankingAndCrowdingSelection extends Selection {
   /**
    * stores a <code>Comparator</code> for crowding comparator checking.
    */
-  private static final Comparator crowdingComparator_ = 
+  private static final Comparator<Solution> crowdingComparator_ = 
                                   new CrowdingComparator();
 
   
@@ -74,7 +75,7 @@ public class RankingAndCrowdingSelection extends Selection {
         
         Configuration.logger_.severe("RankingAndCrowdingSelection.execute: " +
             "problem not specified") ;
-        Class cls = java.lang.String.class;
+        Class<String> cls = java.lang.String.class;
         String name = cls.getName(); 
         throw new JMException("Exception in " + name + ".execute()") ;  
       } // if

@@ -43,7 +43,7 @@ public class FastPGA extends Algorithm{
     Operator crossover, mutation, selection;    
     int termination;
     Distance distance = new Distance();
-    Comparator fpgaFitnessComparator = new FPGAFitnessComparator();
+    Comparator<Solution> fpgaFitnessComparator = new FPGAFitnessComparator();
     
     //Read the parameters
     maxPopSize     = ((Integer)getInputParameter("maxPopSize")).intValue();

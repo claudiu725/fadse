@@ -7,8 +7,6 @@
  */
 package jmetal.problems;
 
-import java.io.IOException;
-
 import jmetal.base.solutionType.ArrayRealSolutionType;
 import jmetal.base.solutionType.BinaryRealSolutionType;
 import jmetal.base.solutionType.RealSolutionType;

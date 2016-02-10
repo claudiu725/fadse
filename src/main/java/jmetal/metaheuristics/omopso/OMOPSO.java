@@ -14,7 +14,6 @@ import jmetal.base.*;
 import jmetal.util.archive.CrowdingArchive;
 import jmetal.base.operator.mutation.*;
 import jmetal.base.operator.comparator.*;
-import jmetal.base.Algorithm;
 import jmetal.util.*;
 
 import java.util.Comparator;
@@ -77,11 +76,11 @@ public class OMOPSO extends Algorithm {
     /**
      * Stores a comparator for checking dominance
      */
-    private Comparator dominance_;
+    private Comparator<Solution> dominance_;
     /**
      * Stores a comparator for crowding checking
      */
-    private Comparator crowdingDistanceComparator_;
+    private Comparator<Solution> crowdingDistanceComparator_;
     /**
      * Stores a <code>Distance</code> object
      */

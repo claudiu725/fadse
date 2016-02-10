@@ -8,7 +8,6 @@ package jmetal.metaheuristics.abyss;
 
 import jmetal.base.*;
 import jmetal.util.archive.CrowdingArchive;
-import jmetal.base.Algorithm;
 import jmetal.base.operator.comparator.CrowdingDistanceComparator;
 
 import java.util.*;
@@ -90,10 +89,10 @@ public class AbYSS extends Algorithm {
     /**
      * Stores the comparators for dominance and equality, respectively
      */
-    private Comparator dominance_;
-    private Comparator equal_;
-    private Comparator fitness_;
-    private Comparator crowdingDistance_;
+    private Comparator<Solution> dominance_;
+    private Comparator<Solution> equal_;
+    private Comparator<Solution> fitness_;
+    private Comparator<Solution> crowdingDistance_;
     /**
      * Stores the crossover operator
      */

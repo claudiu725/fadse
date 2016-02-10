@@ -5,7 +5,6 @@
  */
 package jmetal.problems.WFG;
 
-import java.io.*;
 import java.util.Random;
 import jmetal.base.*;
 import jmetal.base.solutionType.BinaryRealSolutionType;

@@ -23,7 +23,7 @@ public class DENSEA extends Algorithm {
 
     //Implements the Densea delete duplicate elements
     public void deleteDuplicates(SolutionSet population) {
-        Comparator equalIndividuals = new EqualSolutions();
+        Comparator<Solution> equalIndividuals = new EqualSolutions();
         for (int i = 0; i < population.size() / 2; i++) {
             for (int j = i + 1; j < population.size() / 2; j++) {
                 int flag = equalIndividuals.compare(population.get(i), population.get(j));

@@ -40,8 +40,8 @@ public class MutationLocalSearch extends LocalSearch {
    * Stores comparators for dealing with constraints and dominance checking, 
    * respectively.
    */
-  private Comparator constraintComparator_ ;
-  private Comparator dominanceComparator_ ;
+  private Comparator<Solution> constraintComparator_ ;
+  private Comparator<Solution> dominanceComparator_ ;
   
   /**
    * Stores the mutation operator 

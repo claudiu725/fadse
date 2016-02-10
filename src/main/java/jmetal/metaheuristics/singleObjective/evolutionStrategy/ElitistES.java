@@ -44,9 +44,7 @@ public class ElitistES extends Algorithm {
     SolutionSet offspringPopulation ;  
 
     Operator   mutationOperator ;
-    Comparator comparator       ;
-    
-    comparator = new ObjectiveComparator(0) ; // Single objective comparator
+    Comparator<Solution> comparator = new ObjectiveComparator(0) ; // Single objective comparator
     
     // Read the params
     maxEvaluations = ((Integer)this.getInputParameter("maxEvaluations")).intValue();                

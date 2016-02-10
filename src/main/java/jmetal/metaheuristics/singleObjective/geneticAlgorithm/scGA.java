@@ -47,11 +47,9 @@ public class scGA extends Algorithm{
     SolutionSet tempPopulation ;
     Neighborhood neighborhood;
 
-    Comparator  comparator      ;
-    comparator = new ObjectiveComparator(0) ; // Single objective comparator
+    Comparator<Solution>  comparator = new ObjectiveComparator(0) ; // Single objective comparator
     
-    Operator findBestSolution ;
-    findBestSolution = new BestSolutionSelection(comparator) ;
+    //Operator findBestSolution = new BestSolutionSelection(comparator) ;
 
     //Read the parameters
     populationSize    = ((Integer)getInputParameter("populationSize")).intValue();

@@ -124,7 +124,7 @@ public class Spea2Fitness {
     } // while
                 
     if (aux.size() < size){
-      Comparator comparator = new FitnessComparator();
+      Comparator<Solution> comparator = new FitnessComparator();
       solutionSet_.sort(comparator);
       int remain = size - aux.size();
       for (i = 0; i < remain; i++){

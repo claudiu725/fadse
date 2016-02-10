@@ -26,7 +26,7 @@ public class HUXCrossoverInt extends Crossover{
   /**
    * BINARY_SOLUTION represents class jmetal.base.solutionType.RealSolutionType
    */
-  private static Class INT_SOLUTION ; 
+  private static Class<?> INT_SOLUTION ; 
 
 
   /**
@@ -85,7 +85,7 @@ public class HUXCrossoverInt extends Crossover{
       
       Configuration.logger_.severe("HUXCrossover.doCrossover: Cannot perfom " +
           "HuxCrossOver!!!!" + e1.getMessage()) ;
-      Class cls = java.lang.String.class;
+      Class<String> cls = java.lang.String.class;
       String name = cls.getName(); 
       throw new JMException("Exception in " + name + ".doCrossover()") ;
     }        
@@ -110,7 +110,7 @@ public class HUXCrossoverInt extends Crossover{
           parents[0].getType() + " and " + 
           parents[1].getType() + " are obtained");
 
-      Class cls = java.lang.String.class;
+      Class<String> cls = java.lang.String.class;
       String name = cls.getName(); 
       throw new JMException("Exception in " + name + ".execute()") ;
 
@@ -121,7 +121,7 @@ public class HUXCrossoverInt extends Crossover{
     {
       Configuration.logger_.severe("HUXCrossover.execute: operator needs two " +
           "parents");
-      Class cls = java.lang.String.class;
+      Class<String> cls = java.lang.String.class;
       String name = cls.getName(); 
       throw new JMException("Exception in " + name + ".execute()") ;      
     }
@@ -129,7 +129,7 @@ public class HUXCrossoverInt extends Crossover{
     {
       Configuration.logger_.severe("HUXCrossover.execute: probability not " +
       "specified");
-      Class cls = java.lang.String.class;
+      Class<String> cls = java.lang.String.class;
       String name = cls.getName(); 
       throw new JMException("Exception in " + name + ".execute()") ;  
     }         

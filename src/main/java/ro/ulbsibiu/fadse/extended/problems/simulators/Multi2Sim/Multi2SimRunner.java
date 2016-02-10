@@ -5,7 +5,6 @@
 
 package ro.ulbsibiu.fadse.extended.problems.simulators.Multi2Sim;
 import java.util.LinkedHashMap;
-import java.io.File;
 import java.util.LinkedList;
 import java.util.Map;
 

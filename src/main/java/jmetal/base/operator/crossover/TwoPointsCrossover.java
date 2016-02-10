@@ -25,7 +25,7 @@ public class TwoPointsCrossover extends Crossover {
 	/**
 	 * PERMUTATION_SOLUTION represents class jmetal.base.solutionType.PermutationSolutionType
 	 */
-	private static Class PERMUTATION_SOLUTION ; 
+	private static Class<?> PERMUTATION_SOLUTION ; 
 
 	/**
 	 * Constructor

@@ -46,7 +46,7 @@ public class MutationFactory {
             return new BitFlipMutationRandomDefuzzifier();
         } else {
             Configuration.logger_.severe("Operator '" + name + "' not found ");
-            Class cls = java.lang.String.class;
+            Class<String> cls = java.lang.String.class;
             String name2 = cls.getName();
             throw new JMException("Exception in " + name2 + ".getMutationOperator()");
         }
@@ -70,7 +70,7 @@ public class MutationFactory {
             return new BitFlipMutationRandomDefuzzifier(PropUtils.getPropertiesWithPrefix(properties, name + "."));
         } else {
             Configuration.logger_.severe("Operator '" + name + "' not found ");
-            Class cls = java.lang.String.class;
+            Class<String> cls = java.lang.String.class;
             String name2 = cls.getName();
             throw new JMException("Exception in " + name2 + ".getMutationOperator()");
         }

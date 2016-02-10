@@ -24,8 +24,8 @@ public class MetricsFactory {
         try {
             String className = name + "Metric";
             className = MetricsFactory.class.getPackage().getName() + "." + className;
-            Class metricClass = Class.forName(className);
-            Constructor defaultConstructor = metricClass.getConstructor();
+            Class<?> metricClass = Class.forName(className);
+            Constructor<?> defaultConstructor = metricClass.getConstructor();
             Metric metric = (Metric)defaultConstructor.newInstance();
             return metric;
         } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | 

@@ -10,7 +10,7 @@ import jmetal.base.operator.comparator.* ;
 import jmetal.base.operator.selection.BestSolutionSelection;
 import jmetal.base.operator.selection.WorstSolutionSelection;
 import jmetal.base.variable.Permutation;
-import jmetal.base.Algorithm;
+
 import java.util.Comparator;
 import jmetal.util.*;
 
@@ -45,7 +45,7 @@ public class SSGA extends Algorithm {
     Operator    crossoverOperator ;
     Operator    selectionOperator ;
     
-    Comparator  comparator        ;
+    Comparator<Solution>  comparator        ;
     
     comparator = new ObjectiveComparator(0) ; // Single objective comparator
     

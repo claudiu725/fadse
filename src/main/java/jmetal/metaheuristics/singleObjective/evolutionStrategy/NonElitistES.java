@@ -7,7 +7,7 @@ package jmetal.metaheuristics.singleObjective.evolutionStrategy;
 
 import jmetal.base.*;
 import jmetal.base.operator.comparator.* ;
-import jmetal.base.Algorithm;
+
 import java.util.Comparator;
 import jmetal.util.*;
 
@@ -46,7 +46,7 @@ public class NonElitistES extends Algorithm {
     SolutionSet offspringPopulation ;  
 
     Operator   mutationOperator ;
-    Comparator comparator       ;
+    Comparator<Solution> comparator       ;
     
     comparator = new ObjectiveComparator(0) ; // Single objective comparator
     

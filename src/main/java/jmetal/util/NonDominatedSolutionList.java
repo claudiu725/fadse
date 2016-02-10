@@ -20,12 +20,12 @@ public class NonDominatedSolutionList extends SolutionSet{
   /**
    * Stores a <code>Comparator</code> for dominance checking
    */
-  private Comparator dominance_ = new DominanceComparator(); 
+  private Comparator<Solution> dominance_ = new DominanceComparator(); 
   
   /**
    * Stores a <code>Comparator</code> for checking if two solutions are equal
    */
-  private static final Comparator equal_ = new SolutionComparator();     
+  private static final Comparator<Solution> equal_ = new SolutionComparator();     
  
   /** 
   * Constructor.
@@ -42,7 +42,7 @@ public class NonDominatedSolutionList extends SolutionSet{
   * comparator object.
   * @param dominance The comparator for dominance checking.
   */
-  public NonDominatedSolutionList(Comparator dominance) {
+  public NonDominatedSolutionList(Comparator<Solution> dominance) {
     super();
     dominance_ = dominance;
   } // NonDominatedList

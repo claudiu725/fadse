@@ -46,7 +46,7 @@ public class acGA extends Algorithm {
     SolutionSet population ;
     Neighborhood neighborhood;
 
-    Comparator  comparator      ;
+    Comparator<Solution>  comparator      ;
     comparator = new ObjectiveComparator(0) ; // Single objective comparator
     
     Operator findBestSolution ;

@@ -52,7 +52,7 @@ public class DE extends Algorithm {
      Operator selectionOperator ;
      Operator crossoverOperator ;
                
-     Comparator  comparator ;
+     Comparator<Solution>  comparator ;
      comparator = new ObjectiveComparator(0) ; // Single objective comparator
      
      // Differential evolution parameters

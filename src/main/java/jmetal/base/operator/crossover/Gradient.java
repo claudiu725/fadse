@@ -19,7 +19,7 @@ public class Gradient extends Crossover {
   /**
    * REAL_SOLUTION represents class jmetal.base.solutionType.RealSolutionType
    */
-  private static Class REAL_SOLUTION ; 
+  private static Class<?> REAL_SOLUTION ; 
   
   /** 
    * Constructor
@@ -121,7 +121,7 @@ public class Gradient extends Crossover {
           parents[0].getType() + " and " + 
           parents[1].getType() + " are obtained");
 
-      Class cls = java.lang.String.class;
+      Class<String> cls = java.lang.String.class;
       String name = cls.getName(); 
       throw new JMException("Exception in " + name + ".execute()") ;
     } // if 
@@ -131,7 +131,7 @@ public class Gradient extends Crossover {
     {
       Configuration.logger_.severe("SBXCrossover.execute: operator needs two " +
           "parents");
-      Class cls = java.lang.String.class;
+      Class<String> cls = java.lang.String.class;
       String name = cls.getName(); 
       throw new JMException("Exception in " + name + ".execute()") ;      
     }

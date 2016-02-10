@@ -116,8 +116,7 @@ public class NSGAII extends Algorithm {
         if (file != null && !file.equals("")) {
             Logger.getLogger(NSGAII.class.getName()).log(Level.WARNING, "Using a checkpoint file: " + file);
             int i = 0;
-            try {
-                BufferedReader input = new BufferedReader(new FileReader(file));
+            try (BufferedReader input = new BufferedReader(new FileReader(file))) {
 
                 String line = null; //not declared within while loop
                 line = input.readLine();//skip the headder

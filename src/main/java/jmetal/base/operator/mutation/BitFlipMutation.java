@@ -28,15 +28,15 @@ private static boolean IND_CHANGED = false;
     /**
      * BINARY_SOLUTION represents class jmetal.base.solutionType.RealSolutionType
      */
-    private static Class BINARY_SOLUTION;
+    private static Class<?> BINARY_SOLUTION;
     /**
      * BINARY_REAL_SOLUTION represents class jmetal.base.solutionType.BinaryRealSolutionType
      */
-    private static Class BINARY_REAL_SOLUTION;
+    private static Class<?> BINARY_REAL_SOLUTION;
     /**
      * INT_SOLUTION represents class jmetal.base.solutionType.IntSolutionType
      */
-    private static Class INT_SOLUTION;
+    private static Class<?> INT_SOLUTION;
 
     /**
      * Constructor
@@ -100,7 +100,7 @@ private static boolean IND_CHANGED = false;
         } catch (ClassCastException e1) {
             Configuration.logger_.severe("BitFlipMutation.doMutation: "
                     + "ClassCastException error" + e1.getMessage());
-            Class cls = java.lang.String.class;
+            Class<String> cls = java.lang.String.class;
             String name = cls.getName();
             throw new JMException("Exception in " + name + ".doMutation()");
         }
@@ -122,7 +122,7 @@ private static boolean IND_CHANGED = false;
                     + "is not of the right type. The type should be 'Binary', "
                     + "'BinaryReal' or 'Int', but " + solution.getType() + " is obtained");
 
-            Class cls = java.lang.String.class;
+            Class<String> cls = java.lang.String.class;
             String name = cls.getName();
             throw new JMException("Exception in " + name + ".execute()");
         } // if
@@ -131,7 +131,7 @@ private static boolean IND_CHANGED = false;
         if (probability == null) {
             Configuration.logger_.severe("BitFlipMutation.execute: probability not "
                     + "specified");
-            Class cls = java.lang.String.class;
+            Class<String> cls = java.lang.String.class;
             String name = cls.getName();
             throw new JMException("Exception in " + name + ".execute()");
         }

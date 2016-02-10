@@ -48,7 +48,7 @@ public class sMOCell1 extends Algorithm{
     CrowdingArchive archive;
     SolutionSet [] neighbors;    
     Neighborhood neighborhood;
-    Comparator dominance = new DominanceComparator(),
+    Comparator<Solution> dominance = new DominanceComparator(),
     crowding  = new CrowdingComparator();  
     Distance distance = new Distance();
 

@@ -69,7 +69,7 @@ public class PAES extends Algorithm {
     int bisections, archiveSize, maxEvaluations, evaluations;
     AdaptiveGridArchive archive;
     Operator mutationOperator;
-    Comparator dominance;
+    Comparator<Solution> dominance;
     
     //Read the params
     bisections     = ((Integer)this.getInputParameter("biSections")).intValue();

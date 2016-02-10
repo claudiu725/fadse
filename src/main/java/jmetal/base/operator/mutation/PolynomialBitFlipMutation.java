@@ -33,7 +33,7 @@ public class PolynomialBitFlipMutation extends Mutation {
   /**
    * ARRAY_REAL_AND_BINARY_SOLUTION represents class jmetal.base.solutionType.ArrayRealAndBinarySolutionType
    */
-  private static Class ARRAY_REAL_AND_BINARY_SOLUTION ; 
+  private static Class<?> ARRAY_REAL_AND_BINARY_SOLUTION ; 
 
   /**
    * Constructor
@@ -55,7 +55,7 @@ public class PolynomialBitFlipMutation extends Mutation {
 			Configuration.logger_.severe("PolynomialBitFlipMutation.execute: the solution " +
 					"type " + solution.getType() + " is not allowed with this operator");
 
-			Class cls = java.lang.String.class;
+			Class<String> cls = java.lang.String.class;
 			String name = cls.getName(); 
 			throw new JMException("Exception in " + name + ".execute()") ;
 		} // if 
@@ -64,7 +64,7 @@ public class PolynomialBitFlipMutation extends Mutation {
 		if (realProbability == null){
 			Configuration.logger_.severe("PolynomialBitFlipMutation.execute: probability of the real component" +
 			"not specified");
-			Class cls = java.lang.String.class;
+			Class<String> cls = java.lang.String.class;
 			String name = cls.getName(); 
 			throw new JMException("Exception in " + name + ".execute()") ;  
 		}
@@ -73,7 +73,7 @@ public class PolynomialBitFlipMutation extends Mutation {
 		if (binaryProbability == null){
 			Configuration.logger_.severe("PolynomialBitFlipMutation.execute: probability of the binary component" +
 			"not specified");
-			Class cls = java.lang.String.class;
+			Class<String> cls = java.lang.String.class;
 			String name = cls.getName(); 
 			throw new JMException("Exception in " + name + ".execute()") ;  
 		}

@@ -115,7 +115,7 @@ public class CNSGAII extends Algorithm {
 				BufferedReader input = new BufferedReader(new FileReader(file));
 
 				String line = null; // not declared within while loop
-				line = input.readLine();// skip the headder
+				line = input.readLine();// skip the header
 				while ((line = input.readLine()) != null && i < populationSize) {
 					newSolution = new Solution(problem_);
 
@@ -130,6 +130,7 @@ public class CNSGAII extends Algorithm {
 					population.add(newSolution);
 					i++;
 				} // while
+				input.close();
 				if (i < populationSize) {
 					throw new IOException(
 							"Checkpoint file does not have enough elements to fill the entire population");

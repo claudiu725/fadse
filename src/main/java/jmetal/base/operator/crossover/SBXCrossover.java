@@ -40,12 +40,12 @@ public class SBXCrossover extends Crossover {
   /**
    * REAL_SOLUTION represents class jmetal.base.solutionType.RealSolutionType
    */
-  private static Class REAL_SOLUTION ; 
+  private static Class<?> REAL_SOLUTION ; 
 
   /**
    * REAL_SOLUTION represents class jmetal.base.solutionType.ArrayRealSolutionType
    */
-  private static Class ARRAY_REAL_SOLUTION ; 
+  private static Class<?> ARRAY_REAL_SOLUTION ; 
   
   /** 
    * Constructor
@@ -191,7 +191,7 @@ public class SBXCrossover extends Crossover {
       Configuration.logger_.severe("SBXCrossover.execute: the solutions " +
 					"type " + parents[0].getType() + " is not allowed with this operator");
 
-      Class cls = java.lang.String.class;
+      Class<String> cls = java.lang.String.class;
       String name = cls.getName(); 
       throw new JMException("Exception in " + name + ".execute()") ;
     } // if 
@@ -201,7 +201,7 @@ public class SBXCrossover extends Crossover {
     {
       Configuration.logger_.severe("SBXCrossover.execute: operator needs two " +
           "parents");
-      Class cls = java.lang.String.class;
+      Class<String> cls = java.lang.String.class;
       String name = cls.getName(); 
       throw new JMException("Exception in " + name + ".execute()") ;      
     }
@@ -209,7 +209,7 @@ public class SBXCrossover extends Crossover {
     {
       Configuration.logger_.severe("SBXCrossover.execute: probability not " +
       "specified");
-      Class cls = java.lang.String.class;
+      Class<String> cls = java.lang.String.class;
       String name = cls.getName(); 
       throw new JMException("Exception in " + name + ".execute()") ;  
     }

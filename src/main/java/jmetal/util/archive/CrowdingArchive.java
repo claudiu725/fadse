@@ -30,18 +30,18 @@ public class CrowdingArchive extends Archive {
   /**
    * Stores a <code>Comparator</code> for dominance checking.
    */
-  private Comparator dominance_;
+  private Comparator<Solution> dominance_;
   
   /**
    * Stores a <code>Comparator</code> for equality checking (in the objective
    * space).
    */
-  private Comparator equals_; 
+  private Comparator<Solution> equals_; 
 
   /**
    * Stores a <code>Comparator</code> for checking crowding distances.
    */
-  private Comparator crowdingDistance_; 
+  private Comparator<Solution> crowdingDistance_; 
   
   /**
    * Stores a <code>Distance</code> object, for distances utilities

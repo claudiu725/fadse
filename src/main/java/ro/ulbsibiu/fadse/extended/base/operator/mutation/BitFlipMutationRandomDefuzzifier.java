@@ -43,7 +43,7 @@ public class BitFlipMutationRandomDefuzzifier extends Mutation {
     /**
      * INT_SOLUTION represents class jmetal.base.solutionType.IntSolutionType
      */
-    private static Class INT_SOLUTION;
+    private static Class<?> INT_SOLUTION;
 
     /**
      * Constructor
@@ -136,7 +136,7 @@ public class BitFlipMutationRandomDefuzzifier extends Mutation {
         } catch (ClassCastException e1) {
             Configuration.logger_.severe("BitFlipMutation.doMutation: "
                     + "ClassCastException error" + e1.getMessage());
-            Class cls = java.lang.String.class;
+            Class<String> cls = java.lang.String.class;
             String name = cls.getName();
             throw new JMException("Exception in " + name + ".doMutation()");
         }
@@ -156,7 +156,7 @@ public class BitFlipMutationRandomDefuzzifier extends Mutation {
             Configuration.logger_.severe("BitFlipMutation.execute: the solution "
                     + "is not of the right type. 'Int', but " + solution.getType() + " is obtained");
 
-            Class cls = java.lang.String.class;
+            Class<String> cls = java.lang.String.class;
             String name = cls.getName();
             throw new JMException("Exception in " + name + ".execute()");
         } // if 
@@ -166,7 +166,7 @@ public class BitFlipMutationRandomDefuzzifier extends Mutation {
         if (probability == null) {
             Configuration.logger_.severe("BitFlipMutation.execute: probability not "
                     + "specified");
-            Class cls = java.lang.String.class;
+            Class<String> cls = java.lang.String.class;
             String name = cls.getName();
             throw new JMException("Exception in " + name + ".execute()");
         }

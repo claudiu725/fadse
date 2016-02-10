@@ -40,12 +40,12 @@ public class NonUniformMutation extends Mutation{
   /**
    * REAL_SOLUTION represents class jmetal.base.solutionType.RealSolutionType
    */
-  private static Class REAL_SOLUTION ; 
+  private static Class<?> REAL_SOLUTION ; 
 
   /**
    * REAL_SOLUTION represents class jmetal.base.solutionType.ArrayRealSolutionType
    */
-  private static Class ARRAY_REAL_SOLUTION ; 
+  private static Class<?> ARRAY_REAL_SOLUTION ; 
   
   /** 
   * Constructor
@@ -156,7 +156,7 @@ public class NonUniformMutation extends Mutation{
     {
       Configuration.logger_.severe("NonUniformMutation.execute: probability " +
           "not specified");
-      Class cls = java.lang.String.class;
+      Class<String> cls = java.lang.String.class;
       String name = cls.getName(); 
       throw new JMException("Exception in " + name + ".execute()") ;  
     }         

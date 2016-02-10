@@ -31,7 +31,7 @@ public abstract class Variable implements Serializable {
   public abstract Variable deepCopy();
 
   /**
-   * Gets the double value representign the variable. 
+   * Gets the double value representing the variable. 
    * It is used in subclasses of <code>Variable</code> (i.e. <code>Real</code> 
    * and <code>Int</code>).
    * As not all objects belonging to a subclass of <code>Variable</code> have a 
@@ -49,7 +49,7 @@ public abstract class Variable implements Serializable {
   
   /**
   * Sets a double value to a variable in subclasses of <code>Variable</code>. 
-  * As not all objects belonging to asubclass of <code>Variable</code> have a 
+  * As not all objects belonging to a subclass of <code>Variable</code> have a 
   * double value, a call to this method it is considered a fatal error by 
   * default, and the program is terminated. Those classes requiring this method 
   * must redefine it.

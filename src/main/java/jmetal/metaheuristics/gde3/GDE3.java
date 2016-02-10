@@ -45,7 +45,7 @@ public class GDE3 extends Algorithm {
     SolutionSet union               ;
     
     Distance   distance  ;
-    Comparator dominance ;
+    Comparator<Solution> dominance ;
     
     Operator selectionOperator ;
     Operator crossoverOperator ;

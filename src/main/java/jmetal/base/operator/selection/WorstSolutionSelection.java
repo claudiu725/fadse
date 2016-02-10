@@ -20,13 +20,13 @@ import jmetal.util.PseudoRandom;
 public class WorstSolutionSelection extends Selection {
   
 	// Comparator
-  private Comparator comparator_;
+  private Comparator<Solution> comparator_;
     
   /**
    * Constructor
    * @param comparator
    */
-  public WorstSolutionSelection(Comparator comparator) {
+  public WorstSolutionSelection(Comparator<Solution> comparator) {
   	comparator_ = comparator ;
   }
   

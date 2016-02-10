@@ -58,12 +58,12 @@ public class DifferentialEvolutionCrossover extends Crossover {
 	/**
 	 * REAL_SOLUTION represents class jmetal.base.solutionType.RealSolutionType
 	 */
-	private static Class REAL_SOLUTION ; 
+	private static Class<?> REAL_SOLUTION ; 
 	
   /**
    * ARRAY_REAL_SOLUTION represents class jmetal.base.solutionType.ArrayRealSolutionType
    */
-  private static Class ARRAY_REAL_SOLUTION ; 
+  private static Class<?> ARRAY_REAL_SOLUTION ; 
 
 	public double CR_  ;
 	public double F_   ;
@@ -125,7 +125,7 @@ public class DifferentialEvolutionCrossover extends Crossover {
 					parent[1].getType() + " and " + 
 					parent[2].getType() + " are obtained");
 
-			Class cls = java.lang.String.class;
+			Class<String> cls = java.lang.String.class;
 			String name = cls.getName(); 
 			throw new JMException("Exception in " + name + ".execute()") ;
 		}

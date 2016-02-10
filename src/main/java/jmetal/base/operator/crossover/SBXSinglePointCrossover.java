@@ -38,7 +38,7 @@ public class SBXSinglePointCrossover extends Mutation {
 	/**
 	 * ARRAY_REAL_AND_BINARY_SOLUTION represents class jmetal.base.solutionType.ArrayRealAndBinarySolutionType
 	 */
-	private static Class ARRAY_REAL_AND_BINARY_SOLUTION ; 
+	private static Class<?> ARRAY_REAL_AND_BINARY_SOLUTION ; 
 
 	/**
 	 * Constructor
@@ -188,7 +188,7 @@ public class SBXSinglePointCrossover extends Mutation {
 			Configuration.logger_.severe("SBXSinglePointCrossover: the solution " +
 					"type " + parents[0].getType() + " is not allowed with this operator");
 
-			Class cls = java.lang.String.class;
+			Class<String> cls = java.lang.String.class;
 			String name = cls.getName(); 
 			throw new JMException("Exception in " + name + ".execute()") ;
 		} // if 
@@ -197,7 +197,7 @@ public class SBXSinglePointCrossover extends Mutation {
 		if (realProbability == null){
 			Configuration.logger_.severe("SBXSinglePointCrossover: probability of the real component" +
 			"not specified");
-			Class cls = java.lang.String.class;
+			Class<String> cls = java.lang.String.class;
 			String name = cls.getName(); 
 			throw new JMException("Exception in " + name + ".execute()") ;  
 		}
@@ -206,7 +206,7 @@ public class SBXSinglePointCrossover extends Mutation {
 		if (binaryProbability == null){
 			Configuration.logger_.severe("SBXSinglePointCrossover: probability of the binary component" +
 			"not specified");
-			Class cls = java.lang.String.class;
+			Class<String> cls = java.lang.String.class;
 			String name = cls.getName(); 
 			throw new JMException("Exception in " + name + ".execute()") ;  
 		}

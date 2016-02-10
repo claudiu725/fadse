@@ -61,7 +61,7 @@ public class ProblemFactory {
 
         }
         try {
-            Class problemClass = Class.forName(base + name);
+            Class<?> problemClass = Class.forName(base + name);
             System.out.println("Base+name: "+base+name);
             Constructor[] constructors = problemClass.getConstructors();
             int i = 0;
@@ -109,9 +109,9 @@ public class ProblemFactory {
             base = "ro.ulbsibiu.fadse.extended.problems.simulators.";
         }
         try {
-            Class problemClass = Class.forName(base + name);
+            Class<?> problemClass = Class.forName(base + name);
             //Constructor constructors = problemClass.getConstructor(Properties.class);
-            Constructor constructors = problemClass.getConstructor(Properties.class);
+            Constructor<?> constructors = problemClass.getConstructor(Properties.class);
 
             Problem problem = (Problem) constructors.newInstance(params);
 

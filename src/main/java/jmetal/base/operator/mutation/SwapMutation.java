@@ -74,7 +74,7 @@ public class SwapMutation extends Mutation{
 	      Configuration.logger_.severe("SwapMutation.doMutation: invalid type. " +
 	          ""+ solution.getDecisionVariables()[0].getVariableType());
 
-	      Class cls = java.lang.String.class;
+	      Class<String> cls = java.lang.String.class;
 	      String name = cls.getName(); 
 	      throw new JMException("Exception in " + name + ".doMutation()") ;
 	    }
@@ -98,7 +98,7 @@ public class SwapMutation extends Mutation{
     {
       Configuration.logger_.severe("SwapMutation.execute: probability " +
       "not specified");
-      Class cls = java.lang.String.class;
+      Class<String> cls = java.lang.String.class;
       String name = cls.getName(); 
       throw new JMException("Exception in " + name + ".execute()") ;  
     }

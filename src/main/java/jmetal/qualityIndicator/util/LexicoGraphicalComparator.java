@@ -15,7 +15,7 @@ import java.util.Comparator;
  * to compare points given as <code>double</code>.
  * The order used is the lexicograhphical.
  */
-public class LexicoGraphicalComparator implements Comparator{
+public class LexicoGraphicalComparator implements Comparator<Object>{
   
   /** 
    * The compare method compare the objects o1 and o2.

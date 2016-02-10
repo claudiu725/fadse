@@ -84,7 +84,7 @@ public class HypervolumeStopCondition extends StopCondition {
         for (int i = 0; i < listOfPopulationFiles.size(); i++) {
             List<File> subLsit = listOfPopulationFiles.subList(0, i);
             if (condition.stopConditionFulfilled(subLsit)) {
-                System.out.println("["+i+"]"+"FUllfilled");
+                System.out.println("["+i+"]"+"Fullfilled");
             } else {
                 System.out.println("["+i+"]"+"NOT fulfiled");
             }

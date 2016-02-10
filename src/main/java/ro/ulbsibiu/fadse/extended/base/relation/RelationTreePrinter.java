@@ -33,7 +33,6 @@
  */
 package ro.ulbsibiu.fadse.extended.base.relation;
 
-import com.mxgraph.model.mxGraphModel;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;

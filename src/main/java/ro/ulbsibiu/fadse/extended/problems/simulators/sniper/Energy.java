@@ -29,7 +29,7 @@ public class Energy {
     public final String OTHER = "other";
 
     public float computeEnergy(String energyFile, int start, int end, float frequency) {
-        ArrayList params = new ArrayList();
+        ArrayList<String> params = new ArrayList<String>();
 
         File file = new File(energyFile);
 
@@ -106,8 +106,7 @@ public class Energy {
 
     public float readEnergy(String outputFile) {
         File file = new File(outputFile);
-        try {
-            Scanner scanner = new Scanner(file);
+        try (Scanner scanner = new Scanner(file)) {
 
             String previousLine = scanner.nextLine().trim();
 
@@ -125,7 +124,6 @@ public class Energy {
                 }
                 previousLine = line;
             }
-            scanner.close();
 
         } catch (FileNotFoundException e) {
             System.out.println("File " + outputFile + " not found !");

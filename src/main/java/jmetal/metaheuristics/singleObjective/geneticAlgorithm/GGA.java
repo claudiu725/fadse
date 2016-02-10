@@ -43,8 +43,7 @@ public class GGA extends Algorithm {
     Operator    crossoverOperator ;
     Operator    selectionOperator ;
     
-    Comparator  comparator        ;
-    comparator = new ObjectiveComparator(0) ; // Single objective comparator
+    Comparator<Solution>  comparator  = new ObjectiveComparator(0) ; // Single objective comparator
     
     // Read the params
     populationSize = ((Integer)this.getInputParameter("populationSize")).intValue();

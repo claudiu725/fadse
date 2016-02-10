@@ -22,7 +22,7 @@ public class BinaryTournament extends Selection {
    * Stores the <code>Comparator</code> used to compare two
    * solutions
    */
-  private Comparator comparator_;
+  private Comparator<Solution> comparator_;
 
   /**
    * Constructor
@@ -38,7 +38,7 @@ public class BinaryTournament extends Selection {
   * Creates a new Binary tournament with a specific <code>Comparator</code>
   * @param comparator The comparator
   */
-  public BinaryTournament(Comparator comparator) {
+  public BinaryTournament(Comparator<Solution> comparator) {
     comparator_ = comparator;
   } // Constructor
 

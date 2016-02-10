@@ -41,8 +41,6 @@ package ro.ulbsibiu.fadse.tools.chart;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import javax.imageio.ImageIO;
 import jmetal.qualityIndicator.util.MetricsUtil;
 import org.jfree.chart.ChartFactory;

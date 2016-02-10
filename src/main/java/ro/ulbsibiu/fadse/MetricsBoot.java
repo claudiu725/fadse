@@ -16,8 +16,6 @@ import jmetal.base.Solution;
 import jmetal.base.SolutionSet;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-
 import jmetal.metaheuristics.nsgaII.NSGAII;
 import jmetal.problems.DTLZ.DTLZ1;
 import jmetal.qualityIndicator.QualityIndicator;
@@ -31,7 +29,6 @@ import jmetal.problems.DTLZ.DTLZ2;
 import jmetal.problems.DTLZ.DTLZ3;
 import jmetal.problems.DTLZ.DTLZ4;
 
-import java.io.*;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
@@ -51,7 +48,7 @@ public class MetricsBoot {
  */
 public static int getArrayDimensions(Object array) {
     int arrDimensions = 0;
-    Class cls = array.getClass();
+    Class<?> cls = array.getClass();
 
     while (cls.isArray()) {
         arrDimensions++;
