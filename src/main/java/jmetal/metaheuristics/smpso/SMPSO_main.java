@@ -19,9 +19,6 @@ import jmetal.base.operator.mutation.Mutation;
 import jmetal.base.operator.mutation.MutationFactory;
 import jmetal.problems.*;
 import jmetal.problems.DTLZ.*;
-import jmetal.problems.ZDT.*;
-import jmetal.problems.WFG.*;
-import jmetal.problems.LZ09.* ;
 import jmetal.util.Configuration;
 import jmetal.util.JMException ;
 

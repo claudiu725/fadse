@@ -17,8 +17,6 @@ import jmetal.experiments.settings.MOCell_Settings;
 import jmetal.experiments.settings.NSGAII_Settings;
 import jmetal.experiments.settings.SPEA2_Settings;
 import jmetal.experiments.settings.SMPSO_Settings;
-import jmetal.experiments.util.RBoxplot;
-import jmetal.experiments.util.RWilcoxon;
 import jmetal.util.JMException;
 
 /**

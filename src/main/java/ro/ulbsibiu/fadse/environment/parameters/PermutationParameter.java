@@ -1,7 +1,6 @@
 package ro.ulbsibiu.fadse.environment.parameters;
 
 import jmetal.base.Variable;
-import jmetal.base.variable.Int;
 import jmetal.base.variable.Permutation;
 
 public class PermutationParameter implements Parameter {

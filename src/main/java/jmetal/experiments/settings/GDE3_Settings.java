@@ -8,17 +8,13 @@
  */
 package jmetal.experiments.settings;
 
-import jmetal.experiments.*;
 import jmetal.metaheuristics.gde3.*;
-import java.util.Properties;
 import jmetal.base.Algorithm;
 import jmetal.base.Operator;
 import jmetal.base.Problem;
 import jmetal.base.operator.crossover.CrossoverFactory;
-import jmetal.base.operator.mutation.MutationFactory;
 import jmetal.base.operator.selection.SelectionFactory;
 import jmetal.experiments.Settings;
-import jmetal.problems.ProblemFactory;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.JMException;
 

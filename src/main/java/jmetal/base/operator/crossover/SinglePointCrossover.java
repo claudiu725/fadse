@@ -10,11 +10,9 @@ package jmetal.base.operator.crossover;
 import java.util.Properties;
 import jmetal.base.*;
 import jmetal.base.variable.*;
-import jmetal.base.*;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
 import jmetal.util.PseudoRandom;
-import jmetal.util.Configuration.*;
 
 /**
  * This class allows to apply a Single Point crossover operator using two parent

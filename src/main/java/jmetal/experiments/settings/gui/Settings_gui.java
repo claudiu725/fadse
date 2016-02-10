@@ -15,7 +15,6 @@ import jmetal.base.Algorithm;
 import jmetal.base.Problem;
 import jmetal.experiments.Settings;
 import jmetal.util.JMException;
-import jmetal.util.Configuration.*;
 
 public abstract class Settings_gui extends Settings{
 

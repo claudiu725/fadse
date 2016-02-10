@@ -8,16 +8,12 @@
  */
 package jmetal.experiments.settings;
 
-import java.util.Iterator;
 import jmetal.metaheuristics.smpso.*;
-import java.util.Properties;
 import jmetal.base.Algorithm;
 import jmetal.base.Problem;
 import jmetal.base.operator.mutation.Mutation;
 import jmetal.base.operator.mutation.MutationFactory;
 import jmetal.experiments.Settings;
-import jmetal.util.PropUtils;
-import jmetal.problems.ZDT.ZDT1;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.JMException;
 

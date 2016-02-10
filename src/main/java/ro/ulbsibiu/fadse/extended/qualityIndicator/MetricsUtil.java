@@ -53,8 +53,6 @@ import java.util.StringTokenizer;
 import jmetal.base.Problem;
 import jmetal.base.Solution;
 import jmetal.base.SolutionSet;
-import jmetal.base.Variable;
-import jmetal.base.variable.Int;
 import jmetal.problems.ProblemFactory;
 import jmetal.util.JMException;
 
@@ -405,10 +403,10 @@ public class MetricsUtil {
         return result;
     }
 
-    public static LinkedList parseFiles(int nrOfobejctives, int populationSize, List<File> listOfPopulationFiles) throws FileNotFoundException, IOException {
+    public static LinkedList<double[][]> parseFiles(int nrOfobejctives, int populationSize, List<File> listOfPopulationFiles) throws FileNotFoundException, IOException {
         boolean skipFile = false;
         double[] objectives;
-        LinkedList parsedFiles = new LinkedList();
+        LinkedList<double[][]> parsedFiles = new LinkedList<>();
         for (int i = 0; i < listOfPopulationFiles.size(); i++) {
             skipFile = false;
             if (listOfPopulationFiles.get(i).isFile()) {// one file

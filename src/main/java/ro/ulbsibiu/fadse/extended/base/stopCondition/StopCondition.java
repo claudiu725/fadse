@@ -6,7 +6,6 @@
 package ro.ulbsibiu.fadse.extended.base.stopCondition;
 
 import java.io.File;
-import java.util.LinkedList;
 import java.util.List;
 
 import ro.ulbsibiu.fadse.environment.Environment;

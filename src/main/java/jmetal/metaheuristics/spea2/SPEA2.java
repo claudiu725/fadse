@@ -11,8 +11,6 @@ import java.io.IOException;
 
 import jmetal.base.*;
 
-import java.util.Comparator;
-import java.util.Scanner;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;

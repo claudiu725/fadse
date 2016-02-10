@@ -9,7 +9,6 @@
 package jmetal.experiments.settings;
 
 import jmetal.metaheuristics.mocell.*;
-import java.util.Properties;
 import jmetal.base.*;
 import jmetal.base.operator.crossover.CrossoverFactory;
 import jmetal.base.operator.mutation.MutationFactory;
@@ -19,7 +18,6 @@ import jmetal.base.operator.selection.SelectionFactory;
 import jmetal.experiments.Settings;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.JMException;
-import jmetal.util.Configuration.*;
 
 
 public class MOCell_Settings extends Settings{

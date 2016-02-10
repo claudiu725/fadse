@@ -10,7 +10,6 @@ package jmetal.experiments.settings;
 
 import jmetal.metaheuristics.randomSearch.RandomSearch;
 import jmetal.base.Algorithm;
-import jmetal.base.Operator;
 import jmetal.base.Problem;
 import jmetal.experiments.Settings;
 

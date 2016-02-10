@@ -2,11 +2,6 @@ package ro.ulbsibiu.fadse.extended.problems.simulators.msim3;
 
 import java.util.LinkedList;
 
-import org.python.core.PyInteger;
-import org.python.core.PyObject;
-import org.python.core.PyString;
-import org.python.util.PythonInterpreter;
-
 import ro.ulbsibiu.fadse.environment.Individual;
 import ro.ulbsibiu.fadse.environment.Objective;
 import ro.ulbsibiu.fadse.extended.problems.simulators.Msim3Simulator;

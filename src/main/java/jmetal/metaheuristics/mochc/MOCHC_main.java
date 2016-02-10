@@ -19,10 +19,8 @@ import jmetal.base.*;
 import jmetal.base.operator.crossover.*;
 import jmetal.base.operator.mutation.*;
 import jmetal.base.operator.selection.*;
-import jmetal.problems.*;
 import jmetal.problems.DTLZ.*;
 import jmetal.problems.ZDT.*;
-import jmetal.problems.WFG.*;
 import jmetal.util.ApplicationConstants;
 
 public class MOCHC_main {

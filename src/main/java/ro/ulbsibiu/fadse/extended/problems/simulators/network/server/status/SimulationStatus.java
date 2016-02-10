@@ -9,15 +9,11 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import ro.ulbsibiu.fadse.environment.Environment;
 import ro.ulbsibiu.fadse.environment.Individual;
 import ro.ulbsibiu.fadse.extended.problems.simulators.network.Message;
 import ro.ulbsibiu.fadse.extended.problems.simulators.network.server.Neighbor;
 import ro.ulbsibiu.fadse.extended.problems.simulators.network.server.ResultsReceiver;
-import ro.ulbsibiu.fadse.utils.Utils;
 import jmetal.base.Algorithm;
 import jmetal.base.Solution;
 

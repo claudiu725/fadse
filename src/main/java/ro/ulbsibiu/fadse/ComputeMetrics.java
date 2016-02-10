@@ -7,15 +7,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 import java.util.LinkedList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import ro.ulbsibiu.fadse.environment.Environment;
 import ro.ulbsibiu.fadse.extended.qualityIndicator.MetricsUtil;
-import ro.ulbsibiu.fadse.utils.Utils;
-import jmetal.util.JMException;
 
 /*
  * This file is part of the FADSE tool.

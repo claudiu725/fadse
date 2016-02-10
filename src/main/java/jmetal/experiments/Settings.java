@@ -18,7 +18,6 @@ import jmetal.base.Problem;
 import jmetal.base.operator.crossover.CrossoverFactory;
 import jmetal.base.operator.mutation.MutationFactory;
 import jmetal.util.JMException;
-import jmetal.util.Configuration.*;
 
 public abstract class Settings {
 	protected Problem problem_ ;

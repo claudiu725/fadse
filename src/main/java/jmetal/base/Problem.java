@@ -11,7 +11,6 @@ package jmetal.base;
 import java.io.Serializable;
 
 import jmetal.util.JMException;
-import jmetal.util.Configuration.*;
 
 /**
  * Abstract class representing a multiobjective optimization problem

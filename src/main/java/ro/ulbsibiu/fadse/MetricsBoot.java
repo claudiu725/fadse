@@ -25,19 +25,11 @@ import jmetal.base.operator.crossover.*   ;
 import jmetal.base.operator.mutation.*    ;
 import jmetal.base.operator.selection.*   ;
 import jmetal.metaheuristics.spea2.SPEA2;
-import jmetal.problems.DTLZ.DTLZ2;
-import jmetal.problems.DTLZ.DTLZ3;
-import jmetal.problems.DTLZ.DTLZ4;
-
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-import ro.ulbsibiu.fadse.extended.qualityIndicator.CoverageOfTwoSets;
 import jmetal.base.operator.comparator.FitnessComparator;
 import jmetal.metaheuristics.ibea.IBEA;
-import jmetal.problems.DTLZ.DTLZ5;
-import jmetal.problems.DTLZ.DTLZ6;
-import jmetal.problems.DTLZ.DTLZ7;
 
 public class MetricsBoot {
 

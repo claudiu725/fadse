@@ -140,7 +140,8 @@ public class SniperRunner extends SimulatorRunner {
     }
     
        /** Checks if the simulation is still running */
-    private boolean isExecutionTerminated(Process p) {
+    @SuppressWarnings("unused")
+	private boolean isExecutionTerminated(Process p) {
         if (p == null) {
             System.out.println("Process is null - terminate!");
             return true;

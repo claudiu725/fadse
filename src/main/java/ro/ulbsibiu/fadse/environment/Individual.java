@@ -131,7 +131,8 @@ public class Individual implements Cloneable, Serializable {
         return environment;
     }
 
-    private void markAsInfeasible() {
+    @SuppressWarnings("unused")
+	private void markAsInfeasible() {
         if (feasible) {
 //            System.out.println("## INDIVIDUAL " + this.toString() + " IS INFEASIBLE: unknown reason");
         }

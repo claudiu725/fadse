@@ -7,7 +7,6 @@
 package jmetal.base.operator.crossover;
 
 import java.util.Properties;
-import jmetal.base.variable.*;
 import jmetal.base.*;    
 import jmetal.util.Configuration;
 import jmetal.util.JMException;

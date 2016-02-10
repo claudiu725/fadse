@@ -6,11 +6,7 @@
  */
 package jmetal.base.variable;
 
-import java.util.BitSet;
-
 import jmetal.base.Variable;
-import jmetal.util.PseudoRandom;
-import jmetal.util.Configuration.*;
 
 /** This class extends the Binary class to represent a Real variable encoded by
  * a binary string

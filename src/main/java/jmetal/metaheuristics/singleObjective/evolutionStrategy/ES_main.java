@@ -8,9 +8,7 @@
 package jmetal.metaheuristics.singleObjective.evolutionStrategy;
 
 import jmetal.base.*;
-import jmetal.base.operator.crossover.*   ;
 import jmetal.base.operator.mutation.*    ; 
-import jmetal.base.operator.selection.*   ;
 import jmetal.problems.singleObjective.*  ; 
 import jmetal.util.JMException;
 

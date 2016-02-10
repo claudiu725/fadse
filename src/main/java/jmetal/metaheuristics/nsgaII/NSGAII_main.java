@@ -24,8 +24,6 @@ import jmetal.base.operator.selection.*;
 import jmetal.problems.*;
 import jmetal.problems.DTLZ.*;
 import jmetal.problems.ZDT.*;
-import jmetal.problems.WFG.*;
-import jmetal.problems.LZ09.*;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
 
@@ -36,7 +34,6 @@ import java.util.logging.Logger;
 import java.util.LinkedList;
 import java.util.List;
 
-import ro.ulbsibiu.fadse.extended.problems.LOTZProblem;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.ApplicationConstants;
 

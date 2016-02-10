@@ -9,8 +9,6 @@ package jmetal.base.variable;
 
 import jmetal.base.Variable;
 import jmetal.util.JMException;
-import jmetal.util.PseudoRandom;
-import jmetal.util.Configuration.*;
 
 /**
  * Implements a permutation of integer decision variable

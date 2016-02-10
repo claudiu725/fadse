@@ -11,9 +11,6 @@
 package ro.ulbsibiu.fadse.tools.monitor;
 
 import java.net.Inet4Address;
-import java.net.UnknownHostException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -249,7 +246,8 @@ doQuery("getCurrentPop");
     private javax.swing.JTextField serverTextField;
     // End of variables declaration//GEN-END:variables
 
-    private void checkState() {
+    @SuppressWarnings("unused")
+	private void checkState() {
         /* if(Monitor.getInstance().isConnected()) {
         serverTextField.setEnabled(false);
         portTextField.setEnabled(false);

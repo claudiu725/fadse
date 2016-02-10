@@ -12,10 +12,7 @@ package jmetal.base.solutionType;
 import jmetal.base.Problem;
 import jmetal.base.SolutionType;
 import jmetal.base.Variable;
-import jmetal.base.variable.Int;
 import jmetal.base.variable.Permutation;
-import jmetal.base.variable.Real;
-import jmetal.util.Configuration;
 
 public class PermutationSolutionType extends SolutionType {
 

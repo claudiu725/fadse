@@ -14,9 +14,7 @@ import jmetal.base.Problem;
 import jmetal.base.Solution;
 import jmetal.base.SolutionSet;
 import jmetal.base.operator.comparator.ObjectiveComparator;
-import jmetal.util.Distance;
 import jmetal.util.JMException;
-import jmetal.util.Ranking;
 
 /**
  * This class implements a differential evolution algorithm. 

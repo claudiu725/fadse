@@ -8,9 +8,7 @@ package jmetal.base.operator.crossover;
 
 import java.util.Properties;
 import jmetal.base.operator.crossover.Crossover;
-import jmetal.base.solutionType.RealSolutionType;
 import jmetal.base.Solution;
-import jmetal.base.SolutionType;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
 import jmetal.util.PseudoRandom;

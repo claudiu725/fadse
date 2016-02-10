@@ -18,7 +18,6 @@ import jmetal.base.operator.selection.SelectionFactory;
 import jmetal.metaheuristics.nsgaII.NSGAII;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.JMException;
-import jmetal.util.Configuration.*;
 
 /**
  * @author Antonio J. Nebro

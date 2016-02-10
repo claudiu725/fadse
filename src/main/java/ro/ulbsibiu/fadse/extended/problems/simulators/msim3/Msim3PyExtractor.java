@@ -1,7 +1,6 @@
 package ro.ulbsibiu.fadse.extended.problems.simulators.msim3;
 
 import org.python.core.PyException;
-import org.python.core.PyInteger;
 import org.python.core.PyObject;
 import org.python.core.PyString;
 import org.python.util.PythonInterpreter;

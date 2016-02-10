@@ -7,9 +7,6 @@
 package ro.ulbsibiu.fadse.extended.base.operator.mutation;
 
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import jmetal.base.Solution;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
@@ -215,7 +212,8 @@ public class BitFlipMutationFuzzy extends Mutation {
     public static int x = 0;
     public static double MAX_PROBABILITY = 0.8;
 
-    private double computeProbabilityLinear(Variable outputVariable, double probability) {
+    @SuppressWarnings("unused")
+	private double computeProbabilityLinear(Variable outputVariable, double probability) {
         //look through the memebership values on all the memebership functions and find the maximum.
         //this maxMembership will give us an inf on hou much should we trust this value (we can use it or not)
         double maxMemebership = obtainMaxMemebership(outputVariable);

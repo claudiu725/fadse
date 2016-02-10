@@ -13,7 +13,6 @@ import jmetal.base.Problem;
 import jmetal.base.SolutionType;
 import jmetal.base.Variable;
 import jmetal.base.variable.ArrayReal;
-import jmetal.base.variable.Real;
 
 public class ArrayRealSolutionType extends SolutionType {
 

@@ -12,15 +12,11 @@ import java.util.ArrayList;
 
 import jmetal.base.*;
 
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
 import ro.ulbsibiu.fadse.extended.problems.simulators.ServerSimulator;
 import jmetal.base.operator.comparator.DominanceComparator;
-import jmetal.base.operator.comparator.FitnessComparator;
-import jmetal.qualityIndicator.Epsilon;
-import jmetal.qualityIndicator.Hypervolume;
 import jmetal.util.*;
 
 /**

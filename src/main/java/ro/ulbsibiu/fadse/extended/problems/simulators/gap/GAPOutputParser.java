@@ -7,7 +7,6 @@ import java.util.HashMap;
 
 import ro.ulbsibiu.fadse.environment.Individual;
 import ro.ulbsibiu.fadse.environment.Objective;
-import ro.ulbsibiu.fadse.environment.parameters.Parameter;
 import ro.ulbsibiu.fadse.extended.problems.simulators.SimulatorBase;
 import ro.ulbsibiu.fadse.extended.problems.simulators.SimulatorOutputParser;
 import stepstepgui.benchmarks.Benchmark;
@@ -38,10 +37,6 @@ public class GAPOutputParser extends SimulatorOutputParser {
     public static final String OBJECTIVE_CPRI = "clock cycles per reference instruction CPRI";
     public static final String OBJECTIVE_OMSPRI = "optimization milli-seconds per reference instructions OmsPRI";
     public static final String OBJECTIVE_OPTIMIZATION_TIME = "Optimization time (ms)";
-
-    private static String getCacheKey(int cache_chunk_size, int cache_lines_per_set, int cache_sets) {
-        return "" + (double) cache_chunk_size + "-" + (double) cache_lines_per_set + "-" + (double) cache_sets;
-    }
 
     private static String getCacheKey(double cache_chunk_size, double cache_lines_per_set, double cache_sets) {
         return "" + cache_chunk_size + "-" + cache_lines_per_set + "-" + cache_sets;

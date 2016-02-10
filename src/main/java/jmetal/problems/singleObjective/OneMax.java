@@ -8,7 +8,6 @@
 package jmetal.problems.singleObjective;
 
 import jmetal.base.*;
-import jmetal.base.solutionType.BinaryRealSolutionType;
 import jmetal.base.solutionType.BinarySolutionType;
 import jmetal.base.variable.Binary;
 

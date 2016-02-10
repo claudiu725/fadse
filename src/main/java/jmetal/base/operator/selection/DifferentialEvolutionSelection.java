@@ -6,10 +6,8 @@
  */
 package jmetal.base.operator.selection;
 
-import jmetal.base.Operator;
 import jmetal.base.Solution;
 import jmetal.base.SolutionSet;
-import jmetal.util.Configuration;
 import jmetal.util.JMException;
 import jmetal.util.PseudoRandom;
 

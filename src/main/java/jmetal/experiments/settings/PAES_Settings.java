@@ -9,7 +9,6 @@
 package jmetal.experiments.settings;
 
 import jmetal.metaheuristics.paes.*;
-import java.util.Properties;
 import jmetal.base.Algorithm;
 import jmetal.base.operator.mutation.Mutation;
 import jmetal.base.Problem;
@@ -17,7 +16,6 @@ import jmetal.base.operator.mutation.MutationFactory;
 import jmetal.experiments.Settings;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.JMException;
-import jmetal.util.Configuration.*;
 
 public class PAES_Settings extends Settings{
 

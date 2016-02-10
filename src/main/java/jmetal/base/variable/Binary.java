@@ -11,7 +11,6 @@ import java.util.BitSet;
 
 import jmetal.base.Variable;
 import jmetal.util.PseudoRandom;
-import jmetal.util.Configuration.*;
 
 /**
  * This class implements a generic binary string variable.It can be used as

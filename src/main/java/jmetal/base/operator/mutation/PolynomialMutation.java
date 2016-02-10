@@ -13,7 +13,6 @@ import jmetal.util.JMException;
 import jmetal.util.PseudoRandom;
 import jmetal.util.wrapper.XReal;
 import jmetal.base.operator.mutation.Mutation;
-import jmetal.base.variable.ArrayReal;
 
 /**
  * This class implements a polynomial mutation operator. 

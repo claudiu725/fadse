@@ -14,7 +14,6 @@ import jmetal.base.*;
 import jmetal.base.solutionType.BinaryRealSolutionType;
 import jmetal.base.solutionType.RealSolutionType;
 import jmetal.util.JMException;
-import jmetal.util.Configuration.*;
 
 /** 
  * Class representing problem LZ09_F8 

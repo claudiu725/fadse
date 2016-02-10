@@ -11,7 +11,6 @@ import jmetal.base.*;
 import jmetal.util.archive.AdaptiveGridArchive;
 import jmetal.base.operator.selection.PESA2Selection;
 import jmetal.util.JMException;
-import jmetal.util.PseudoRandom;
 
 /**
  * This class implements the PESA2 algorithm. 

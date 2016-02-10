@@ -8,7 +8,6 @@ package jmetal.base.operator.comparator;
 
 import java.util.*;
 import jmetal.base.*;
-import jmetal.util.PseudoRandom;
 
 /**
  * This class implements a <code>Comparator</code> (a method for comparing

@@ -937,9 +937,10 @@ public class GAPRunner extends SimulatorRunner {
     }
 
     /** Returns the last line of a file as String */
-    private String getLastLineFromFile_slow(File file) throws IOException {
+    @SuppressWarnings("unused")
+	private String getLastLineFromFile_slow(File file) throws IOException {
         IOException ioex = null;
-
+ 
         String last_line = null, prev_line = null;
         BufferedReader br = null;
         try {
@@ -1016,7 +1017,8 @@ public class GAPRunner extends SimulatorRunner {
         return lastLine;
     }
 
-    private void addOptimizationTimeToResultFile(long optimization_time) {
+    @SuppressWarnings("unused")
+	private void addOptimizationTimeToResultFile(long optimization_time) {
         // TODO: regroup results
         File file = new File(this.simulator.getSimulatorOutputFile());
 

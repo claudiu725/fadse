@@ -4,9 +4,6 @@
  */
 package ro.ulbsibiu.fadse.environment.parameters;
 
-import java.util.Random;
-
-import ro.ulbsibiu.fadse.utils.Utils;
 import jmetal.base.Variable;
 import jmetal.base.variable.Real;
 

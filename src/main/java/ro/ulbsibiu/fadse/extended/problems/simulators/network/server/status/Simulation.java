@@ -33,7 +33,6 @@
  */
 package ro.ulbsibiu.fadse.extended.problems.simulators.network.server.status;
 
-import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.LinkedList;
 import java.util.List;

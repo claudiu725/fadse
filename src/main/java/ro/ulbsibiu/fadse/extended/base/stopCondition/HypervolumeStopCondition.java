@@ -7,7 +7,6 @@ package ro.ulbsibiu.fadse.extended.base.stopCondition;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;

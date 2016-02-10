@@ -12,9 +12,7 @@ package ro.ulbsibiu.fadse;
  * @author Horia
  */
 import net.sourceforge.jFuzzyLogic.FIS;
-import net.sourceforge.jFuzzyLogic.defuzzifier.Defuzzifier;
 import net.sourceforge.jFuzzyLogic.defuzzifier.DefuzzifierRandom;
-import org.jfree.chart.JFreeChart;
 
 /**
  * Test parsing an FCL file

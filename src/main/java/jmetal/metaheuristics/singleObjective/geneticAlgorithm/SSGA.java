@@ -7,10 +7,7 @@ package jmetal.metaheuristics.singleObjective.geneticAlgorithm;
 
 import jmetal.base.*;
 import jmetal.base.operator.comparator.* ;
-import jmetal.base.operator.selection.BestSolutionSelection;
 import jmetal.base.operator.selection.WorstSolutionSelection;
-import jmetal.base.variable.Permutation;
-
 import java.util.Comparator;
 import jmetal.util.*;
 

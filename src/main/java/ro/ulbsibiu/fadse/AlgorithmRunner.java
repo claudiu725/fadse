@@ -17,7 +17,6 @@ import ro.ulbsibiu.fadse.environment.Environment;
 import ro.ulbsibiu.fadse.extended.problems.simulators.network.server.status.SimulationStatus;
 import jmetal.experiments.Settings;
 import jmetal.experiments.SettingsFactory;
-import jmetal.qualityIndicator.QualityIndicator;
 
 /*
  *

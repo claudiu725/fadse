@@ -4,7 +4,6 @@
  */
 
 package ro.ulbsibiu.fadse.extended.problems.simulators.simplegem5;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Scanner;
 import java.io.File;
@@ -13,7 +12,6 @@ import ro.ulbsibiu.fadse.environment.Individual;
 import ro.ulbsibiu.fadse.environment.Objective;
 import ro.ulbsibiu.fadse.extended.problems.simulators.SimulatorBase;
 import ro.ulbsibiu.fadse.extended.problems.simulators.SimulatorOutputParser;
-import ro.ulbsibiu.fadse.extended.problems.simulators.msim3.Msim3Constants;
 
 /**
  * Parser for the output file of Msim simulator

@@ -9,7 +9,6 @@ import jmetal.base.*;
 
 import java.util.Comparator;
 import jmetal.base.operator.comparator.*;
-import jmetal.base.operator.selection.BestSolutionSelection;
 import jmetal.util.*;
 
 /**

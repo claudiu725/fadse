@@ -9,11 +9,9 @@ package jmetal.base.operator.crossover;
 
 import java.util.Properties;
 import jmetal.base.*;    
-import jmetal.base.variable.*;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
 import jmetal.util.PseudoRandom;
-import jmetal.util.Configuration.*;
 import jmetal.util.wrapper.XReal;
 
 /**

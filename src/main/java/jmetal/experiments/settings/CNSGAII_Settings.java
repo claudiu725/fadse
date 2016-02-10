@@ -9,7 +9,6 @@
 package jmetal.experiments.settings;
 
 import jmetal.metaheuristics.cnsgaII.CNSGAII;
-import jmetal.metaheuristics.nsgaII.*;
 import jmetal.base.*;
 import jmetal.base.operator.crossover.Crossover;
 import jmetal.base.operator.mutation.Mutation;

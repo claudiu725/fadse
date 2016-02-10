@@ -8,7 +8,6 @@
  */
 package jmetal.experiments.settings;
 
-import jmetal.metaheuristics.spea2.*;
 import jmetal.base.*;
 import jmetal.base.operator.crossover.CrossoverFactory;
 import jmetal.base.operator.mutation.MutationFactory;

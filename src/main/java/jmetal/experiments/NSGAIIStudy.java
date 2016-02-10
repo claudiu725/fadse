@@ -13,8 +13,6 @@ import java.util.logging.Level;
 import jmetal.base.Algorithm;
 import jmetal.base.Problem;
 import jmetal.experiments.settings.NSGAII_Settings;
-import jmetal.experiments.util.RBoxplot;
-import jmetal.experiments.util.RWilcoxon;
 import jmetal.util.JMException;
 
 /**

@@ -13,7 +13,6 @@ import java.io.IOException;
 import jmetal.base.*;
 import jmetal.util.archive.*;
 import jmetal.base.operator.comparator.CrowdingComparator;
-import jmetal.base.variable.Binary;
 import jmetal.util.JMException;
 
 import java.util.*;

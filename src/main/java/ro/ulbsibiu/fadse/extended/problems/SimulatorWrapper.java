@@ -36,12 +36,8 @@
  */
 package ro.ulbsibiu.fadse.extended.problems;
 
-import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import ro.ulbsibiu.fadse.environment.Environment;
 import ro.ulbsibiu.fadse.environment.Individual;
 import ro.ulbsibiu.fadse.environment.Objective;
@@ -53,7 +49,6 @@ import ro.ulbsibiu.fadse.environment.parameters.PermutationParameter;
 import ro.ulbsibiu.fadse.utils.Utils;
 import jmetal.base.Problem;
 import jmetal.base.Solution;
-import jmetal.base.Variable;
 import jmetal.base.solutionType.IntRealPermutationSolutionType;
 import jmetal.base.solutionType.IntRealSolutionType;
 import jmetal.base.solutionType.IntSolutionType;

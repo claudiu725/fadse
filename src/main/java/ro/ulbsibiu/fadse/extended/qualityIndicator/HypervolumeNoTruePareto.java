@@ -33,8 +33,6 @@
  */
 package ro.ulbsibiu.fadse.extended.qualityIndicator;
 
-import jmetal.qualityIndicator.Hypervolume;
-
 /**
  *
  * @author Horia Calborean

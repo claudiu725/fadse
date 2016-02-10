@@ -10,9 +10,7 @@
 package jmetal.base.operator.mutation;
 
 import jmetal.base.Solution;
-import jmetal.base.Variable;
 import jmetal.base.operator.mutation.Mutation;
-import jmetal.base.variable.ArrayReal;
 import jmetal.base.variable.Binary;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;

@@ -10,7 +10,6 @@ package jmetal.base;
 import java.io.Serializable;
 
 import jmetal.base.variable.Binary;
-import jmetal.util.Configuration.*;
 
 /**
  * Class representing a solution for a problem.

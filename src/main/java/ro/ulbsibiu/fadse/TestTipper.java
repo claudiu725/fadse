@@ -13,9 +13,6 @@ package ro.ulbsibiu.fadse;
  */
 import java.util.Iterator;
 import net.sourceforge.jFuzzyLogic.FIS;
-import net.sourceforge.jFuzzyLogic.ruleActivationMethod.RuleActivationMethod;
-import net.sourceforge.jFuzzyLogic.ruleActivationMethod.RuleActivationMethodMin;
-import net.sourceforge.jFuzzyLogic.ruleActivationMethod.RuleActivationMethodProduct;
 
 /**
  * Test parsing an FCL file

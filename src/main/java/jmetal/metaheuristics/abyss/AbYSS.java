@@ -8,8 +8,6 @@ package jmetal.metaheuristics.abyss;
 
 import jmetal.base.*;
 import jmetal.util.archive.CrowdingArchive;
-import jmetal.base.operator.comparator.CrowdingDistanceComparator;
-
 import java.util.*;
 
 import ro.ulbsibiu.fadse.extended.problems.simulators.ServerSimulator;

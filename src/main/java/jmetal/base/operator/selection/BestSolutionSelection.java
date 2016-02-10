@@ -8,10 +8,6 @@ package jmetal.base.operator.selection;
 import java.util.Comparator;
 
 import jmetal.base.*;
-import jmetal.base.operator.comparator.BinaryTournamentComparator;
-import jmetal.base.operator.comparator.DominanceComparator;
-import jmetal.base.operator.comparator.ObjectiveComparator;
-import jmetal.util.PseudoRandom;
 
 /**
  * This class implements a selection operator used for selecting the best 

@@ -1,8 +1,6 @@
 package ro.ulbsibiu.fadse.extended.problems.simulators.msim3;
 
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
-
 import ro.ulbsibiu.fadse.extended.problems.simulators.msim3.parametermodifiers.CLIOptionCoreIndexSuffix;
 import ro.ulbsibiu.fadse.extended.problems.simulators.msim3.parametermodifiers.CacheModifier;
 import ro.ulbsibiu.fadse.extended.problems.simulators.msim3.parametermodifiers.IDCoreIndexPrefix;

@@ -8,7 +8,6 @@ package jmetal.base.operator.selection;
 
 import java.util.Comparator;
 import jmetal.base.Solution;
-import jmetal.base.Operator;
 import jmetal.base.SolutionSet;
 import jmetal.base.operator.comparator.DominanceComparator;
 import jmetal.util.PseudoRandom;

@@ -7,15 +7,7 @@ package ro.ulbsibiu.fadse;
  * and open the template in the editor.
  */
 
-/**
- *
- * @author Horia
- */
-import java.util.Iterator;
 import net.sourceforge.jFuzzyLogic.FIS;
-import net.sourceforge.jFuzzyLogic.ruleActivationMethod.RuleActivationMethod;
-import net.sourceforge.jFuzzyLogic.ruleActivationMethod.RuleActivationMethodMin;
-import net.sourceforge.jFuzzyLogic.ruleActivationMethod.RuleActivationMethodProduct;
 
 /**
  * Test parsing an FCL file

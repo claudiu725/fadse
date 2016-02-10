@@ -11,9 +11,7 @@ import jmetal.base.*;
 import jmetal.base.solutionType.ArrayRealSolutionType;
 import jmetal.base.solutionType.BinaryRealSolutionType;
 import jmetal.base.solutionType.RealSolutionType;
-import jmetal.base.variable.ArrayReal;
 import jmetal.util.JMException;
-import jmetal.util.Configuration.*;
 import jmetal.util.wrapper.XReal;
 
 /** 

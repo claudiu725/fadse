@@ -8,9 +8,7 @@
 package jmetal.problems.singleObjective;
 
 import jmetal.base.*;
-import jmetal.base.solutionType.BinaryRealSolutionType;
 import jmetal.base.solutionType.PermutationSolutionType;
-import jmetal.base.variable.Binary;
 import jmetal.base.variable.Permutation;
 
 import java.io.* ;

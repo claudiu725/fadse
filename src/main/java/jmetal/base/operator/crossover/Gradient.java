@@ -11,7 +11,6 @@ import java.util.Properties;
 import jmetal.base.*;    
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
-import jmetal.util.Configuration.*;
 
 
 public class Gradient extends Crossover {

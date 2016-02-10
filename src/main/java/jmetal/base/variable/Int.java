@@ -10,7 +10,6 @@ import jmetal.base.Variable;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
 import jmetal.util.PseudoRandom;
-import jmetal.util.Configuration.*;
 
 /**
  * This class implements an integer decision variable 

@@ -9,7 +9,6 @@ package jmetal.problems;
 
 import jmetal.base.*;
 import jmetal.base.variable.* ;
-import jmetal.util.Configuration.*;
 
 /**
  * Class representing problem RadioNetworkDesign

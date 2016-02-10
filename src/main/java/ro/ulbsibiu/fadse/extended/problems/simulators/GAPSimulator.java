@@ -5,7 +5,6 @@
 
 package ro.ulbsibiu.fadse.extended.problems.simulators;
 import ro.ulbsibiu.fadse.environment.Environment;
-import ro.ulbsibiu.fadse.extended.problems.simulators.*;
 import ro.ulbsibiu.fadse.extended.problems.simulators.gap.GAPOutputParser;
 import ro.ulbsibiu.fadse.extended.problems.simulators.gap.GAPRunner;
 

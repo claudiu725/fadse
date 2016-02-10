@@ -11,7 +11,6 @@ import jmetal.base.Solution;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
 import jmetal.util.PseudoRandom;
-import jmetal.util.wrapper.XReal;
 import jmetal.base.operator.mutation.Mutation;
 import jmetal.util.wrapper.XInt;
 

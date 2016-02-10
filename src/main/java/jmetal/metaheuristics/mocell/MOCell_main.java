@@ -21,15 +21,8 @@ import jmetal.base.operator.crossover.*   ;
 import jmetal.base.operator.mutation.*    ; 
 import jmetal.base.operator.selection.*   ;
 import jmetal.problems.*                  ;
-import jmetal.problems.DTLZ.*;
-import jmetal.problems.ZDT.* ;
-import jmetal.problems.WFG.* ;
-import jmetal.problems.LZ09.* ;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
-
-import java.util.logging.FileHandler;
-import java.util.logging.Logger;
 
 import jmetal.qualityIndicator.QualityIndicator;
 

@@ -7,12 +7,10 @@
  */
 package jmetal.problems;
 
-import jmetal.base.solutionType.ArrayRealSolutionType;
 import jmetal.base.solutionType.BinaryRealSolutionType;
 import jmetal.base.solutionType.RealSolutionType;
 import jmetal.base.*;
 import jmetal.util.JMException;
-import jmetal.util.Configuration.*;
 
 /**
  * Class representing problem Constr_Ex

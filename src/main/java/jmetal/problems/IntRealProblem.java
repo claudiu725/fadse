@@ -8,12 +8,8 @@
 package jmetal.problems;
 
 import jmetal.base.*;
-import jmetal.base.solutionType.ArrayRealSolutionType;
-import jmetal.base.solutionType.BinaryRealSolutionType;
 import jmetal.base.solutionType.IntRealSolutionType;
-import jmetal.base.solutionType.RealSolutionType;
 import jmetal.util.JMException;
-import jmetal.util.Configuration.*;
 
 /**
  * Class representing a problem having N integer and M real variables.
