@@ -51,6 +51,7 @@ public class XMLInputReader {
 	
     public InputDocument parse(String xmlFilePath) {
         try {
+        	System.out.println("Using xml config: " + xmlFilePath);
             InputDocument inputDoc = new InputDocument();
             DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
