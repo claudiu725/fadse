@@ -3,23 +3,11 @@ package ro.ulbsibiu.fadse;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.Serializable;
 import java.nio.file.Path;
 import java.util.Properties;
 
-import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.core.Appender;
-import org.apache.logging.log4j.core.Layout;
-import org.apache.logging.log4j.core.appender.FileAppender;
-import org.apache.logging.log4j.core.config.AppenderRef;
-import org.apache.logging.log4j.core.config.Configuration;
-import org.apache.logging.log4j.core.config.LoggerConfig;
-import org.apache.logging.log4j.core.impl.Log4jContextFactory;
-import org.apache.logging.log4j.core.layout.PatternLayout;
-import org.apache.logging.log4j.core.LoggerContext;
-
 import jmetal.base.Algorithm;
 import jmetal.base.Problem;
 import jmetal.base.SolutionSet;
@@ -89,10 +77,12 @@ public class AlgorithmRunner {
         properties = new Properties();
         String path = "N/A";
         String currentDir = System.getProperty("user.dir");
-        System.out.println("Current folder is: " + currentDir);
+        logger.info("Current folder is: " + currentDir);
         try {
             path = env.getInputDocument().getMetaheuristicConfigPath();
-            properties.load(new FileInputStream(currentDir+ File.separator + path));
+            path = currentDir+ File.separator + path;
+            logger.info("Loading properties file " + path);
+            properties.load(new FileInputStream(path));
         } catch (Exception e) {
             logger.error("BAD properties file [" + path + "]. going with default values", e);
         }
@@ -102,7 +92,7 @@ public class AlgorithmRunner {
         */
         
         SolutionSet population = null;
-        System.out.println(env.getInputDocument().getSimulatorType());
+        logger.info("Simulator type is " + env.getInputDocument().getSimulatorType());
         if (env.getInputDocument().getSimulatorType().equalsIgnoreCase("synthetic")) {
             // it is a synthetic problem
             problem = null;
@@ -123,6 +113,7 @@ public class AlgorithmRunner {
             problem = (new ProblemFactory()).getProblem(problemName,
                     problemParams);
         }
+        logger.info("Created a problem of class " + problem.getClass().getName());
         Object[] settingsParams = {problem};
         settings = (new SettingsFactory()).getSettingsObject(algorithmName,
                 settingsParams);

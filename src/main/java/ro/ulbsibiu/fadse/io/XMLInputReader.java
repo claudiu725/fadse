@@ -14,6 +14,8 @@ import java.util.Map;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -46,6 +48,8 @@ import ro.ulbsibiu.fadse.extended.base.relation.RelationTree;
  * @author Horia
  */
 public class XMLInputReader {
+	Logger logger = LogManager.getLogger(XMLInputReader.class);
+	
 	public final static String metaheuristicConfigBasePath = 
 			System.getProperty("file.separator") + "configs" 
     		+ System.getProperty("file.separator") + "metaheuristicConfig"
@@ -53,7 +57,7 @@ public class XMLInputReader {
 	
     public InputDocument parse(Path xmlFilePath) {
         try {
-        	System.out.println("Using xml config: " + xmlFilePath);
+        	logger.info("Using xml config: " + xmlFilePath);
             InputDocument inputDoc = new InputDocument();
             DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
@@ -66,11 +70,13 @@ public class XMLInputReader {
             NodeList simulator = doc.getElementsByTagName("simulator");
             NamedNodeMap simulatorattributes = simulator.item(0).getAttributes();
             String simulatorName = simulatorattributes.getNamedItem("name").getNodeValue();
+            logger.info("Using simulator " + simulatorName);
             String simulatorType = simulatorattributes.getNamedItem("type").getNodeValue();
             inputDoc.setSimulatorName(simulatorName);
             inputDoc.setSimulatorType(simulatorType);
 
             NodeList simulatorParams = ((Element) simulator.item(0)).getElementsByTagName("parameter");
+            logger.info("Found " + simulatorParams.getLength() + " simulator parameters");
             for (int i = 0; i < simulatorParams.getLength(); i++) {
                 NamedNodeMap simulatorParamattributes = simulatorParams.item(i).getAttributes();
                 inputDoc.addSimulatorParameter(simulatorParamattributes.getNamedItem("name").getNodeValue(), simulatorParamattributes.getNamedItem("value").getNodeValue());
@@ -78,6 +84,7 @@ public class XMLInputReader {
 //BENCHMARKS
             NodeList benchmarksNode = doc.getElementsByTagName("benchmarks");
             if (benchmarksNode != null && benchmarksNode.getLength() > 0) {
+            	logger.info("Using benchmarks");
                 NodeList benchmarks = ((Element) benchmarksNode.item(0)).getElementsByTagName("item");
                 LinkedList<String> values = new LinkedList<String>();
                 for (int i = 0; i < benchmarks.getLength(); i++) {
@@ -85,12 +92,17 @@ public class XMLInputReader {
                 }
                 inputDoc.setBenchmarks(values);
             }
+            else
+            {
+            	logger.info("Not using benchmarks");
+            }
 //DATABASE
             //<database ip="127.0.0.1" port="1527" name="FADS_DB" user="fadse" password="fadse"/>            
         	NodeList databaseNode = doc.getElementsByTagName("database");
         	Node databaseRootNode = databaseNode.item(0);
         	if (databaseRootNode != null)
         	{
+        		logger.info("Using the database");
 	            NamedNodeMap databaseattributes = databaseRootNode.getAttributes();
 	            String databaseIp = databaseattributes.getNamedItem("ip").getNodeValue();
 	            String databasePort = databaseattributes.getNamedItem("port").getNodeValue();
@@ -105,7 +117,7 @@ public class XMLInputReader {
         	}
             else
             {
-            	System.out.println("Not using the database");
+            	logger.info("Not using the database");
             }
 //METAHEURISTIC
             NodeList metaheuristicNode = doc.getElementsByTagName("metaheuristic");
@@ -119,12 +131,13 @@ public class XMLInputReader {
 	            if(Paths.get(metaheuristicConfigPath).isAbsolute()) { //
 	            	inputDoc.setMetaheuristicConfigPath(metaheuristicConfigPath);
 	            } else {
-	            	inputDoc.setMetaheuristicConfigPath(metaheuristicConfigBasePath + metaheuristicConfigPath);            	
+	            	inputDoc.setMetaheuristicConfigPath(metaheuristicConfigBasePath + metaheuristicConfigPath);       	
 	            }
+	            logger.info("Using metaheuristic " + metaheuristicName + " with config_path " + inputDoc.getMetaheuristicConfigPath());
             }
             else
             {
-            	System.out.println("Didn't find metaheuristic in config file. Using NSGA-II by default.");
+            	logger.warn("Didn't find metaheuristic in config file. Using NSGA-II by default.");
             	inputDoc.setMetaheuristicName("NSGAII");
             	inputDoc.setMetaheuristicConfigPath(metaheuristicConfigBasePath + "nsgaii.properties");
             }
@@ -132,6 +145,7 @@ public class XMLInputReader {
 
             NodeList parameters = ((Element) doc.getElementsByTagName("parameters").item(0)).getElementsByTagName("parameter");
             Parameter[] params = new Parameter[parameters.getLength()];
+            logger.info("Found " + parameters.getLength() + " parameters");
             for (int i = 0; i < parameters.getLength(); i++) {
                 Node parameter = parameters.item(i);
                 NamedNodeMap attributes = parameter.getAttributes();
@@ -153,11 +167,11 @@ public class XMLInputReader {
                 } else if (type.equalsIgnoreCase("boolean")) {//it is an Integer parameter with 0/1 min/max value
                     p = createBooleanParameter(name, "boolean", description, parameter);
                 } else if (type.equalsIgnoreCase("on_off_mask")) {
-                    System.err.println("Unsuported parameter type: " + type);
+                    logger.error("Unsuported parameter type: " + type);
                 } else if (type.equalsIgnoreCase("float")) {
                     p = createFloatParameter(name, "float", description, parameter, params);
                 } else {
-                    System.err.println("Unsuported parameter type: " + type);
+                    logger.error("Unsuported parameter type: " + type);
                 }
                 if (p != null) {
                     params[i] = p;
@@ -170,8 +184,8 @@ public class XMLInputReader {
             if (virtualParametersRootNode != null)
             {
                 NodeList virtualParameters = ((Element) virtualParametersRootNode).getElementsByTagName("parameter");
-                System.out.println("EXTRACTING THE VIRTUAL PARAMS");
                 Parameter[] virtualParams = new Parameter[virtualParameters.getLength()];
+                logger.info("Found " + virtualParameters.getLength() + " virtual parameters");
                 for (int i = 0; i < virtualParameters.getLength(); i++) {
                     Node parameter = virtualParameters.item(i);
                     NamedNodeMap attributes = parameter.getAttributes();
@@ -182,22 +196,23 @@ public class XMLInputReader {
                         virtualParams[i] = p;
                     }
                 }
-                System.out.println("FOUND: "+virtualParams.length);
+                logger.info("FOUND: "+virtualParams.length);
                 inputDoc.setVirtualParameters(virtualParams);
                 Parameter[] paramsTemp = new Parameter[params.length+virtualParams.length];
-                System.out.println("NORMAL PARAMS: "+params.length);
+                logger.info("NORMAL PARAMS: "+params.length);
                 System.arraycopy(params, 0, paramsTemp, 0, params.length);
                 System.arraycopy(virtualParams, 0, paramsTemp, params.length, virtualParams.length);
                 params = paramsTemp;
-                System.out.println("NORMAL PARAMS (after): "+params.length);
+                logger.info("NORMAL PARAMS (after): "+params.length);
             }
             else
             {
-                System.out.println("Not using virtual parameters");
+            	logger.info("Not using virtual parameters");
             }
 //SYSTEM METRICS
             NodeList systemMetrics = ((Element) doc.getElementsByTagName("system_metrics").item(0)).getElementsByTagName("system_metric");
             Map<String, Objective> objectives = new HashMap<String, Objective>();
+            logger.info("Found " + systemMetrics.getLength() + " system_metrics (objectives)");
             for (int i = 0; i < systemMetrics.getLength(); i++) {
                 Node metric = systemMetrics.item(i);
                 NamedNodeMap attributes = metric.getAttributes();
@@ -224,6 +239,7 @@ public class XMLInputReader {
             NodeList rules = ((Element) doc.getElementsByTagName("rules").item(0)).getElementsByTagName("rule");
             List<Rule> rulesList = new LinkedList<Rule>();
             String[] ruleTypes = {"greater-equal", "greater", "equal", "less-equal", "less", "not-equal"};
+            logger.info("Found " + rules.getLength() + " rules");
             for (int i = 0; i < rules.getLength(); i++) {//takes each rule
                 Element ruleNode = (Element) rules.item(i);//rule node repesents a <rule> element
 
@@ -263,11 +279,12 @@ public class XMLInputReader {
             {
 	            NodeList relations = ((Element) relationsRootNode).getElementsByTagName("relation");
 	            List<Relation> relationsList = new LinkedList<Relation>();
+            	logger.info("Found " + relations.getLength() + " relations");
 	            for (int i = 0; i < relations.getLength(); i++) {//takes each relation
 	                Element relationNode = (Element) relations.item(i);//relation node repesents a <relation> element
 	                Relation relation = getIfRelation(relationNode, params);//find relations of type<if>
 	                relationsList.add(relation);
-	                System.out.println(relation);
+	                logger.info(relation);
 	            }
 	            //build the trees using the paramters and the relations
 	            RelationTree relationTree = new RelationTree();
@@ -284,7 +301,7 @@ public class XMLInputReader {
 	                    }
 	                }
 	                if (isRoot) {
-	                    System.out.println("ADD ROOT: " + i);
+	                    logger.info("ADD ROOT: " + i);
 	                    relationTree.addRootNode(i);
 	                    relationTreeCopy.addRootNode(i);
 	                }
@@ -292,13 +309,13 @@ public class XMLInputReader {
 	                addSubNodesToRelationTrees(relationTree, params, relationsList, i);
 	                addSubNodesToRelationTrees(relationTreeCopy, params, relationsList, i);
 	            }
-	            System.out.println("RelationTree: " + relationTree);
+	            logger.info("RelationTree: " + relationTree);
 	            inputDoc.setRelationTree1(relationTree);
 	            inputDoc.setRelationTree2(relationTreeCopy);
             }
             else
             {
-            	System.out.println("Not using relations.");
+            	logger.info("Not using relations.");
             }
 
 			// Uncomment this to see graphical representation
@@ -415,17 +432,6 @@ public class XMLInputReader {
 //            Logger.getLogger(XMLInputReader.class.getName()).log(Level.SEVERE, null, ex);
 //        }
         return p;
-    }
-
-    public static void main(String args[]) {
-        XMLInputReader inputReader = new XMLInputReader();
-        InputDocument id = inputReader.parse(Paths.get("configs/falsesimin.xml"));
-        System.out.println(id.getRelationTree1().findNode(0));
-        System.out.println(id.getRelationTree1().findNode(1));
-
-        System.out.println(id.getRelationTree1().findNode(2));
-
-
     }
 
     /**
