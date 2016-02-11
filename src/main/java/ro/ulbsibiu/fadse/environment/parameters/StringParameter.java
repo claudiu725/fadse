@@ -2,6 +2,7 @@ package ro.ulbsibiu.fadse.environment.parameters;
 
 import java.util.LinkedList;
 import java.util.List;
+
 import jmetal.base.Variable;
 import jmetal.base.variable.Int;
 

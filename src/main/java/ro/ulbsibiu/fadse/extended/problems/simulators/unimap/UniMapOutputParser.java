@@ -38,6 +38,7 @@ import java.util.LinkedList;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Scanner;
+
 import ro.ulbsibiu.fadse.environment.Environment;
 import ro.ulbsibiu.fadse.environment.Individual;
 import ro.ulbsibiu.fadse.environment.Objective;

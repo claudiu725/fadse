@@ -4,9 +4,9 @@
  */
 
 package ro.ulbsibiu.fadse.extended.problems.simulators.simplegem5;
+import java.io.File;
 import java.util.LinkedList;
 import java.util.Scanner;
-import java.io.File;
 
 import ro.ulbsibiu.fadse.environment.Individual;
 import ro.ulbsibiu.fadse.environment.Objective;

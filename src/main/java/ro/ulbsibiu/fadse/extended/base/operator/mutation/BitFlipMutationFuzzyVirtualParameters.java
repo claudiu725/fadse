@@ -6,22 +6,21 @@
  */
 package ro.ulbsibiu.fadse.extended.base.operator.mutation;
 
+import java.util.Iterator;
 import java.util.Properties;
+
 import jmetal.base.Solution;
+import jmetal.base.operator.mutation.Mutation;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
 import jmetal.util.PseudoRandom;
-import jmetal.base.operator.mutation.Mutation;
-
-import java.util.Iterator;
-
+import net.sourceforge.jFuzzyLogic.FIS;
+import net.sourceforge.jFuzzyLogic.rule.Variable;
 import ro.ulbsibiu.fadse.environment.Environment;
 import ro.ulbsibiu.fadse.environment.parameters.Exp2Parameter;
 import ro.ulbsibiu.fadse.environment.parameters.IntegerParameter;
 import ro.ulbsibiu.fadse.environment.parameters.Parameter;
 import ro.ulbsibiu.fadse.utils.Utils;
-import net.sourceforge.jFuzzyLogic.FIS;
-import net.sourceforge.jFuzzyLogic.rule.Variable;
 
 /**
  * This class implements a bit flip mutation operator.

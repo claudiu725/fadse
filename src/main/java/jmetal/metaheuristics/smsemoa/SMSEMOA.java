@@ -6,12 +6,18 @@
 package jmetal.metaheuristics.smsemoa;
 
 import java.util.LinkedList;
-import jmetal.base.*;
+
+import jmetal.base.Algorithm;
+import jmetal.base.Operator;
+import jmetal.base.Problem;
+import jmetal.base.Solution;
+import jmetal.base.SolutionSet;
 import jmetal.base.operator.comparator.CrowdingDistanceComparator;
 import jmetal.qualityIndicator.Hypervolume;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.qualityIndicator.util.MetricsUtil;
-import jmetal.util.*;
+import jmetal.util.JMException;
+import jmetal.util.Ranking;
 
 /**
  * This class implements the SMS-EMOA algorithm, as described in

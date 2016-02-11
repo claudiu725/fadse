@@ -2,15 +2,14 @@ package ro.ulbsibiu.fadse.environment;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.nio.file.FileSystem;
-import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import ro.ulbsibiu.fadse.environment.document.InputDocument;
 import ro.ulbsibiu.fadse.environment.parameters.CheckpointFileParameter;
@@ -19,7 +18,7 @@ import ro.ulbsibiu.fadse.persistence.ConnectionPool;
 
 public class Environment implements Serializable {
 
-	static Logger logger = Logger.getLogger(Environment.class.getName());
+	public static Logger logger = LogManager.getLogger(Environment.class.getName());
     private String neighborsConfigFile;
     private CheckpointFileParameter checkpointFileParam;
     private String fuzzyInputFile;
@@ -40,9 +39,9 @@ public class Environment implements Serializable {
     	inputDocument = (new XMLInputReader()).parse(inputFilePath);
         ConnectionPool.setInputDocument(inputDocument);
         String currentdir = System.getProperty("user.dir");
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy_MM_dd");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss:SSS EEE");
         String date = dateFormat.format(new Date());
-        Path resultsFolder = Paths.get(currentdir, "results", date);
+        resultsFolder = Paths.get(currentdir, "results", date);
         try {
 			Files.createDirectories(resultsFolder);
 		} catch (IOException e) {

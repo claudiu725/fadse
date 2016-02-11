@@ -6,7 +6,9 @@
  */
 package jmetal.problems;
 
-import jmetal.base.*;
+import jmetal.base.Problem;
+import jmetal.base.Solution;
+import jmetal.base.Variable;
 import jmetal.base.solutionType.BinaryRealSolutionType;
 import jmetal.base.solutionType.RealSolutionType;
 import jmetal.util.JMException;

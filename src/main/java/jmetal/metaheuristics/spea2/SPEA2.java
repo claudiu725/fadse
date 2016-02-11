@@ -8,16 +8,20 @@ package jmetal.metaheuristics.spea2;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-
-import jmetal.base.*;
-
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import jmetal.base.Algorithm;
+import jmetal.base.Operator;
+import jmetal.base.Problem;
+import jmetal.base.Solution;
+import jmetal.base.SolutionSet;
+import jmetal.util.JMException;
+import jmetal.util.Ranking;
+import jmetal.util.Spea2Fitness;
 import ro.ulbsibiu.fadse.environment.parameters.CheckpointFileParameter;
 import ro.ulbsibiu.fadse.extended.problems.simulators.ServerSimulator;
-import jmetal.util.*;
 
 /** 
  * This class representing the SPEA2 algorithm

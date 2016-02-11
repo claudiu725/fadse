@@ -5,12 +5,16 @@
  */
 package jmetal.metaheuristics.paes;
 
-import jmetal.base.*;
-import jmetal.util.archive.AdaptiveGridArchive;
-import jmetal.base.operator.comparator.*;
-import jmetal.util.JMException;
-
 import java.util.Comparator;
+
+import jmetal.base.Algorithm;
+import jmetal.base.Operator;
+import jmetal.base.Problem;
+import jmetal.base.Solution;
+import jmetal.base.SolutionSet;
+import jmetal.base.operator.comparator.DominanceComparator;
+import jmetal.util.JMException;
+import jmetal.util.archive.AdaptiveGridArchive;
 
 /**
  * This class implements the NSGA-II algorithm. 

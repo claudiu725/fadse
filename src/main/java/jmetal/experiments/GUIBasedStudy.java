@@ -6,12 +6,12 @@
  */
 package jmetal.experiments;
 
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.Properties;
+
 import jmetal.base.Algorithm;
 import jmetal.base.Problem;
-
 import jmetal.util.JMException;
 
 /**

@@ -7,7 +7,8 @@
 
 package jmetal.problems.singleObjective;
 
-import jmetal.base.*;
+import jmetal.base.Problem;
+import jmetal.base.Solution;
 import jmetal.base.solutionType.BinarySolutionType;
 import jmetal.base.variable.Binary;
 

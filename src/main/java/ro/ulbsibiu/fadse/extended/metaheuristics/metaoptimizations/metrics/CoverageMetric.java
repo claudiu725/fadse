@@ -6,8 +6,8 @@
 
 package ro.ulbsibiu.fadse.extended.metaheuristics.metaoptimizations.metrics;
 
-import ro.ulbsibiu.fadse.extended.qualityIndicator.CoverageOfTwoSets;
 import jmetal.base.SolutionSet;
+import ro.ulbsibiu.fadse.extended.qualityIndicator.CoverageOfTwoSets;
 
 /**
  *

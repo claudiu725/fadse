@@ -7,12 +7,12 @@
 package jmetal.base.operator.mutation;
 
 import java.util.Properties;
+
 import jmetal.base.Solution;
-import jmetal.base.variable.*;
+import jmetal.base.variable.Binary;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
 import jmetal.util.PseudoRandom;
-import jmetal.base.operator.mutation.Mutation;
 
 /**
  * This class implements a bit flip mutation operator.

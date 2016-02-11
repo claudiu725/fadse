@@ -5,15 +5,16 @@
 
 package jmetal.base.operator.selection;
 
+import java.util.Comparator;
+
 import jmetal.base.Problem;
 import jmetal.base.Solution;
 import jmetal.base.SolutionSet;
+import jmetal.base.operator.comparator.CrowdingComparator;
 import jmetal.util.Configuration;
 import jmetal.util.Distance;
 import jmetal.util.JMException;
 import jmetal.util.Ranking;
-import java.util.Comparator;
-import jmetal.base.operator.comparator.*;
 
 /** 
  * This class implements a selection for selecting a number of solutions from

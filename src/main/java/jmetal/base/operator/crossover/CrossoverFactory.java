@@ -9,11 +9,10 @@ package jmetal.base.operator.crossover;
 
 import java.util.Properties;
 
-import ro.ulbsibiu.fadse.extended.base.operator.crossover.RelationalSinglePointCrossover;
-import jmetal.base.operator.crossover.Crossover;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
 import jmetal.util.PropUtils;
+import ro.ulbsibiu.fadse.extended.base.operator.crossover.RelationalSinglePointCrossover;
 
 /**
  * Class implementing a crossover factory.

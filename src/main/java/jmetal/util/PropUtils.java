@@ -9,8 +9,13 @@
  */
 package jmetal.util;
 
-import java.util.*;
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.Properties;
 
 public abstract class PropUtils extends Object
 {

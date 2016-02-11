@@ -5,11 +5,20 @@
  */
 package jmetal.metaheuristics.mocell;
 
-import jmetal.base.*;
 import java.util.Comparator;
+
+import jmetal.base.Algorithm;
+import jmetal.base.Operator;
+import jmetal.base.Problem;
+import jmetal.base.Solution;
+import jmetal.base.SolutionSet;
+import jmetal.base.operator.comparator.CrowdingComparator;
+import jmetal.base.operator.comparator.DominanceComparator;
+import jmetal.util.Distance;
+import jmetal.util.JMException;
+import jmetal.util.Neighborhood;
+import jmetal.util.Ranking;
 import jmetal.util.archive.CrowdingArchive;
-import jmetal.base.operator.comparator.*;
-import jmetal.util.*;
 
 /**
  * This class represents a synchronous version of MOCell algorithm, which 

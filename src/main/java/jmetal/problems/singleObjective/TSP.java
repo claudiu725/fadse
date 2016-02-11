@@ -7,11 +7,18 @@
 
 package jmetal.problems.singleObjective;
 
-import jmetal.base.*;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StreamTokenizer;
+
+import jmetal.base.Problem;
+import jmetal.base.Solution;
 import jmetal.base.solutionType.PermutationSolutionType;
 import jmetal.base.variable.Permutation;
-
-import java.io.* ;
 
 /**
  * Class representing a TSP (Traveling Salesman Problem) problem.

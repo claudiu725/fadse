@@ -43,7 +43,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -52,12 +51,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.StringTokenizer;
 
-import jmetal.base.Problem;
-import jmetal.base.Solution;
-import jmetal.base.SolutionSet;
-import jmetal.problems.ProblemFactory;
-import jmetal.util.JMException;
-
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
@@ -65,6 +58,11 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
+import jmetal.base.Problem;
+import jmetal.base.Solution;
+import jmetal.base.SolutionSet;
+import jmetal.problems.ProblemFactory;
+import jmetal.util.JMException;
 import ro.ulbsibiu.fadse.environment.Environment;
 import ro.ulbsibiu.fadse.environment.Individual;
 import ro.ulbsibiu.fadse.environment.parameters.Parameter;

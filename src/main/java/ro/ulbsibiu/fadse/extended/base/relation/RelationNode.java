@@ -36,6 +36,7 @@ package ro.ulbsibiu.fadse.extended.base.relation;
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
+
 import jmetal.base.Variable;
 
 /**

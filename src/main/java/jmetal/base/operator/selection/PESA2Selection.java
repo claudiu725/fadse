@@ -6,11 +6,11 @@
 
 package jmetal.base.operator.selection;
 
-import jmetal.base.*;
-import jmetal.util.archive.*;
+import jmetal.base.Solution;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
 import jmetal.util.PseudoRandom;
+import jmetal.util.archive.AdaptiveGridArchive;
 
 /** 
  * This class implements a selection operator as the used in PESA-II 

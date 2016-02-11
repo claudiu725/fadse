@@ -9,15 +9,21 @@ package jmetal.metaheuristics.nsgaII;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-
-import jmetal.base.*;
-import jmetal.qualityIndicator.QualityIndicator;
-import jmetal.util.*;
-
+import java.nio.file.Path;
 import java.util.StringTokenizer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import jmetal.base.Algorithm;
+import jmetal.base.Operator;
+import jmetal.base.Problem;
+import jmetal.base.Solution;
+import jmetal.base.SolutionSet;
+import jmetal.qualityIndicator.QualityIndicator;
+import jmetal.util.Distance;
+import jmetal.util.JMException;
+import jmetal.util.Ranking;
 import ro.ulbsibiu.fadse.environment.parameters.CheckpointFileParameter;
 import ro.ulbsibiu.fadse.extended.base.operator.mutation.BitFlipMutationFuzzy;
 import ro.ulbsibiu.fadse.extended.base.operator.mutation.BitFlipMutationFuzzyVirtualParameters;
@@ -29,6 +35,7 @@ import ro.ulbsibiu.fadse.extended.problems.simulators.ServerSimulator;
  */
 public class NSGAII extends Algorithm {
 
+	public static Logger logger = LogManager.getLogger(NSGAII.class);
     /**
      * stores the problem to solve
      */
@@ -80,7 +87,7 @@ public class NSGAII extends Algorithm {
         if (output != null) {
             outputEveryPopulation = (Boolean) output;
         }
-        String outputPath = (String) getInputParameter("outputPath");
+        Path outputPath = (Path) getInputParameter("outputPath");
 
         //Initialize the variables
         population = new SolutionSet(populationSize);
@@ -114,7 +121,7 @@ public class NSGAII extends Algorithm {
         int feasiblePercentage = Integer
                 .parseInt((String) getInputParameter("forceMinimumPercentageFeasibleIndividuals"));
         if (file != null && !file.equals("")) {
-            Logger.getLogger(NSGAII.class.getName()).log(Level.WARNING, "Using a checkpoint file: " + file);
+            logger.warn("Using a checkpoint file: " + file);
             int i = 0;
             try (BufferedReader input = new BufferedReader(new FileReader(file))) {
 
@@ -137,7 +144,7 @@ public class NSGAII extends Algorithm {
                     throw new IOException("Checkpoint file does not have enough elements to fill the entire population");
                 }
             } catch (IOException ex) {
-                Logger.getLogger(NSGAII.class.getName()).log(Level.SEVERE, "Checkpoint file does not have enough elements to fill the entire population [" + i + "<" + populationSize + "]. Filling it with random individuals");
+            	logger.error("Checkpoint file does not have enough elements to fill the entire population [" + i + "<" + populationSize + "]. Filling it with random individuals");
                 while (i < populationSize) {
                     newSolution = new Solution(problem_);
                     if (mutationOperator instanceof BitFlipMutationFuzzy
@@ -259,7 +266,7 @@ public class NSGAII extends Algorithm {
                 ((ServerSimulator) problem_).dumpCurrentPopulation("offspring" + System.currentTimeMillis(), offspringPopulation);
             }
             //WORKAROUND
-            System.out.println("RESEND");
+            //System.out.println("RESEND");
             for (int i = 0; i < populationSize; i++) {
                 Solution s = population.get(i);
                 problem_.evaluate(s);
@@ -323,7 +330,7 @@ public class NSGAII extends Algorithm {
                 ((ServerSimulator) problem_).dumpCurrentPopulation("pareto" + System.currentTimeMillis(), ranking_temp.getSubfront(0));
             } else {
                 if (outputEveryPopulation) {
-                    population.printObjectivesToFile(outputPath + System.currentTimeMillis() + ".csv");
+                    population.printObjectivesToFile(outputPath.resolve(System.currentTimeMillis() + ".csv").toString());
                 }
             }
 

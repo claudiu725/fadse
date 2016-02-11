@@ -38,6 +38,14 @@ package ro.ulbsibiu.fadse.extended.problems;
 
 import java.util.LinkedList;
 import java.util.List;
+
+import jmetal.base.Problem;
+import jmetal.base.Solution;
+import jmetal.base.solutionType.IntRealPermutationSolutionType;
+import jmetal.base.solutionType.IntRealSolutionType;
+import jmetal.base.solutionType.IntSolutionType;
+import jmetal.base.solutionType.RealSolutionType;
+import jmetal.util.JMException;
 import ro.ulbsibiu.fadse.environment.Environment;
 import ro.ulbsibiu.fadse.environment.Individual;
 import ro.ulbsibiu.fadse.environment.Objective;
@@ -47,13 +55,6 @@ import ro.ulbsibiu.fadse.environment.parameters.DoubleParameter;
 import ro.ulbsibiu.fadse.environment.parameters.Parameter;
 import ro.ulbsibiu.fadse.environment.parameters.PermutationParameter;
 import ro.ulbsibiu.fadse.utils.Utils;
-import jmetal.base.Problem;
-import jmetal.base.Solution;
-import jmetal.base.solutionType.IntRealPermutationSolutionType;
-import jmetal.base.solutionType.IntRealSolutionType;
-import jmetal.base.solutionType.IntSolutionType;
-import jmetal.base.solutionType.RealSolutionType;
-import jmetal.util.JMException;
 
 /**
  *

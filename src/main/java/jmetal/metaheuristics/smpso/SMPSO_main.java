@@ -14,18 +14,20 @@ package jmetal.metaheuristics.smpso;
 
 import java.io.File;
 import java.io.IOException;
-import jmetal.base.*;
-import jmetal.base.operator.mutation.Mutation;
-import jmetal.base.operator.mutation.MutationFactory;
-import jmetal.problems.*;
-import jmetal.problems.DTLZ.*;
-import jmetal.util.Configuration;
-import jmetal.util.JMException ;
-
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
+
+import jmetal.base.Algorithm;
+import jmetal.base.Problem;
+import jmetal.base.SolutionSet;
+import jmetal.base.operator.mutation.Mutation;
+import jmetal.base.operator.mutation.MutationFactory;
+import jmetal.problems.ProblemFactory;
+import jmetal.problems.DTLZ.DTLZ1;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.ApplicationConstants;
+import jmetal.util.Configuration;
+import jmetal.util.JMException ;
 
 public class SMPSO_main {
   public static Logger      logger_ ;      // Logger object

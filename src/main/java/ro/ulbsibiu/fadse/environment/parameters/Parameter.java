@@ -1,6 +1,7 @@
 package ro.ulbsibiu.fadse.environment.parameters;
 
 import java.io.Serializable;
+
 import jmetal.base.Variable;
 
 public interface Parameter extends Cloneable,Serializable {

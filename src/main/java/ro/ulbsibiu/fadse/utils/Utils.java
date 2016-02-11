@@ -10,16 +10,16 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import jmetal.base.Solution;
+import jmetal.base.SolutionSet;
+import jmetal.base.Variable;
+import jmetal.util.JMException;
 import ro.ulbsibiu.fadse.environment.Environment;
 import ro.ulbsibiu.fadse.environment.Objective;
 import ro.ulbsibiu.fadse.environment.parameters.Parameter;
 import ro.ulbsibiu.fadse.environment.parameters.VirtualParameter;
 import ro.ulbsibiu.fadse.extended.problems.simulators.network.Message;
 import ro.ulbsibiu.fadse.extended.problems.simulators.network.server.status.SimulationStatus;
-import jmetal.base.Solution;
-import jmetal.base.SolutionSet;
-import jmetal.base.Variable;
-import jmetal.util.JMException;
 
 public class Utils {
 

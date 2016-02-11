@@ -7,6 +7,10 @@ package jmetal.problems;
 
 import java.lang.reflect.Constructor;
 import java.util.Properties;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import jmetal.base.Problem;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
@@ -16,6 +20,7 @@ import jmetal.util.JMException;
  */
 public class ProblemFactory {
 
+	Logger logger = LogManager.getLogger(ProblemFactory.class);
     /**
      * Creates an object representing a problem
      * @param name Name of the problem
@@ -57,7 +62,7 @@ public class ProblemFactory {
         }
         try {
             Class<?> problemClass = Class.forName(base + name);
-            System.out.println("Base+name: "+base+name);
+            logger.info("Base+name: "+base+name);
             Constructor[] constructors = problemClass.getConstructors();
             int i = 0;
             //find the constructor
@@ -70,10 +75,10 @@ public class ProblemFactory {
             return problem;
         }// try
         catch (Exception e) {
-            Configuration.logger_.severe("ProblemFactory.getProblem: "
+            logger.fatal("ProblemFactory.getProblem: "
                     + "Problem '" + name + "' does not exist. "
-                    + "Please, check the problem names in jmetal/problems: "+e.getMessage());
-            throw new JMException("Exception in " + name + ".getProblem():"+e.getMessage());
+                    + "Please, check the problem names in jmetal/problems: ", e);
+            throw new IllegalArgumentException("Class not found.");
         } // catch
     }
 
@@ -113,11 +118,10 @@ public class ProblemFactory {
             return problem;
         }// try
         catch (Exception e) {
-            e.printStackTrace();
             Configuration.logger_.severe("ProblemFactory.getProblem: "
                     + "Problem '" + name + "' does not exist. "
                     + "Please, check the problem names in jmetal/problems");
-            throw new JMException("Exception in " + name + ".getProblem()");
+            throw new IllegalArgumentException("Class not found.");
         } // catch
     }
 }

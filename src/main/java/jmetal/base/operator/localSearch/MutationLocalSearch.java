@@ -7,15 +7,15 @@
 
 package jmetal.base.operator.localSearch;
 
+import java.util.Comparator;
+
+import jmetal.base.Operator;
 import jmetal.base.Problem;
 import jmetal.base.Solution;
-import jmetal.base.Operator;
 import jmetal.base.SolutionSet;
-import jmetal.base.operator.comparator.OverallConstraintViolationComparator;
 import jmetal.base.operator.comparator.DominanceComparator;
+import jmetal.base.operator.comparator.OverallConstraintViolationComparator;
 import jmetal.util.JMException;
-
-import java.util.Comparator;
 
 /**
  * This class implements an local search operator based in the use of a 

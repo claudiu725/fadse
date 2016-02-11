@@ -16,14 +16,14 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
-import jmetal.base.*;
-import jmetal.util.*;
-
 import java.util.Vector;
+
 import jmetal.base.Algorithm;
+import jmetal.base.Operator;
 import jmetal.base.Problem;
 import jmetal.base.Solution;
 import jmetal.base.SolutionSet;
+import jmetal.util.JMException;
 import jmetal.util.PseudoRandom;
 
 public class MOEAD_DRA extends Algorithm {

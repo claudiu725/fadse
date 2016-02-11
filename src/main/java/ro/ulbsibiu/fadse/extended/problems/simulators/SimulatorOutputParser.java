@@ -1,15 +1,15 @@
 package ro.ulbsibiu.fadse.extended.problems.simulators;
 
-import java.util.Map;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.HashMap;
-import java.io.*;
-import java.util.Scanner;
 import java.util.LinkedList;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Scanner;
 
 import ro.ulbsibiu.fadse.environment.Individual;
 import ro.ulbsibiu.fadse.environment.Objective;
-import ro.ulbsibiu.fadse.extended.problems.simulators.SimulatorBase;
 import ro.ulbsibiu.fadse.persistence.Result;
 
 /**

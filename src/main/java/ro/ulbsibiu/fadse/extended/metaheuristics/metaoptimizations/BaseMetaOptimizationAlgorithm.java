@@ -5,10 +5,6 @@
  */
 package ro.ulbsibiu.fadse.extended.metaheuristics.metaoptimizations;
 
-import ro.ulbsibiu.fadse.environment.parameters.CheckpointFileParameter;
-import ro.ulbsibiu.fadse.extended.metaheuristics.metaoptimizations.metaoptimized.MetaOptimizedAlgorithm;
-import ro.ulbsibiu.fadse.extended.metaheuristics.metaoptimizations.metrics.Metric;
-import ro.ulbsibiu.fadse.extended.problems.simulators.ServerSimulator;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -22,12 +18,17 @@ import java.util.Random;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import jmetal.base.Algorithm;
 import jmetal.base.Problem;
 import jmetal.base.Solution;
 import jmetal.base.SolutionSet;
 import jmetal.metaheuristics.nsgaII.NSGAII;
 import jmetal.util.JMException;
+import ro.ulbsibiu.fadse.environment.parameters.CheckpointFileParameter;
+import ro.ulbsibiu.fadse.extended.metaheuristics.metaoptimizations.metaoptimized.MetaOptimizedAlgorithm;
+import ro.ulbsibiu.fadse.extended.metaheuristics.metaoptimizations.metrics.Metric;
+import ro.ulbsibiu.fadse.extended.problems.simulators.ServerSimulator;
 
 /**
  *

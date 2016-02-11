@@ -6,16 +6,12 @@ package ro.ulbsibiu.fadse.extended.qualityIndicator;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import jmetal.base.SolutionSet;
 
 /**
  *

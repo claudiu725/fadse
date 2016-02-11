@@ -5,9 +5,6 @@
  */
 package ro.ulbsibiu.fadse.extended.metaheuristics.metaoptimizations;
 
-import ro.ulbsibiu.fadse.extended.metaheuristics.metaoptimizations.metaoptimized.MetaOptimizedAlgorithm;
-import ro.ulbsibiu.fadse.extended.problems.simulators.ServerSimulator;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -21,6 +18,8 @@ import jmetal.base.Solution;
 import jmetal.base.SolutionSet;
 import jmetal.util.JMException;
 import jmetal.util.Ranking;
+import ro.ulbsibiu.fadse.extended.metaheuristics.metaoptimizations.metaoptimized.MetaOptimizedAlgorithm;
+import ro.ulbsibiu.fadse.extended.problems.simulators.ServerSimulator;
 
 /**
  *

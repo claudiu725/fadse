@@ -5,9 +5,13 @@
  */
 package jmetal.metaheuristics.randomSearch;
 
+import jmetal.base.Algorithm;
+import jmetal.base.Problem;
+import jmetal.base.Solution;
+import jmetal.base.SolutionSet;
+import jmetal.util.JMException;
+import jmetal.util.NonDominatedSolutionList;
 import ro.ulbsibiu.fadse.extended.problems.simulators.ServerSimulator;
-import jmetal.base.*;
-import jmetal.util.*;
 
 /**
  * This class implements the NSGA-II algorithm.

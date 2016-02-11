@@ -35,6 +35,7 @@ package net.sourceforge.jFuzzyLogic.defuzzifier;
 
 import java.util.LinkedList;
 import java.util.Random;
+
 import net.sourceforge.jFuzzyLogic.rule.Variable;
 
 /**

@@ -37,9 +37,9 @@ import java.sql.Timestamp;
 import java.util.LinkedList;
 import java.util.List;
 
+import jmetal.base.Solution;
 import ro.ulbsibiu.fadse.extended.problems.simulators.network.Message;
 import ro.ulbsibiu.fadse.extended.problems.simulators.network.server.Neighbor;
-import jmetal.base.Solution;
 
 /**
  *

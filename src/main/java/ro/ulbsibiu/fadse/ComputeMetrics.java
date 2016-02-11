@@ -3,12 +3,7 @@ package ro.ulbsibiu.fadse;
 
 
 
-import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.LinkedList;
-import ro.ulbsibiu.fadse.extended.qualityIndicator.MetricsUtil;
 
 /*
  * This file is part of the FADSE tool.

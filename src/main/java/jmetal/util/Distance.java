@@ -7,8 +7,10 @@
 */
 package jmetal.util;
 
+import jmetal.base.Solution;
+import jmetal.base.SolutionSet;
+import jmetal.base.Variable;
 import jmetal.base.operator.comparator.ObjectiveComparator;
-import jmetal.base.*;
 
 /**
  * This class implements some facilities for distances

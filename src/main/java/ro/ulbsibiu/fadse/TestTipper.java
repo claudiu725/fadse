@@ -12,6 +12,7 @@ package ro.ulbsibiu.fadse;
  * @author Horia
  */
 import java.util.Iterator;
+
 import net.sourceforge.jFuzzyLogic.FIS;
 
 /**

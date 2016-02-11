@@ -6,11 +6,15 @@
  */
 package jmetal.metaheuristics.pesa2;
 
-import ro.ulbsibiu.fadse.extended.problems.simulators.ServerSimulator;
-import jmetal.base.*;
-import jmetal.util.archive.AdaptiveGridArchive;
+import jmetal.base.Algorithm;
+import jmetal.base.Operator;
+import jmetal.base.Problem;
+import jmetal.base.Solution;
+import jmetal.base.SolutionSet;
 import jmetal.base.operator.selection.PESA2Selection;
 import jmetal.util.JMException;
+import jmetal.util.archive.AdaptiveGridArchive;
+import ro.ulbsibiu.fadse.extended.problems.simulators.ServerSimulator;
 
 /**
  * This class implements the PESA2 algorithm. 

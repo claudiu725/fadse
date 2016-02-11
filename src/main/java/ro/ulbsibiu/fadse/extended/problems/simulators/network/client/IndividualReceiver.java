@@ -18,7 +18,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.ini4j.Wini;
-import org.jfree.util.Log;
 
 import ro.ulbsibiu.fadse.environment.document.InputDocument;
 import ro.ulbsibiu.fadse.extended.problems.SimulatorWrapper;

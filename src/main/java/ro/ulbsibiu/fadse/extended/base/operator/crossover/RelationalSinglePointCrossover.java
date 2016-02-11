@@ -42,15 +42,16 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Properties;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import ro.ulbsibiu.fadse.environment.Environment;
-import ro.ulbsibiu.fadse.extended.base.relation.RelationNode;
-import ro.ulbsibiu.fadse.extended.base.relation.RelationTree;
-import jmetal.base.*;
+import jmetal.base.Solution;
 import jmetal.base.operator.crossover.Crossover;
 import jmetal.util.JMException;
 import jmetal.util.PseudoRandom;
+import ro.ulbsibiu.fadse.environment.Environment;
+import ro.ulbsibiu.fadse.extended.base.relation.RelationNode;
+import ro.ulbsibiu.fadse.extended.base.relation.RelationTree;
 
 /**
  * This class allows to apply a Single Point crossover operator using two parent
@@ -60,7 +61,7 @@ import jmetal.util.PseudoRandom;
  */
 public class RelationalSinglePointCrossover extends Crossover {
 
-	Logger logger = Logger.getLogger(RelationalSinglePointCrossover.class.getName());
+	Logger logger = LogManager.getLogger(RelationalSinglePointCrossover.class.getName());
     /**
      * BINARY_SOLUTION represents class jmetal.base.solutionType.RealSolutionType
      */

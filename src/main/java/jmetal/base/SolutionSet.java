@@ -6,17 +6,26 @@
 */
 package jmetal.base;
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /** 
  * Class representing a SolutionSet (a set of solutions)
  */
 public class SolutionSet implements Serializable {
   
-  static Logger logger = Logger.getLogger(SolutionSet.class.getName());
+  static Logger logger = LogManager.getLogger(SolutionSet.class.getName());
   /**
    * Stores a list of <code>solution</code> objects.
    */

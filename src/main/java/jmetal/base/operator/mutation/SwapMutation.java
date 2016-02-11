@@ -8,12 +8,12 @@
 package jmetal.base.operator.mutation;
 
 import java.util.Properties;
+
 import jmetal.base.Solution;
-import jmetal.base.variable.*;
+import jmetal.base.variable.Permutation;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
 import jmetal.util.PseudoRandom;
-import jmetal.base.operator.mutation.Mutation;
 
 /**
  * This class implements a swap mutation.

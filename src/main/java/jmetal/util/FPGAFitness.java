@@ -6,9 +6,12 @@
  */
 package jmetal.util;
 
-import jmetal.base.*                    ;
-import jmetal.base.operator.comparator.*;
-import java.util.*                      ;
+import java.util.Comparator;
+
+import jmetal.base.Problem;
+import jmetal.base.Solution;
+import jmetal.base.SolutionSet;
+import jmetal.base.operator.comparator.DominanceComparator;
 
 /**
  * This class implements facilities for calculating the fitness for the

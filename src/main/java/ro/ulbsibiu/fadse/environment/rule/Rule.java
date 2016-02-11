@@ -6,6 +6,7 @@
 package ro.ulbsibiu.fadse.environment.rule;
 
 import java.io.Serializable;
+
 import ro.ulbsibiu.fadse.environment.parameters.Parameter;
 
 /**

@@ -5,11 +5,16 @@
  */
 package jmetal.metaheuristics.singleObjective.geneticAlgorithm;
 
-import jmetal.base.*;
-import jmetal.base.operator.comparator.* ;
-import jmetal.base.operator.selection.WorstSolutionSelection;
 import java.util.Comparator;
-import jmetal.util.*;
+
+import jmetal.base.Algorithm;
+import jmetal.base.Operator;
+import jmetal.base.Problem;
+import jmetal.base.Solution;
+import jmetal.base.SolutionSet;
+import jmetal.base.operator.comparator.ObjectiveComparator;
+import jmetal.base.operator.selection.WorstSolutionSelection;
+import jmetal.util.JMException;
 
 /** 
  * Class implementing a steady state genetic algorithm

@@ -1,9 +1,10 @@
 package ro.ulbsibiu.fadse.extended.problems.simulators.gap;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
-import java.util.LinkedList;
-import java.io.*;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 import ro.ulbsibiu.fadse.environment.Individual;
 import ro.ulbsibiu.fadse.environment.Objective;

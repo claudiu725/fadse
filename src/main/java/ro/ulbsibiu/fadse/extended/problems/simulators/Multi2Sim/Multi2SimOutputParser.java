@@ -4,8 +4,11 @@
  */
 
 package ro.ulbsibiu.fadse.extended.problems.simulators.Multi2Sim;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.SequenceInputStream;
 import java.util.LinkedList;
-import java.io.*;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

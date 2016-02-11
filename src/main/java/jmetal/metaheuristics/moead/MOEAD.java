@@ -9,14 +9,14 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
-import jmetal.base.*;
-import jmetal.util.*;
-
 import java.util.Vector;
+
 import jmetal.base.Algorithm;
+import jmetal.base.Operator;
 import jmetal.base.Problem;
 import jmetal.base.Solution;
 import jmetal.base.SolutionSet;
+import jmetal.util.JMException;
 import jmetal.util.PseudoRandom;
 
 public class MOEAD extends Algorithm {

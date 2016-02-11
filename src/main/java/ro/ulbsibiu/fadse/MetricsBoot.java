@@ -2,6 +2,26 @@ package ro.ulbsibiu.fadse;
 
 
 
+import java.io.File;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+
+import jmetal.base.Algorithm;
+import jmetal.base.Operator;
+import jmetal.base.Problem;
+import jmetal.base.Solution;
+import jmetal.base.SolutionSet;
+import jmetal.base.operator.comparator.FitnessComparator;
+import jmetal.base.operator.crossover.CrossoverFactory;
+import jmetal.base.operator.mutation.MutationFactory;
+import jmetal.base.operator.selection.BinaryTournament;
+import jmetal.base.operator.selection.SelectionFactory;
+import jmetal.metaheuristics.ibea.IBEA;
+import jmetal.metaheuristics.nsgaII.NSGAII;
+import jmetal.metaheuristics.spea2.SPEA2;
+import jmetal.problems.DTLZ.DTLZ1;
+import jmetal.qualityIndicator.QualityIndicator;
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -12,24 +32,7 @@ package ro.ulbsibiu.fadse;
  * @author Andrei
  */
 import jmetal.qualityIndicator.util.MetricsUtil;
-import jmetal.base.Solution;
-import jmetal.base.SolutionSet;
-
-import java.io.File;
-import jmetal.metaheuristics.nsgaII.NSGAII;
-import jmetal.problems.DTLZ.DTLZ1;
-import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.JMException;
-import jmetal.base.*;
-import jmetal.base.operator.crossover.*   ;
-import jmetal.base.operator.mutation.*    ;
-import jmetal.base.operator.selection.*   ;
-import jmetal.metaheuristics.spea2.SPEA2;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-
-import jmetal.base.operator.comparator.FitnessComparator;
-import jmetal.metaheuristics.ibea.IBEA;
 
 public class MetricsBoot {
 

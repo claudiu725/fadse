@@ -16,9 +16,9 @@ import java.util.concurrent.Semaphore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ro.ulbsibiu.fadse.environment.document.InputDocument;
-
 import com.mysql.jdbc.PreparedStatement;
+
+import ro.ulbsibiu.fadse.environment.document.InputDocument;
 
 /**
  * ConnectionPool verwaltet die Datenbankverbindungen, die nicht über SPRING

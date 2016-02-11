@@ -7,10 +7,13 @@
 
 package jmetal.util;
 
+import java.util.Comparator;
+import java.util.Iterator;
+
 import jmetal.base.Solution;
 import jmetal.base.SolutionSet;
-import jmetal.base.operator.comparator.*;
-import java.util.*;
+import jmetal.base.operator.comparator.DominanceComparator;
+import jmetal.base.operator.comparator.SolutionComparator;
 
 /** 
  * This class implements an unbound list of non-dominated solutions

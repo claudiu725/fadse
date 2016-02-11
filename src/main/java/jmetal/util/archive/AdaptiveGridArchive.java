@@ -6,10 +6,12 @@
  */
 package jmetal.util.archive;
 
-import jmetal.base.*;
+import java.util.Comparator;
+import java.util.Iterator;
+
+import jmetal.base.Solution;
 import jmetal.base.operator.comparator.DominanceComparator;
 import jmetal.util.AdaptiveGrid;
-import java.util.*;
 
 /**
  * This class implements an archive based on an adaptative grid used in PAES

@@ -6,10 +6,11 @@
  */
 package jmetal.experiments;
 
-import java.util.logging.Logger;
 import java.io.IOException;
 import java.util.Properties;
 import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import jmetal.base.Algorithm;
 import jmetal.base.Problem;
 import jmetal.experiments.settings.NSGAII_Settings;

@@ -6,12 +6,18 @@
 
 package jmetal.metaheuristics.fastPGA;
 
-import jmetal.base.*;
+import java.util.Comparator;
+
+import jmetal.base.Algorithm;
+import jmetal.base.Operator;
+import jmetal.base.Problem;
+import jmetal.base.Solution;
+import jmetal.base.SolutionSet;
 import jmetal.base.operator.comparator.FPGAFitnessComparator;
-import jmetal.util.*;
-
-import java.util.*;
-
+import jmetal.util.Distance;
+import jmetal.util.FPGAFitness;
+import jmetal.util.JMException;
+import jmetal.util.Ranking;
 import ro.ulbsibiu.fadse.extended.problems.simulators.ServerSimulator;
 
 /*

@@ -7,9 +7,12 @@
 
 package jmetal.util.archive;
 
-import jmetal.base.*;
-import jmetal.base.operator.comparator.*;
 import java.util.Comparator;
+
+import jmetal.base.Solution;
+import jmetal.base.operator.comparator.DominanceComparator;
+import jmetal.base.operator.comparator.EqualSolutions;
+import jmetal.base.operator.comparator.FitnessComparator;
 import jmetal.util.Spea2Fitness;
 
 /**

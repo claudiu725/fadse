@@ -7,8 +7,10 @@
  */
 package jmetal.problems;
 
-import jmetal.base.*;
-import jmetal.base.variable.* ;
+import jmetal.base.Problem;
+import jmetal.base.Solution;
+import jmetal.base.Variable;
+import jmetal.base.variable.Binary;
 
 /**
  * Class representing problem RadioNetworkDesign

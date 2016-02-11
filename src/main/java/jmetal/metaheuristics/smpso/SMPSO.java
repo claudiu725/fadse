@@ -17,8 +17,6 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import ro.ulbsibiu.fadse.environment.parameters.CheckpointFileParameter;
-import ro.ulbsibiu.fadse.extended.problems.simulators.ServerSimulator;
 import jmetal.base.Algorithm;
 import jmetal.base.Operator;
 import jmetal.base.Problem;
@@ -33,6 +31,8 @@ import jmetal.util.JMException;
 import jmetal.util.PseudoRandom;
 import jmetal.util.archive.CrowdingArchive;
 import jmetal.util.wrapper.XInt;
+import ro.ulbsibiu.fadse.environment.parameters.CheckpointFileParameter;
+import ro.ulbsibiu.fadse.extended.problems.simulators.ServerSimulator;
 
 public class SMPSO extends Algorithm {
 

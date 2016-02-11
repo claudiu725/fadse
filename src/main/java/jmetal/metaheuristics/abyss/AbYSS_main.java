@@ -13,17 +13,21 @@
 package jmetal.metaheuristics.abyss;
 
 import java.io.IOException;
-import jmetal.base.*;
-import jmetal.base.operator.crossover.*   ;
-import jmetal.base.operator.mutation.*    ; 
-import jmetal.problems.*                  ;
-import jmetal.qualityIndicator.QualityIndicator;
-import jmetal.util.Configuration;
-import jmetal.util.JMException;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
 
+import jmetal.base.Algorithm;
+import jmetal.base.Operator;
+import jmetal.base.Problem;
+import jmetal.base.SolutionSet;
+import jmetal.base.operator.crossover.CrossoverFactory;
 import jmetal.base.operator.localSearch.MutationLocalSearch;
+import jmetal.base.operator.mutation.MutationFactory;
+import jmetal.problems.Kursawe;
+import jmetal.problems.ProblemFactory;
+import jmetal.qualityIndicator.QualityIndicator;
+import jmetal.util.Configuration;
+import jmetal.util.JMException;
 /**
  * This class is the main program used to configure and run AbYSS, a 
  * multiobjective scatter search metaheuristics.

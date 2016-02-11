@@ -34,14 +34,13 @@
 
 package ro.ulbsibiu.fadse.utils.test;
 
+import java.nio.file.Paths;
+
+import jmetal.base.variable.Int;
 import ro.ulbsibiu.fadse.environment.document.InputDocument;
 import ro.ulbsibiu.fadse.environment.parameters.IntegerParameter;
 import ro.ulbsibiu.fadse.environment.parameters.Parameter;
 import ro.ulbsibiu.fadse.io.XMLInputReader;
-
-import java.nio.file.Paths;
-
-import jmetal.base.variable.Int;
 
 /**
  *

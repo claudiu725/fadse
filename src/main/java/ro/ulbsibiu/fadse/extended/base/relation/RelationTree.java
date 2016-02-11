@@ -37,14 +37,14 @@ import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
-import ro.ulbsibiu.fadse.environment.parameters.Parameter;
-import ro.ulbsibiu.fadse.environment.rule.Rule;
 import jmetal.base.Problem;
 import jmetal.base.Solution;
 import jmetal.base.Variable;
 import jmetal.base.variable.Int;
 import jmetal.problems.ProblemFactory;
 import jmetal.util.JMException;
+import ro.ulbsibiu.fadse.environment.parameters.Parameter;
+import ro.ulbsibiu.fadse.environment.rule.Rule;
 
 /**
  *

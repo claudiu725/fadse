@@ -8,14 +8,16 @@
  */
 package jmetal.experiments.settings;
 
-import jmetal.metaheuristics.mocell.*;
-import jmetal.base.*;
-import jmetal.base.operator.crossover.CrossoverFactory;
-import jmetal.base.operator.mutation.MutationFactory;
+import jmetal.base.Algorithm;
+import jmetal.base.Operator;
+import jmetal.base.Problem;
 import jmetal.base.operator.crossover.Crossover;
+import jmetal.base.operator.crossover.CrossoverFactory;
 import jmetal.base.operator.mutation.Mutation;
+import jmetal.base.operator.mutation.MutationFactory;
 import jmetal.base.operator.selection.SelectionFactory;
 import jmetal.experiments.Settings;
+import jmetal.metaheuristics.mocell.MOCell;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.JMException;
 

@@ -7,7 +7,8 @@ package jmetal.base.operator.selection;
 
 import java.util.Comparator;
 
-import jmetal.base.*;
+import jmetal.base.Solution;
+import jmetal.base.SolutionSet;
 
 /**
  * This class implements a selection operator used for selecting the worst 

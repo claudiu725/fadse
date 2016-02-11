@@ -7,9 +7,18 @@
  */
 package jmetal.util;
 
-import jmetal.base.*                    ;
-import jmetal.base.operator.comparator.*;
-import java.util.*                      ;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+
+import jmetal.base.Solution;
+import jmetal.base.SolutionSet;
+import jmetal.base.operator.comparator.DominanceComparator;
+import jmetal.base.operator.comparator.FitnessComparator;
 
 /**
  * This class implements some facilities for calculating the Spea2Fitness

@@ -8,14 +8,13 @@ package jmetal.base.operator.mutation;
 
 import java.util.Properties;
 
+import jmetal.util.Configuration;
+import jmetal.util.JMException;
+import jmetal.util.PropUtils;
 import ro.ulbsibiu.fadse.extended.base.operator.mutation.BitFlipMutationFuzzy;
 import ro.ulbsibiu.fadse.extended.base.operator.mutation.BitFlipMutationFuzzyVirtualParameters;
 import ro.ulbsibiu.fadse.extended.base.operator.mutation.BitFlipMutationRandomDefuzzifier;
 import ro.ulbsibiu.fadse.extended.base.operator.mutation.RelationalBitFlipMutation;
-import jmetal.base.operator.mutation.Mutation;
-import jmetal.util.PropUtils;
-import jmetal.util.Configuration;
-import jmetal.util.JMException;
 
 /**
  * Class implementing a mutation factory.

@@ -1,5 +1,6 @@
 package ro.ulbsibiu.fadse.extended.problems.simulators.msim3;
 
+import java.io.File;
 import java.util.LinkedList;
 
 import ro.ulbsibiu.fadse.environment.Individual;
@@ -7,9 +8,6 @@ import ro.ulbsibiu.fadse.environment.Objective;
 import ro.ulbsibiu.fadse.extended.problems.simulators.Msim3Simulator;
 import ro.ulbsibiu.fadse.extended.problems.simulators.SimulatorBase;
 import ro.ulbsibiu.fadse.extended.problems.simulators.SimulatorOutputParser;
-import ro.ulbsibiu.fadse.extended.problems.simulators.msim3.Msim3PyExtractor;
-
-import java.io.File;
 
 /**
  * Parser for the output file of the Msim-3 simulator

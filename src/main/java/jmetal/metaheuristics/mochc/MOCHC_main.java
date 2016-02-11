@@ -15,12 +15,26 @@ package jmetal.metaheuristics.mochc;
 import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
-import jmetal.base.*;
-import jmetal.base.operator.crossover.*;
-import jmetal.base.operator.mutation.*;
-import jmetal.base.operator.selection.*;
-import jmetal.problems.DTLZ.*;
-import jmetal.problems.ZDT.*;
+
+import jmetal.base.Algorithm;
+import jmetal.base.Operator;
+import jmetal.base.Problem;
+import jmetal.base.SolutionSet;
+import jmetal.base.operator.crossover.CrossoverFactory;
+import jmetal.base.operator.mutation.MutationFactory;
+import jmetal.base.operator.selection.SelectionFactory;
+import jmetal.problems.DTLZ.DTLZ1;
+import jmetal.problems.DTLZ.DTLZ2;
+import jmetal.problems.DTLZ.DTLZ3;
+import jmetal.problems.DTLZ.DTLZ4;
+import jmetal.problems.DTLZ.DTLZ5;
+import jmetal.problems.DTLZ.DTLZ6;
+import jmetal.problems.DTLZ.DTLZ7;
+import jmetal.problems.ZDT.ZDT1;
+import jmetal.problems.ZDT.ZDT2;
+import jmetal.problems.ZDT.ZDT3;
+import jmetal.problems.ZDT.ZDT4;
+import jmetal.problems.ZDT.ZDT6;
 import jmetal.util.ApplicationConstants;
 
 public class MOCHC_main {

@@ -8,10 +8,11 @@
  */
 package jmetal.experiments.settings;
 
-import jmetal.base.*;
+import jmetal.base.Algorithm;
+import jmetal.base.Problem;
 import jmetal.base.operator.crossover.Crossover;
-import jmetal.base.operator.mutation.Mutation;
 import jmetal.base.operator.crossover.CrossoverFactory;
+import jmetal.base.operator.mutation.Mutation;
 import jmetal.base.operator.mutation.MutationFactory;
 import jmetal.base.operator.selection.Selection;
 import jmetal.base.operator.selection.SelectionFactory;

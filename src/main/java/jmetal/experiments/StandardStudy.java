@@ -6,17 +6,18 @@
  */
 package jmetal.experiments;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.io.IOException;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import jmetal.base.Algorithm;
 import jmetal.base.Problem;
 import jmetal.experiments.settings.GDE3_Settings;
 import jmetal.experiments.settings.MOCell_Settings;
 import jmetal.experiments.settings.NSGAII_Settings;
-import jmetal.experiments.settings.SPEA2_Settings;
 import jmetal.experiments.settings.SMPSO_Settings;
+import jmetal.experiments.settings.SPEA2_Settings;
 import jmetal.util.JMException;
 
 /**

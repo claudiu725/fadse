@@ -7,7 +7,8 @@
 package jmetal.base ;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 import jmetal.util.JMException;
 

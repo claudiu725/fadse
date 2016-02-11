@@ -6,9 +6,6 @@
 
 package ro.ulbsibiu.fadse.extended.metaheuristics.metaoptimizations.metaoptimized;
 
-import ro.ulbsibiu.fadse.environment.parameters.CheckpointFileParameter;
-import ro.ulbsibiu.fadse.extended.problems.simulators.ServerSimulator;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -24,6 +21,8 @@ import jmetal.metaheuristics.spea2.SPEA2;
 import jmetal.util.JMException;
 import jmetal.util.Ranking;
 import jmetal.util.Spea2Fitness;
+import ro.ulbsibiu.fadse.environment.parameters.CheckpointFileParameter;
+import ro.ulbsibiu.fadse.extended.problems.simulators.ServerSimulator;
 
 /**
  *

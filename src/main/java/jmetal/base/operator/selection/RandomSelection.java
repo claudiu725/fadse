@@ -5,7 +5,8 @@
  */
 package jmetal.base.operator.selection;
 
-import jmetal.base.*;
+import jmetal.base.Solution;
+import jmetal.base.SolutionSet;
 import jmetal.util.PseudoRandom;
 
 /**

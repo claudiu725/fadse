@@ -8,9 +8,11 @@
 
 package jmetal.problems.ZDT;
 
-import jmetal.base.*;
+import jmetal.base.Problem;
+import jmetal.base.Solution;
+import jmetal.base.Variable;
 import jmetal.base.solutionType.BinarySolutionType;
-import jmetal.base.variable.*;
+import jmetal.base.variable.Binary;
 
 /**
  * Class representing problem ZDT5

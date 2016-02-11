@@ -5,8 +5,11 @@
 
 package ro.ulbsibiu.fadse.extended.problems.simulators.Multi2Sim;
 
-import java.util.*;
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.util.Enumeration;
+import java.util.NoSuchElementException;
 
 public class FileEnumeration implements Enumeration {
 

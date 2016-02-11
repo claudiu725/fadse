@@ -3,7 +3,6 @@ package ro.ulbsibiu.fadse.extended.problems.simulators.msimcommon;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
-import java.lang.NullPointerException;
 
 public class ParameterGroup implements Parameter {
 	protected String ID;

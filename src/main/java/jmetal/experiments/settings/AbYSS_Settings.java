@@ -8,7 +8,6 @@
  */
 package jmetal.experiments.settings;
 
-import jmetal.metaheuristics.abyss.*;
 import jmetal.base.Algorithm;
 import jmetal.base.Operator;
 import jmetal.base.Problem;
@@ -16,8 +15,7 @@ import jmetal.base.operator.crossover.CrossoverFactory;
 import jmetal.base.operator.localSearch.MutationLocalSearch;
 import jmetal.base.operator.mutation.MutationFactory;
 import jmetal.experiments.Settings;
-
-
+import jmetal.metaheuristics.abyss.AbYSS;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.JMException;
 

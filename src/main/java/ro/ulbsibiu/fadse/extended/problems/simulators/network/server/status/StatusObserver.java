@@ -40,15 +40,14 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Iterator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.ini4j.Wini;
 
 import jmetal.base.Solution;
 import jmetal.base.SolutionSet;
 import jmetal.util.Ranking;
-
-import org.ini4j.Wini;
-
 import ro.ulbsibiu.fadse.utils.Utils;
 
 /**
@@ -57,6 +56,7 @@ import ro.ulbsibiu.fadse.utils.Utils;
  */
 public class StatusObserver implements Runnable {
 
+	Logger logger = LogManager.getLogger(StatusObserver.class);
     private SimulationStatus simulationStatus;
     private Utils u;
 
@@ -75,20 +75,20 @@ public class StatusObserver implements Runnable {
             File dir = new File(currentdir);
             Wini ini = new Wini(new File(dir + System.getProperty("file.separator") + "configs" + System.getProperty("file.separator") + "fadseConfig.ini"));
             serverSocket = new ServerSocket(ini.get("Monitor", "listenPort", int.class));
-            Logger.getLogger(StatusObserver.class.getName()).log(Level.CONFIG, "Monitor Started ... listening on port: " + ini.get("Monitor", "listenPort", int.class));
+            logger.info("Monitor Started ... listening on port: " + ini.get("Monitor", "listenPort", int.class));
             while (true) {
                 try {
                     String result = "";
-                    Logger.getLogger(StatusObserver.class.getName()).log(Level.INFO, "StatusObserver: Waiting for connection");
+                    logger.info("StatusObserver: Waiting for connection");
                     Socket socket = serverSocket.accept();
-                    Logger.getLogger(StatusObserver.class.getName()).log(Level.INFO, "Statusobserver: connected");
+                    logger.info("Statusobserver: connected");
                     dos = new ObjectOutputStream(socket.getOutputStream());
                     dos.flush();
                     dis = new ObjectInputStream(socket.getInputStream());
 //                dos.writeObject(((JSONObject) JSONSerializer.toJSON( simualtionStatus.getSentMessages() )));//TODO switch to String and use JSON or XML
                     String command = (String) dis.readObject();
                     try {
-                        Logger.getLogger(StatusObserver.class.getName()).log(Level.INFO,"Statusobserver: read command -> " + command);
+                    	logger.info("Statusobserver: read command -> " + command);
                         if (command.equalsIgnoreCase("nrActiveSimulations")) {
                             result = Integer.toString(simulationStatus.getNumberOfActiveSimulations());
 
@@ -130,7 +130,7 @@ public class StatusObserver implements Runnable {
                             String headder = u.generateCSVHeadder(simulationStatus.getEnvironment());
                             result = headder;
                             SolutionSet finalSolutionSet = new SolutionSet(solutionSet.size());
-                            Iterator i = solutionSet.iterator();
+                            Iterator<Solution> i = solutionSet.iterator();
                             while (i.hasNext()) {
                                 Solution s = (Solution) i.next();
                                 if (s.getNumberOfViolatedConstraint() == 0) {
@@ -152,7 +152,7 @@ public class StatusObserver implements Runnable {
 
                         e.printStackTrace();
                     }
-                    Logger.getLogger(StatusObserver.class.getName()).log(Level.INFO,"StatusObserver: writing result: " + result);
+                    logger.info("StatusObserver: writing result: " + result);
                     dos.writeObject(result);
                     dos.flush();
                 } catch (Exception e) {
@@ -160,7 +160,7 @@ public class StatusObserver implements Runnable {
                 }
             }
         } catch (IOException ex) {
-            Logger.getLogger(SimulationStatus.class.getName()).log(Level.SEVERE, null, ex);
+        	logger.info("", ex);
         }
     }
 }

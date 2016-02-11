@@ -6,9 +6,12 @@
  */
 package jmetal.util.archive;
 
-import jmetal.base.*;
-import jmetal.base.operator.comparator.*;
 import java.util.Comparator;
+
+import jmetal.base.Solution;
+import jmetal.base.operator.comparator.CrowdingDistanceComparator;
+import jmetal.base.operator.comparator.DominanceComparator;
+import jmetal.base.operator.comparator.EqualSolutions;
 import jmetal.util.Distance;
 
 /**

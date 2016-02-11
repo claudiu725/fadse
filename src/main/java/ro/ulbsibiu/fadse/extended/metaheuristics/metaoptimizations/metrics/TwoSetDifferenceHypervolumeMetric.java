@@ -5,11 +5,11 @@
  */
 package ro.ulbsibiu.fadse.extended.metaheuristics.metaoptimizations.metrics;
 
-import ro.ulbsibiu.fadse.extended.qualityIndicator.HypervolumeTwoSetDiference;
-import ro.ulbsibiu.fadse.extended.qualityIndicator.MetricsUtil;
 import jmetal.base.Solution;
 import jmetal.base.SolutionSet;
 import jmetal.util.Ranking;
+import ro.ulbsibiu.fadse.extended.qualityIndicator.HypervolumeTwoSetDiference;
+import ro.ulbsibiu.fadse.extended.qualityIndicator.MetricsUtil;
 
 /**
  *

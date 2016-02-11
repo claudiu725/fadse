@@ -44,14 +44,15 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Properties;
 
-import org.apache.log4j.Logger;
-
-import ro.ulbsibiu.fadse.environment.Environment;
-import ro.ulbsibiu.fadse.extended.base.relation.RelationTree;
 import jmetal.base.Solution;
+import jmetal.base.operator.mutation.Mutation;
 import jmetal.util.JMException;
 import jmetal.util.PseudoRandom;
-import jmetal.base.operator.mutation.Mutation;
+import ro.ulbsibiu.fadse.environment.Environment;
+import ro.ulbsibiu.fadse.extended.base.relation.RelationTree;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  *
@@ -64,7 +65,7 @@ import jmetal.base.operator.mutation.Mutation;
  */
 public class RelationalBitFlipMutation extends Mutation {
 
-	Logger logger = Logger.getLogger(RelationalBitFlipMutation.class.getName());
+	Logger logger = LogManager.getLogger(RelationalBitFlipMutation.class.getName());
     /**
      * INT_SOLUTION represents class jmetal.base.solutionType.IntSolutionType
      */

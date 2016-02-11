@@ -2,7 +2,6 @@ package ro.ulbsibiu.fadse.utils;
 
 import java.io.Serializable;
 import java.util.HashMap;
-import java.lang.Double;
 
 /************************************************************************
  * <i>Mathematic expression evaluator.</i> Supports the following functions:

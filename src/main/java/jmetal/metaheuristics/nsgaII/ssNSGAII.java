@@ -5,9 +5,15 @@
  */
 package jmetal.metaheuristics.nsgaII;
 
-import jmetal.base.*;
+import jmetal.base.Algorithm;
+import jmetal.base.Operator;
+import jmetal.base.Problem;
+import jmetal.base.Solution;
+import jmetal.base.SolutionSet;
 import jmetal.qualityIndicator.QualityIndicator;
-import jmetal.util.*;
+import jmetal.util.Distance;
+import jmetal.util.JMException;
+import jmetal.util.Ranking;
 
 /**
  * This class implements a steady-state version of NSGA-II.

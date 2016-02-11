@@ -8,13 +8,13 @@
  */
 package jmetal.experiments.settings;
 
-import jmetal.metaheuristics.cellde.*;
 import jmetal.base.Algorithm;
 import jmetal.base.Operator;
 import jmetal.base.Problem;
 import jmetal.base.operator.crossover.CrossoverFactory;
 import jmetal.base.operator.selection.SelectionFactory;
 import jmetal.experiments.Settings;
+import jmetal.metaheuristics.cellde.CellDE;
 import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.JMException;
 

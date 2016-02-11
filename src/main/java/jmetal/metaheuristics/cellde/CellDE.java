@@ -5,10 +5,20 @@
  */
 package jmetal.metaheuristics.cellde;
 
-import jmetal.base.*;
 import java.util.Comparator;
-import jmetal.base.operator.comparator.*;
-import jmetal.util.*;
+
+import jmetal.base.Algorithm;
+import jmetal.base.Operator;
+import jmetal.base.Problem;
+import jmetal.base.Solution;
+import jmetal.base.SolutionSet;
+import jmetal.base.operator.comparator.CrowdingComparator;
+import jmetal.base.operator.comparator.DominanceComparator;
+import jmetal.util.Distance;
+import jmetal.util.JMException;
+import jmetal.util.Neighborhood;
+import jmetal.util.PseudoRandom;
+import jmetal.util.Ranking;
 
 /**
  * This class represents the original asynchronous MOCell algorithm

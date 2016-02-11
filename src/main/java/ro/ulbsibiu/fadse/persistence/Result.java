@@ -11,13 +11,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import jmetal.base.Solution;
+import jmetal.base.Variable;
+import jmetal.util.JMException;
 import ro.ulbsibiu.fadse.environment.Individual;
 import ro.ulbsibiu.fadse.environment.Objective;
 import ro.ulbsibiu.fadse.environment.document.InputDocument;
 import ro.ulbsibiu.fadse.environment.parameters.Parameter;
-import jmetal.base.Solution;
-import jmetal.base.Variable;
-import jmetal.util.JMException;
 
 /**
  *

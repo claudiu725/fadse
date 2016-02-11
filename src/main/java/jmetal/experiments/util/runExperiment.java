@@ -11,14 +11,15 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import jmetal.base.Algorithm;
 import jmetal.base.Problem;
 import jmetal.base.SolutionSet;
 import jmetal.experiments.Experiment;
 import jmetal.experiments.Settings;
 import jmetal.problems.ProblemFactory;
+import jmetal.qualityIndicator.QualityIndicator;
 import jmetal.util.JMException;
-import jmetal.qualityIndicator.* ;
 /**
  *
  * @author antonio

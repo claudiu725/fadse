@@ -6,8 +6,9 @@
  */
 package jmetal.base.operator.comparator;
 
-import jmetal.base.Solution;
 import java.util.Comparator;
+
+import jmetal.base.Solution;
 
 
 /**

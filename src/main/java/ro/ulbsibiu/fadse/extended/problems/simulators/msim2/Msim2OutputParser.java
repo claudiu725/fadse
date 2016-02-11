@@ -1,5 +1,6 @@
 package ro.ulbsibiu.fadse.extended.problems.simulators.msim2;
 
+import java.io.File;
 import java.util.LinkedList;
 
 import org.python.core.PyInteger;
@@ -11,8 +12,6 @@ import ro.ulbsibiu.fadse.environment.Individual;
 import ro.ulbsibiu.fadse.environment.Objective;
 import ro.ulbsibiu.fadse.extended.problems.simulators.SimulatorBase;
 import ro.ulbsibiu.fadse.extended.problems.simulators.SimulatorOutputParser;
-
-import java.io.File;
 
 /**
  * Parser for the output file of the Msim-2 simulator

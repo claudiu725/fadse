@@ -1,7 +1,7 @@
 package ro.ulbsibiu.fadse.environment.parameters;
 
-import ro.ulbsibiu.fadse.utils.MathEvaluator;
 import jmetal.base.Variable;
+import ro.ulbsibiu.fadse.utils.MathEvaluator;
 
 /*
  * Supports only Integer parameters

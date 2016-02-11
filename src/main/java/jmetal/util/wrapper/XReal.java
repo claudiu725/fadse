@@ -8,17 +8,17 @@
  */
 package jmetal.util.wrapper;
 
-import org.apache.log4j.Logger;
-import org.apache.log4j.Priority;
-
 import jmetal.base.Solution;
 import jmetal.base.SolutionType;
 import jmetal.base.variable.ArrayReal;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class XReal {
-	static Logger logger = Logger.getLogger(XReal.class.getName());
+	static Logger logger = LogManager.getLogger(XReal.class.getName());
 	
 	Solution solution_ ;
 	SolutionType type_ ;

@@ -9,15 +9,18 @@
 package jmetal.metaheuristics.ibea;
 
 import java.util.ArrayList;
-
-import jmetal.base.*;
-
 import java.util.Iterator;
 import java.util.List;
 
-import ro.ulbsibiu.fadse.extended.problems.simulators.ServerSimulator;
+import jmetal.base.Algorithm;
+import jmetal.base.Operator;
+import jmetal.base.Problem;
+import jmetal.base.Solution;
+import jmetal.base.SolutionSet;
 import jmetal.base.operator.comparator.DominanceComparator;
-import jmetal.util.*;
+import jmetal.util.JMException;
+import jmetal.util.Ranking;
+import ro.ulbsibiu.fadse.extended.problems.simulators.ServerSimulator;
 
 /**
  * This class representing the SPEA2 algorithm
