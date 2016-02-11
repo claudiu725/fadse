@@ -5,9 +5,9 @@ package ro.ulbsibiu.fadse;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.ini4j.Wini;
 
 import ro.ulbsibiu.fadse.extended.problems.simulators.network.client.IndividualReceiver;
@@ -50,6 +50,8 @@ import ro.ulbsibiu.fadse.extended.problems.simulators.network.client.IndividualR
  * @author Horia Calborean
  */
 public class BootClient {
+	
+	public static Logger logger = LogManager.getLogger(BootClient.class);
 
     public static void main(String[] args) {
         try {
@@ -67,24 +69,26 @@ public class BootClient {
                 try {
                     Thread.sleep(30000);//5 minutes
                 } catch (InterruptedException ex) {
-                    Logger.getLogger(BootClient.class.getName()).log(Level.SEVERE, null, ex);
+                    logger.error("Interrupted", ex);
                 }
                 //Watchdog
                 if (!indReceiver.simulating) {
                     long elapsedTimeSinceNoMessage = System.currentTimeMillis() - indReceiver.connectionWaitStartTime;
                     String currentdir = System.getProperty("user.dir");
                     File dir = new File(currentdir);
-                    Wini ini = new Wini(new File(dir + System.getProperty("file.separator") + "configs" + System.getProperty("file.separator") + "fadseConfig.ini"));
+                    String iniPath = dir + System.getProperty("file.separator") + "configs" + System.getProperty("file.separator") + "fadseConfig.ini";
+                    logger.info("Using ini " + iniPath);
+                    Wini ini = new Wini(new File(iniPath));
                     int time = ini.get("Watchdog", "time", int.class);
                     if (elapsedTimeSinceNoMessage > (60000*time)) {//1minute*param
                         t.interrupt();
-                        Logger.getLogger(BootClient.class.getName()).log(Level.SEVERE, "Watchdog had to stop this client and restart it");
+                        logger.fatal("Watchdog had to stop this client and restart it");
                         System.exit(1);
                     }
                 }
             }
         } catch (IOException ex) {
-            Logger.getLogger(BootClient.class.getName()).log(Level.SEVERE, "Fadse ini config file could not be read", ex);
+            logger.fatal("Fadse ini config file could not be read", ex);
         }
     }
 }

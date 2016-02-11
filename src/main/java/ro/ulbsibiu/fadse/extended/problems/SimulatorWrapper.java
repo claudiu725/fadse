@@ -36,7 +36,7 @@
  */
 package ro.ulbsibiu.fadse.extended.problems;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 import jmetal.base.Problem;
@@ -125,7 +125,9 @@ public abstract class SimulatorWrapper extends Problem {
         Validator validator = new Validator();
 
 
-        LinkedList<String> benchmarks = environment.getInputDocument().getBenchmarks();
+        List<String> benchmarks = environment.getInputDocument().getBenchmarks();
+        if (benchmarks == null)
+        	benchmarks = new ArrayList<>();
         /** for all variables... associate them with a parameter */
         Parameter[] params = Utils.getParameters(solution, environment);
         Individual ind = null;

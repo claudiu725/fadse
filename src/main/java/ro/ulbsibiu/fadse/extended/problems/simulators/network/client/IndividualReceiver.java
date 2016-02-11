@@ -14,9 +14,9 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.ini4j.Wini;
 
 import ro.ulbsibiu.fadse.environment.document.InputDocument;
@@ -30,6 +30,7 @@ import ro.ulbsibiu.fadse.persistence.ConnectionPool;
  */
 public class IndividualReceiver implements Runnable {
 
+	Logger logger = LogManager.getLogger(IndividualReceiver.class);
     ServerSocket serverSocket;
     private Thread simulationRunner;
     private ClientSimulatorRunner clientSimulatorRunner;
@@ -39,25 +40,30 @@ public class IndividualReceiver implements Runnable {
     private static Random r = new Random(System.currentTimeMillis());
 
     public IndividualReceiver() throws IOException {
+    	logger.info("Creating IndividualReceiver");
         String currentdir = System.getProperty("user.dir");
         File dir = new File(currentdir);
-        Wini ini = new Wini(new File(dir + System.getProperty("file.separator") + "configs" + System.getProperty("file.separator") + "fadseConfig.ini"));
+        String iniPath = dir + System.getProperty("file.separator") + "configs" + System.getProperty("file.separator") + "fadseConfig.ini";
+        logger.info("Using ini " + iniPath);
+        Wini ini = new Wini(new File(iniPath));
         init(ini.get("Client", "listenPort", int.class));
     }
 
     public IndividualReceiver(int port) throws IOException {
+    	logger.info("Creating IndividualReceiver");
         init(port);
     }
 
     private void init(int port) throws IOException {
+    	logger.info("Using port " + port);
         try {
             serverSocket = new ServerSocket(port);
             InetAddress ip;
             try {
                 ip = InetAddress.getLocalHost();
-                System.out.println("<neighbor ip=\"" + ip.getHostAddress() + "\" listenPort=\"" + port + "\" availableSlots = \"1\" />");
+                logger.info("<neighbor ip=\"" + ip.getHostAddress() + "\" listenPort=\"" + port + "\" availableSlots = \"1\" />");
             } catch (UnknownHostException e) {
-                System.out.println("Client started on port:" + port);
+                logger.info("Client started on port:" + port, e);
             }
         } catch (BindException ex) {
             if (retries < 1000) {
@@ -83,7 +89,7 @@ public class IndividualReceiver implements Runnable {
                 simulationStart = false;
                 connectionWaitStartTime = System.currentTimeMillis();
                 socket = serverSocket.accept();
-                System.out.println("IndividualReceiver: Received ind- " + (receivedIndividuals++) + "");
+                logger.info("Received ind-" + (receivedIndividuals++));
 //                System.out.println("IndividualReceiver: Received a message");
                 dos = new ObjectOutputStream(socket.getOutputStream());
                 dos.flush();
@@ -133,18 +139,18 @@ public class IndividualReceiver implements Runnable {
                     simulationStart = true;
                 }
             } catch (IOException ex) {
-                Logger.getLogger(IndividualReceiver.class.getName()).log(Level.SEVERE, "IOException", ex);
+                logger.error("IOException", ex);
                 simulationStart = false;
             } catch (ClassNotFoundException ex) {
-                Logger.getLogger(IndividualReceiver.class.getName()).log(Level.SEVERE, "ClassNotFoundException", ex);
+            	logger.error("ClassNotFoundException", ex);
                 simulationStart = false;
             } finally {
                 closeAllConnections(dis, dos, socket);
             }
             if (simulationStart) {
-                Logger.getLogger(IndividualReceiver.class.getName()).log(Level.INFO, "Now I can start the simulation...");
+            	logger.info("Now I can start the simulation...");
                 startSimulation(m, sim);
-                Logger.getLogger(IndividualReceiver.class.getName()).log(Level.INFO, "I've finished the simulation (?)");
+                logger.info("I've finished the simulation (?)");
             }
         }
     }
@@ -176,17 +182,17 @@ public class IndividualReceiver implements Runnable {
         try {
             dos.close();
         } catch (IOException ex) {
-            Logger.getLogger(IndividualReceiver.class.getName()).log(Level.SEVERE, "DOS could not be closed" + ex.getMessage(), ex);
+            logger.error("DOS could not be closed" + ex.getMessage(), ex);
         }
         try {
             dis.close();
         } catch (IOException ex) {
-            Logger.getLogger(IndividualReceiver.class.getName()).log(Level.SEVERE, "DIS could not be closed" + ex.getMessage(), ex);
+        	logger.error("DIS could not be closed" + ex.getMessage(), ex);
         }
         try {
             socket.close();
         } catch (IOException ex) {
-            Logger.getLogger(IndividualReceiver.class.getName()).log(Level.SEVERE, "Socket could not be closed" + ex.getMessage(), ex);
+        	logger.error("Socket could not be closed" + ex.getMessage(), ex);
         }
     }
 }

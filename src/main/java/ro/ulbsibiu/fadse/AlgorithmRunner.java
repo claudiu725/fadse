@@ -118,15 +118,16 @@ public class AlgorithmRunner {
         settings = (new SettingsFactory()).getSettingsObject(algorithmName,
                 settingsParams);
         algorithm = settings.configure(properties);
+        logger.info("Created an algorithm of class " + algorithm.getClass().getName());
         try {
             algorithm.getOperator("mutation").setParameter("environment", env);
         } catch (Exception e) {
-            System.out.println("MUTATION was not defined");
+            logger.error("MUTATION was not defined");
         }
         try {
             algorithm.getOperator("crossover").setParameter("environment", env);
         } catch (Exception e) {
-            System.out.println("CROSSOVER was not defined");
+            logger.error("CROSSOVER was not defined");
         }
         // Algorithm parameters htey work only for NSGA-II for other algorithms
         // we need to define others, we have to see how to do it more easily
@@ -161,8 +162,13 @@ public class AlgorithmRunner {
         	// if the output path is not present in the xml config
         	outputPath = env.getResultsFolder();
         	env.getInputDocument().setOutputPath(outputPath);
+        	logger.info("Using output folder " + outputPath);
         }
-        env.setResultsFolder(outputPath);
+        else
+        {
+        	env.setResultsFolder(outputPath);
+        	logger.info("Overriding output folder " + outputPath);
+        }
 
         algorithm.setInputParameter("outputPath", outputPath);
 
@@ -171,13 +177,15 @@ public class AlgorithmRunner {
         // Execute the Algorithm
         population = algorithm.execute();
 
-        population.printObjectivesToFile(outputPath.resolve("FUN").toString());
-        population.printVariablesToFile(outputPath.resolve("VAR").toString());
+        String objectivesPath = outputPath.resolve("Objectives").toString();
+        String variablesPath = outputPath.resolve("Variables").toString();
+        population.printObjectivesToFile(objectivesPath);
+        population.printVariablesToFile(variablesPath);
         long estimatedTime = System.currentTimeMillis() - initTime;
         // Result messages
         logger.info("Total execution time: " + estimatedTime + "ms");
-        logger.info("Objectives values have been writen to file " + outputPath.resolve("FUN").toString());
-        logger.info("Variables values have been writen to file " + outputPath.resolve("VAR").toString());
+        logger.info("Objectives values have been writen to file " + objectivesPath);
+        logger.info("Variables values have been writen to file " + variablesPath);
     } // main
 } // main
 

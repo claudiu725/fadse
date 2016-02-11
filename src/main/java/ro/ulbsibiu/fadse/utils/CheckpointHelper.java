@@ -81,8 +81,7 @@ public class CheckpointHelper {
 
     public void load(SolutionSet solutionSet, int size, Problem problem) throws ClassNotFoundException, JMException {
         int i = 0;
-        try {
-            BufferedReader input = new BufferedReader(new FileReader(fileName));
+        try (BufferedReader input = new BufferedReader(new FileReader(fileName))) {
 
             String line = null; //not declared within while loop
             while ((line = input.readLine()) != null && i < size) {
@@ -134,8 +133,7 @@ public class CheckpointHelper {
     }
 
     public void load(double[] items, int size) throws FileNotFoundException {
-        try {
-            BufferedReader input = new BufferedReader(new FileReader(fileName));
+        try (BufferedReader input = new BufferedReader(new FileReader(fileName))) {
             String line = null; //not declared within while loop
             line = input.readLine();
             StringTokenizer tokenizer = new StringTokenizer(line, ",");

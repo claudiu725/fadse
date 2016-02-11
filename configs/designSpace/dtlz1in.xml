@@ -8,7 +8,7 @@
         this is the input file for the DTLZ1problem
 -->
 <design_space xmlns="http://www.multicube.eu/" version="1.4">
-    <simulator name="DTLZ1" type="synthetic" ><!--type="synthetic"--><!--type can be synthetic or simulator-->
+    <simulator name="ServerSimulator" type="simulator" ><!--type="synthetic"--><!--type can be synthetic or simulator-->
         <simulator_executable path="/path/my_simulator_executable" />
     </simulator>
     <metaheuristic name="NSGAII" config_path="nsgaii.properties" />

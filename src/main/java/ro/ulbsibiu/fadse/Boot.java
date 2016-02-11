@@ -1,11 +1,9 @@
 package ro.ulbsibiu.fadse;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import jmetal.util.JMException;
 import ro.ulbsibiu.fadse.environment.Environment;
 import ro.ulbsibiu.fadse.environment.parameters.CheckpointFileParameter;
 import ro.ulbsibiu.fadse.tools.monitor.SwingMonitor;
@@ -52,8 +50,10 @@ import ro.ulbsibiu.fadse.tools.monitor.SwingMonitor;
  */
 public class Boot {
 
+	public static Logger logger = LogManager.getLogger(Boot.class);
+	
     public static void main(String[] args) {
-        System.out.println("#########################################");
+    	System.out.println("#########################################");
         System.out.println("# FADSE              client server or xml");
         System.out.println("#########################################");
 
@@ -62,10 +62,13 @@ public class Boot {
         ExitInputLister.addExitListener();
 
         if (args.length > 0 && args[0].equals("client")) {
+        	logger.info("Starting client");
             BootClient.main(args);
         } else if (args.length > 0 && args[0].equals("monitor")) {
+        	logger.info("Starting swing monitor");
             SwingMonitor.main(args);
         } else {
+        	logger.info("Starting server");
             String currentdir = System.getProperty("user.dir");
             File dir = new File(currentdir);
 
@@ -109,31 +112,26 @@ public class Boot {
                 } else if (args[i].endsWith(".fcl")) {
                     fuzzyConfigFile = args[i];
                 }
-            }           
+            }
 
+            logger.info("Using environment file " + environmentConfigFile);
             Environment env = new Environment(environmentConfigFile);
+            logger.info("Using checkpoint file " + checkpointFile);
+            logger.info("Using second checkpoint file " + secondFile);
+            logger.info("Using fuzzy config file " + fuzzyConfigFile);
+            logger.info("Using neighbor config file " + neighborConfig);
             CheckpointFileParameter checkpointFileParameter = new CheckpointFileParameter(checkpointFile, secondFile);
             env.setCheckpointFileParameter(checkpointFileParameter);
             env.setFuzzyInputFile(fuzzyConfigFile);
-            //TODO
             env.setNeighborsConfigFile(neighborConfig);
-            //END TODO            
             
             try {
                 AlgorithmRunner algRunner = new AlgorithmRunner();
                 algRunner.run(env);
-            } catch (JMException ex) {
-                Logger.getLogger(Boot.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SecurityException ex) {
-                Logger.getLogger(Boot.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(Boot.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IllegalArgumentException ex) {
-                Logger.getLogger(Boot.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IllegalAccessException ex) {
-                Logger.getLogger(Boot.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(Boot.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            catch (Throwable ex)
+            {
+            	logger.error("Error", ex);
             }
         }
     }

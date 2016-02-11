@@ -329,28 +329,27 @@ public class XMLInputReader {
 		        NamedNodeMap outputAttributes = outputRootNode.getAttributes();
 		        Path outputPath = Paths.get(outputAttributes.getNamedItem("output_path").getNodeValue());           
 		        inputDoc.setOutputPath(outputPath);
-		        System.out.println("Using output path:");
-		        System.out.println(outputPath);
+		        logger.info("Using output path:" + outputPath);
             }
             else
             {
             	String outputPath = System.getProperty("user.home") + System.getProperty("file.separator") + "default";
-            	System.out.println("Using default output path:");
-            	System.out.println(outputPath);
+            	logger.info("Using default output path: " + outputPath);
             }
             
             return inputDoc;
         } catch (SAXParseException err) {
-            System.out.println("** Parsing error" + ", line "
-                    + err.getLineNumber() + ", uri " + err.getSystemId());
-            System.out.println(" " + err.getMessage());
+            logger.error("** Parsing error" + ", line "
+                    + err.getLineNumber() + ", uri " + err.getSystemId() 
+                    + " " + err.getMessage(), err);
 
         } catch (SAXException e) {
             Exception x = e.getException();
             ((x == null) ? e : x).printStackTrace();
+            logger.error("SAXException", e);
 
         } catch (Throwable t) {
-            t.printStackTrace();
+        	logger.catching(t);
         }
         //System.exit (0);
         return null;
@@ -457,7 +456,7 @@ public class XMLInputReader {
         NamedNodeMap attributes = parameter.getAttributes();
         String minValue = attributes.getNamedItem("min").getNodeValue();
         String maxValue = attributes.getNamedItem("max").getNodeValue();
-        double stepI = 0.01;//default step
+//        double stepI = 0.01;//default step
 //        if (attributes.getNamedItem("step") != null) {
 //            String step = attributes.getNamedItem("step").getNodeValue();
 //            stepI = Double.parseDouble(step);
