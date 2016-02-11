@@ -3,6 +3,7 @@ package ro.ulbsibiu.fadse;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.Serializable;
 import java.nio.file.Path;
 import java.util.Properties;
 
@@ -11,12 +12,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.Appender;
 import org.apache.logging.log4j.core.Layout;
-import org.apache.logging.log4j.core.LoggerContext;
 import org.apache.logging.log4j.core.appender.FileAppender;
 import org.apache.logging.log4j.core.config.AppenderRef;
 import org.apache.logging.log4j.core.config.Configuration;
 import org.apache.logging.log4j.core.config.LoggerConfig;
+import org.apache.logging.log4j.core.impl.Log4jContextFactory;
 import org.apache.logging.log4j.core.layout.PatternLayout;
+import org.apache.logging.log4j.core.LoggerContext;
 
 import jmetal.base.Algorithm;
 import jmetal.base.Problem;
@@ -92,28 +94,12 @@ public class AlgorithmRunner {
             path = env.getInputDocument().getMetaheuristicConfigPath();
             properties.load(new FileInputStream(currentDir+ File.separator + path));
         } catch (Exception e) {
-            System.out.println("BAD properties file [" + path + "]. going with default values");
+            logger.error("BAD properties file [" + path + "]. going with default values", e);
         }
         long initTime = System.currentTimeMillis();
-        
+        /*
         logger.info("Using log file : " + env.getAlgorithmFolder(algorithmName).toString());
-
-        final LoggerContext ctx = (LoggerContext) LogManager.getContext(false);
-        final Configuration config = ctx.getConfiguration();
-        Layout layout = PatternLayout.createLayout(PatternLayout.SIMPLE_CONVERSION_PATTERN, null, config, null,
-            null,false, false, null, null);
-        Appender appender = FileAppender.createAppender("target/test.log", "false", "false", "File", "true",
-            "false", "false", "4000", layout, null, "false", null, config);
-        appender.start();
-        config.addAppender(appender);
-        AppenderRef ref = AppenderRef.createAppenderRef("File", null, null);
-        AppenderRef[] refs = new AppenderRef[] {ref};
-        LoggerConfig loggerConfig = LoggerConfig.createLogger("false", Level.INFO, "org.apache.logging.log4j",
-            "true", refs, null, config, null );
-        loggerConfig.addAppender(appender, null, null);
-        config.addLogger("org.apache.logging.log4j", loggerConfig);
-        ctx.updateLoggers();
-
+        */
         
         SolutionSet population = null;
         System.out.println(env.getInputDocument().getSimulatorType());

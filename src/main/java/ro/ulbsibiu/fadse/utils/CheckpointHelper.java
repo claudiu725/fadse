@@ -40,8 +40,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.StringTokenizer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import jmetal.base.Problem;
 import jmetal.base.Solution;
@@ -55,6 +56,7 @@ import ro.ulbsibiu.fadse.environment.Environment;
  */
 public class CheckpointHelper {
 
+	public static Logger logger = LogManager.getLogger(CheckpointHelper.class);
     StringBuilder content;
     String fileName;
     Environment environment;
@@ -97,7 +99,7 @@ public class CheckpointHelper {
                 i++;
             } //while
         } catch (IOException ex) {
-            Logger.getLogger(CheckpointHelper.class.getName()).log(Level.SEVERE, "Checkpoint file does not have enough elements to fill the entire population [" + i + "<" + size + "]. Filling it with random individuals");
+            logger.error("Checkpoint file does not have enough elements to fill the entire population [" + i + "<" + size + "]. Filling it with random individuals");
             while (i < size) {
                 Solution particle = new Solution(problem);
                 problem.evaluate(particle);
@@ -141,7 +143,7 @@ public class CheckpointHelper {
                 items[j] = Double.valueOf(tokenizer.nextToken());
             }
         } catch (IOException ex) {
-            Logger.getLogger(CheckpointHelper.class.getName()).log(Level.SEVERE, "IO Exception ");
+            logger.error("IO Exception ");
         }
     }
 

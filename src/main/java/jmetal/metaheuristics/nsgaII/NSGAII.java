@@ -77,6 +77,8 @@ public class NSGAII extends Algorithm {
 
         Distance distance = new Distance();
 
+        logger.info("executing");
+        
         //Read the parameters
         populationSize = ((Integer) getInputParameter("populationSize")).intValue();
         maxEvaluations = ((Integer) getInputParameter("maxEvaluations")).intValue();
@@ -344,6 +346,7 @@ public class NSGAII extends Algorithm {
         // Return the first non-dominated front
         Ranking ranking = new Ranking(population);
 
+        logger.info("done");
 
         return ranking.getSubfront(0);
 
