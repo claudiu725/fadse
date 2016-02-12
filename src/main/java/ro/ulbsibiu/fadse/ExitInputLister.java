@@ -21,7 +21,7 @@ import org.apache.logging.log4j.Logger;
  */
 public class ExitInputLister implements Runnable {
 
-	public static Logger logger = LogManager.getLogger();
+	static Logger logger = LogManager.getLogger();
 	
     public static void addExitListener() {
         ExitInputLister exi = new ExitInputLister();

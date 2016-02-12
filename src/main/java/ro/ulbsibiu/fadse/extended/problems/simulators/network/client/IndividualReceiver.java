@@ -30,7 +30,7 @@ import ro.ulbsibiu.fadse.persistence.ConnectionPool;
  */
 public class IndividualReceiver implements Runnable {
 
-	Logger logger = LogManager.getLogger(IndividualReceiver.class);
+	Logger logger = LogManager.getLogger();
     ServerSocket serverSocket;
     private Thread simulationRunner;
     private ClientSimulatorRunner clientSimulatorRunner;

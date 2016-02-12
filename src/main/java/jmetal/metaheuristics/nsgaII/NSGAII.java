@@ -35,7 +35,7 @@ import ro.ulbsibiu.fadse.extended.problems.simulators.ServerSimulator;
  */
 public class NSGAII extends Algorithm {
 
-	public static Logger logger = LogManager.getLogger(NSGAII.class);
+	public static Logger logger = LogManager.getLogger();
     /**
      * stores the problem to solve
      */

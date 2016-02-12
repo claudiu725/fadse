@@ -50,7 +50,7 @@ import ro.ulbsibiu.fadse.tools.monitor.SwingMonitor;
  */
 public class Boot {
 
-	public static Logger logger = LogManager.getLogger(Boot.class);
+	static Logger logger = LogManager.getLogger();
 	
     public static void main(String[] args) {
     	System.out.println("#########################################");

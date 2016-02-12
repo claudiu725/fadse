@@ -46,7 +46,7 @@ import ro.ulbsibiu.fadse.utils.Utils;
  */
 public class ServerSimulator extends SimulatorWrapper {
 	
-	Logger logger = LogManager.getLogger(ServerSimulator.class.getName());
+	Logger logger = LogManager.getLogger();
 	//    private List<String> currentlySimulating;
 	//    private Map<Message, Solution> sentToSimulation;
     private ResultsReceiver receiver;

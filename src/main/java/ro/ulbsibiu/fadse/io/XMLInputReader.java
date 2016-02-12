@@ -48,7 +48,7 @@ import ro.ulbsibiu.fadse.extended.base.relation.RelationTree;
  * @author Horia
  */
 public class XMLInputReader {
-	Logger logger = LogManager.getLogger(XMLInputReader.class);
+	Logger logger = LogManager.getLogger();
 	
 	public final static String metaheuristicConfigBasePath = 
 			System.getProperty("file.separator") + "configs" 

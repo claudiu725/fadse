@@ -56,7 +56,7 @@ import ro.ulbsibiu.fadse.environment.Environment;
  */
 public class CheckpointHelper {
 
-	public static Logger logger = LogManager.getLogger(CheckpointHelper.class);
+	static Logger logger = LogManager.getLogger();
     StringBuilder content;
     String fileName;
     Environment environment;

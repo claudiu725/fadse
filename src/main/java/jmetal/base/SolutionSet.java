@@ -25,7 +25,7 @@ import org.apache.logging.log4j.Logger;
  */
 public class SolutionSet implements Serializable {
   
-  static Logger logger = LogManager.getLogger(SolutionSet.class.getName());
+  static Logger logger = LogManager.getLogger();
   /**
    * Stores a list of <code>solution</code> objects.
    */

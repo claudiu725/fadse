@@ -19,7 +19,7 @@ import ro.ulbsibiu.fadse.extended.problems.simulators.network.Message;
  */
 public class ClientSimulatorRunner implements Runnable {
 	
-	Logger logger = LogManager.getLogger(ClientSimulatorRunner.class);
+	Logger logger = LogManager.getLogger();
 	
     private Individual individual;
     private SimulatorWrapper simulator;

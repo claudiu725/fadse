@@ -51,7 +51,7 @@ import ro.ulbsibiu.fadse.extended.problems.simulators.network.client.IndividualR
  */
 public class BootClient {
 	
-	public static Logger logger = LogManager.getLogger(BootClient.class);
+	static Logger logger = LogManager.getLogger();
 
     public static void main(String[] args) {
         try {

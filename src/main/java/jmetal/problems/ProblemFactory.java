@@ -20,7 +20,7 @@ import jmetal.util.JMException;
  */
 public class ProblemFactory {
 
-	Logger logger = LogManager.getLogger(ProblemFactory.class);
+	Logger logger = LogManager.getLogger();
     /**
      * Creates an object representing a problem
      * @param name Name of the problem

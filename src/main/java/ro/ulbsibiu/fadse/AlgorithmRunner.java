@@ -59,7 +59,7 @@ import ro.ulbsibiu.fadse.extended.problems.simulators.network.server.status.Simu
  */
 public class AlgorithmRunner {
 
-    public static Logger logger = LogManager.getLogger(AlgorithmRunner.class); // Logger object
+    static Logger logger = LogManager.getLogger();
     private Algorithm algorithm = null; // The algorithm to use
 
     public void run(Environment env) throws JMException, SecurityException,

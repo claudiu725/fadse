@@ -24,7 +24,7 @@ import ro.ulbsibiu.fadse.extended.problems.simulators.network.Message;
  */
 public class ResultsSender {
 
-	Logger logger = LogManager.getLogger(ResultsSender.class);
+	Logger logger = LogManager.getLogger();
 	
     public void send(Individual ind, Message m) throws IOException {
         ObjectOutputStream out = null;
