@@ -63,16 +63,14 @@ public class Main {
       algorithmName = args[0] ;
       Object [] problemParams = {"Real"};
       problem = (new ProblemFactory()).getProblem(problemName, problemParams);      
-      Object [] settingsParams = {problem} ;
-      settings = (new SettingsFactory()).getSettingsObject(algorithmName, settingsParams) ;
+      settings = (new SettingsFactory()).getSettingsObject(algorithmName, problem) ;
       } // if
     else if (args.length == 2) { // algorithmName problemName
       algorithmName = args[0] ;
       problemName = args[1] ;
       Object [] problemParams = {"Real"};
       problem = (new ProblemFactory()).getProblem(problemName, problemParams);      
-      Object [] settingsParams = {problem} ;
-      settings = (new SettingsFactory()).getSettingsObject(algorithmName, settingsParams) ;
+      settings = (new SettingsFactory()).getSettingsObject(algorithmName, problem) ;
       } // if
     else if (args.length == 3) { // algorithmName problemName paretoFrontFile
       algorithmName = args[0] ;
@@ -80,8 +78,7 @@ public class Main {
       paretoFrontFile = args[2] ;
       Object [] problemParams = {"Real"};
       problem = (new ProblemFactory()).getProblem(problemName, problemParams);      
-      Object [] settingsParams = {problem} ;
-      settings = (new SettingsFactory()).getSettingsObject(algorithmName, settingsParams) ;
+      settings = (new SettingsFactory()).getSettingsObject(algorithmName, problem) ;
       
       properties.setProperty("paretoFrontFile_", paretoFrontFile);
       indicators = new QualityIndicator(problem, paretoFrontFile);

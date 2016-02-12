@@ -1,21 +1,14 @@
 package ro.ulbsibiu.fadse;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.Properties;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import jmetal.base.Algorithm;
-import jmetal.base.Problem;
 import jmetal.base.SolutionSet;
-import jmetal.experiments.Settings;
-import jmetal.experiments.SettingsFactory;
-import jmetal.problems.ProblemFactory;
 import jmetal.util.JMException;
 import ro.ulbsibiu.fadse.environment.Environment;
+import ro.ulbsibiu.fadse.extended.base.factory.AlgorithmFactory;
 import ro.ulbsibiu.fadse.extended.problems.simulators.network.server.status.SimulationStatus;
 
 /*
@@ -67,68 +60,10 @@ public class AlgorithmRunner {
             ClassNotFoundException {
         // Runtime.getRuntime().addShutdownHook(new Thread(new
         // PerformCleanup()));
-        Problem problem; // The problem to solve
 
-        Properties properties;
-        Settings settings = null;
-        String algorithmName = env.getInputDocument().getMetaheuristicName();
-        String problemName = env.getInputDocument().getSimulatorName();
-
-        properties = new Properties();
-        String path = "N/A";
-        String currentDir = System.getProperty("user.dir");
-        logger.info("Current folder is: " + currentDir);
-        try {
-            path = env.getInputDocument().getMetaheuristicConfigPath();
-            path = currentDir+ File.separator + path;
-            logger.info("Loading properties file " + path);
-            properties.load(new FileInputStream(path));
-        } catch (Exception e) {
-            logger.error("BAD properties file [" + path + "]. going with default values", e);
-        }
+        algorithm = AlgorithmFactory.createFromInputDocument(env.getInputDocument(), env);
         long initTime = System.currentTimeMillis();
-        /*
-        logger.info("Using log file : " + env.getAlgorithmFolder(algorithmName).toString());
-        */
         
-        SolutionSet population = null;
-        logger.info("Simulator type is " + env.getInputDocument().getSimulatorType());
-        if (env.getInputDocument().getSimulatorType().equalsIgnoreCase("synthetic")) {
-            // it is a synthetic problem
-            problem = null;
-            Object[] problemParams = {"Real"};// TODO configure the problem
-            // param type, nr of variables,
-            // nr of objectives
-            if (problemName.startsWith("DTLZ")) {
-                problemParams = new Object[3];
-                problemParams[0] = "Real";
-                problemParams[1] = env.getInputDocument().getParameters().length;
-                problemParams[2] = env.getInputDocument().getObjectives().size();
-            }
-            problem = (new ProblemFactory()).getProblem(problemName,
-                    problemParams);
-        } else {
-            // is a simulator
-            Object[] problemParams = {env};
-            problem = (new ProblemFactory()).getProblem(problemName,
-                    problemParams);
-        }
-        logger.info("Created a problem of class " + problem.getClass().getName());
-        Object[] settingsParams = {problem};
-        settings = (new SettingsFactory()).getSettingsObject(algorithmName,
-                settingsParams);
-        algorithm = settings.configure(properties);
-        logger.info("Created an algorithm of class " + algorithm.getClass().getName());
-        try {
-            algorithm.getOperator("mutation").setParameter("environment", env);
-        } catch (Exception e) {
-            logger.error("MUTATION was not defined");
-        }
-        try {
-            algorithm.getOperator("crossover").setParameter("environment", env);
-        } catch (Exception e) {
-            logger.error("CROSSOVER was not defined");
-        }
         // Algorithm parameters htey work only for NSGA-II for other algorithms
         // we need to define others, we have to see how to do it more easily
         // probably with configuration files
@@ -136,23 +71,6 @@ public class AlgorithmRunner {
                 && !env.getCheckpointFileParameter().equals("")) {
             algorithm.setInputParameter("checkpointFile",
                     env.getCheckpointFileParameter());
-        }
-        if (env.getInputDocument().getSimulatorParameter(
-                "forceFeasibleFirstGeneration") != null) {
-            algorithm.setInputParameter(
-                    "forceFeasibleFirstGeneration",
-                    env.getInputDocument().getSimulatorParameter(
-                    "forceFeasibleFirstGeneration"));
-        }
-        if (env.getInputDocument().getSimulatorParameter(
-                "forceMinimumPercentageFeasibleIndividuals") != null) {
-            algorithm.setInputParameter(
-                    "forceMinimumPercentageFeasibleIndividuals",
-                    env.getInputDocument().getSimulatorParameter(
-                    "forceMinimumPercentageFeasibleIndividuals"));
-        } else {
-            algorithm.setInputParameter(
-                    "forceMinimumPercentageFeasibleIndividuals", "0");
         }
 
         Path outputPath = env.getInputDocument().getOutputPath();
@@ -175,13 +93,13 @@ public class AlgorithmRunner {
         SimulationStatus.getInstance().setAlgorithm(algorithm);
         SimulationStatus.getInstance().setEnvironment(env);
         // Execute the Algorithm
-        population = algorithm.execute();
+        SolutionSet population = algorithm.execute();
 
         String objectivesPath = outputPath.resolve("Objectives").toString();
         String variablesPath = outputPath.resolve("Variables").toString();
         population.printObjectivesToFile(objectivesPath);
         population.printVariablesToFile(variablesPath);
-        long estimatedTime = System.currentTimeMillis() - initTime;
+		long estimatedTime = System.currentTimeMillis() - initTime ;
         // Result messages
         logger.info("Total execution time: " + estimatedTime + "ms");
         logger.info("Objectives values have been writen to file " + objectivesPath);

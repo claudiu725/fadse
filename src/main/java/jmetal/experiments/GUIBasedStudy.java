@@ -34,8 +34,7 @@ public class GUIBasedStudy extends Experiment {
       if (!paretoFrontFile_[problemIndex].equals("")) {
         for (int i = 0; i < numberOfAlgorithms; i++) {
           parameters[i].setProperty("PARETO_FRONT_FILE", paretoFrontFile_[problemIndex]);
-          Object [] settingsParams = {problem} ;
-          algorithm[i] = (new SettingsFactory()).getSettingsObject(algorithmNameList_[i], settingsParams).configure(parameters[i]);
+          algorithm[i] = (new SettingsFactory()).getSettingsObject(algorithmNameList_[i], problem).configure(parameters[i]);
         }
       } // if
     } catch (IllegalArgumentException ex) {
