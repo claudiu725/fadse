@@ -39,7 +39,7 @@ public class Environment implements Serializable {
     	inputDocument = (new XMLInputReader()).parse(inputFilePath);
         ConnectionPool.setInputDocument(inputDocument);
         String currentdir = System.getProperty("user.dir");
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_hh:mm:ss:SSS");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_hh:mm:ss");
         String date = dateFormat.format(new Date());
         resultsFolder = Paths.get(currentdir, "results", date);
         try {

@@ -7,6 +7,7 @@ package jmetal.base.operator.selection;
 
 import java.util.Comparator;
 
+import jmetal.base.Solution;
 import jmetal.base.SolutionSet;
 
 /**
@@ -16,13 +17,13 @@ import jmetal.base.SolutionSet;
 public class BestSolutionSelection extends Selection {
   
 	// Comparator
-  private Comparator comparator_;
+  private Comparator<Solution> comparator_;
     
   /**
    * Constructor
    * @param comparator
    */
-  public BestSolutionSelection(Comparator comparator) {
+  public BestSolutionSelection(Comparator<Solution> comparator) {
   	comparator_ = comparator ;
   }
   

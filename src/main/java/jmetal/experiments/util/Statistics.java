@@ -24,17 +24,17 @@ public class Statistics {
    * @param last index of last position to consider in the vector
    * @return The median
    */
-  public static Double calculateMedian(Vector vector, int first, int last) {
+  public static Double calculateMedian(Vector<Double> vector, int first, int last) {
     double median = 0.0;
 
     int size = last - first + 1;
     // System.out.println("size: " + size + "first: " + first + " last:  " + last) ;
 
     if (size % 2 != 0) {
-      median = (Double) vector.elementAt(first + size / 2);
+      median = vector.elementAt(first + size / 2);
     } else {
-      median = ((Double) vector.elementAt(first + size / 2 - 1) +
-              (Double) vector.elementAt(first + size / 2)) / 2.0;
+      median = (vector.elementAt(first + size / 2 - 1) +
+              vector.elementAt(first + size / 2)) / 2.0;
     }
 
     return median;
@@ -45,7 +45,7 @@ public class Statistics {
    * @param vector
    * @return The IQR
    */
-  public static Double calculateIQR(Vector vector) {
+  public static Double calculateIQR(Vector<Double> vector) {
     double q3 = 0.0;
     double q1 = 0.0;
 
