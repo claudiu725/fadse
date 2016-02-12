@@ -1,6 +1,9 @@
+
 package ro.ulbsibiu.fadse;
 
-import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -70,7 +73,7 @@ public class Boot {
         } else {
         	logger.info("Starting server");
             String currentdir = System.getProperty("user.dir");
-            File dir = new File(currentdir);
+            Path dir = Paths.get(currentdir);
 
              //String xmlFileName = "falsesimin.xml";
             String xmlFileName = "gapdistsimin_radu.xml";
@@ -94,14 +97,12 @@ public class Boot {
             String secondFile = "";
 
             String fuzzyConfigFile ="";
-            String environmentConfigFile = dir 
-            		+ System.getProperty("file.separator") + "configs" 
-            		+ System.getProperty("file.separator") + "designSpace"
-            		+ System.getProperty("file.separator") + xmlFileName;
-            String neighborConfig = dir 
-            		+ System.getProperty("file.separator") + "configs"
-            		+ System.getProperty("file.separator") + "neighbor"
-            		+ System.getProperty("file.separator") + "simpleNeighborConfig.xml";
+            String environmentConfigFile = dir.resolve("configs")
+            		.resolve("designSpace")
+            		.resolve(xmlFileName).toString();
+            String neighborConfig = dir.resolve("configs")
+            		.resolve("neighbor")
+            		.resolve("simpleNeighborConfig.xml").toString();
             for (int i = 1; i < args.length; i++) {
                 if (args[i].endsWith(".xml")) {
                     neighborConfig = args[i];

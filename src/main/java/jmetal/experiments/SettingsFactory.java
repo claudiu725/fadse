@@ -8,6 +8,7 @@ package jmetal.experiments;
 
 import java.lang.reflect.Constructor;
 
+import jmetal.base.Problem;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
 
@@ -29,7 +30,7 @@ public class SettingsFactory {
    * @return The settings object
    * @throws JMException 
    */
-  public Settings getSettingsObject(String algorithmName, Object [] params) throws JMException {
+  public Settings getSettingsObject(String algorithmName, Problem problem) throws JMException {
     // Params are the arguments
     // The only argument is the problem to solve
     
@@ -37,15 +38,8 @@ public class SettingsFactory {
 
     try {
       Class<?> problemClass = Class.forName(base);
-      Constructor [] constructors = problemClass.getConstructors();
-      int i = 0;
-      //find the constructor
-      while ((i < constructors.length) && 
-             (constructors[i].getParameterTypes().length!=params.length)) {
-        i++;
-      }
-      // constructors[i] is the selected one constructor
-      Settings algorithmSettings = (Settings)constructors[i].newInstance(params);
+      Constructor<?> constructor = problemClass.getConstructor(Problem.class);
+      Settings algorithmSettings = (Settings)constructor.newInstance(problem);
       return algorithmSettings;      
     }// try
     catch(Exception e) {

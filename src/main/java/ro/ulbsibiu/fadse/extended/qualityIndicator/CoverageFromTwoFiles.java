@@ -69,8 +69,8 @@ public static void main(String[] args) throws IOException {
         SolutionSet pop1 = MetricsUtil.readPopulation(folderPathPop1,populationSizePop1,nrOfobejctivesPop1);
         SolutionSet pop2 = MetricsUtil.readPopulation(folderPathPop2,populationSizePop2,nrOfobejctivesPop2);
         CoverageOfTwoSets coverage = new CoverageOfTwoSets();
-        System.out.println("coverage pop1 - pop2: "+coverage.computeCoverage(pop1, pop2));
-        System.out.println("coverage pop2 - pop1: "+coverage.computeCoverage(pop2, pop1));
+        System.out.println("coverage pop1 - pop2: " + coverage.computeCoverage(pop1, pop2));
+        System.out.println("coverage pop2 - pop1: " + coverage.computeCoverage(pop2, pop1));
 
     }
 

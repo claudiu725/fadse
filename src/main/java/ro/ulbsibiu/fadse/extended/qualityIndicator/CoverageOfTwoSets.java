@@ -20,7 +20,7 @@ public class CoverageOfTwoSets {
      * @param pop2
      * @return
      */
-    public static double computeCoverage(SolutionSet pop1, SolutionSet pop2) {
+    public double computeCoverage(SolutionSet pop1, SolutionSet pop2) {
 //Case study pop1 = IBEA, pop2 = SPEA2 - more easy to reason about :)
         double dominationCount = 0;
         boolean dominated = false;
