@@ -22,7 +22,7 @@ public class AlgorithmFactory {
 	
 	static public Algorithm createFromInputDocument(InputDocument document, Environment env) throws JMException, IllegalArgumentException, IllegalAccessException, ClassNotFoundException
 	{
-		Problem problem = FadseProblemFactory.createFromInputDocument(document);
+		Problem problem = FadseProblemFactory.createFromInputDocument(document, env);
 		Properties properties = PropertiesFactory.createFromFile(document.getMetaheuristicConfigPath());
         Settings settings = (new SettingsFactory()).getSettingsObject(document.getMetaheuristicName(), problem);
         Algorithm algorithm = settings.configure(properties);

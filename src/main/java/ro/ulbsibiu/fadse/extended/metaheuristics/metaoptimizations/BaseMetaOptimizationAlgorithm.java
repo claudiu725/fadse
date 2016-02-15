@@ -12,23 +12,20 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.Random;
 import java.util.StringTokenizer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import jmetal.base.Algorithm;
 import jmetal.base.Problem;
 import jmetal.base.Solution;
 import jmetal.base.SolutionSet;
-import jmetal.metaheuristics.nsgaII.NSGAII;
 import jmetal.util.JMException;
 import ro.ulbsibiu.fadse.environment.parameters.CheckpointFileParameter;
 import ro.ulbsibiu.fadse.extended.metaheuristics.metaoptimizations.metaoptimized.MetaOptimizedAlgorithm;
 import ro.ulbsibiu.fadse.extended.metaheuristics.metaoptimizations.metrics.Metric;
-import ro.ulbsibiu.fadse.extended.problems.simulators.ServerSimulator;
 
 /**
  *
@@ -36,6 +33,8 @@ import ro.ulbsibiu.fadse.extended.problems.simulators.ServerSimulator;
  */
 public abstract class BaseMetaOptimizationAlgorithm extends Algorithm {
 
+	Logger logger = LogManager.getLogger();
+	
     protected Problem problem_;
 
     protected Random rand;
@@ -52,15 +51,13 @@ public abstract class BaseMetaOptimizationAlgorithm extends Algorithm {
     protected int maxEvaluations;
     protected int evaluations = 0;
     
-    protected Path resultsFolder = Paths.get("../metrics");
+    protected Path resultsFolder = null;
 
     public BaseMetaOptimizationAlgorithm(Problem problem) {
         problem_ = problem;
         rand = new Random();
 
-        if (problem_ instanceof ServerSimulator) {
-            resultsFolder = ((ServerSimulator) problem_).getEnvironment().getInputDocument().getOutputPath();
-        }
+        resultsFolder = (Path) getInputParameter("outputPath");
     }
 
     protected SolutionSet readOrCreateInitialSolutionSet() throws ClassNotFoundException, JMException {
@@ -73,7 +70,7 @@ public abstract class BaseMetaOptimizationAlgorithm extends Algorithm {
         }
 
         if (file != null && !file.equals("")) {
-            Logger.getLogger(IsmailAlgorithm.class.getName()).log(Level.WARNING, "Using a checkpoint file: " + file);
+            logger.warn("Using a checkpoint file: " + file);
             int i = 0;
             try {
                 BufferedReader input = new BufferedReader(new FileReader(file));
@@ -97,7 +94,7 @@ public abstract class BaseMetaOptimizationAlgorithm extends Algorithm {
                     throw new IOException("Checkpoint file does not have enough elements to fill the entire population");
                 }
             } catch (IOException ex) {
-                Logger.getLogger(NSGAII.class.getName()).log(Level.SEVERE, "Checkpoint file does not have enough elements to fill the entire population [" + i + "<" + populationSize + "]. Filling it with random individuals");
+                logger.error("Checkpoint file does not have enough elements to fill the entire population [" + i + "<" + populationSize + "]. Filling it with random individuals");
                 while (i < populationSize) {
                     Solution newSolution = new Solution(problem_);
                     problem_.evaluate(newSolution);
@@ -139,8 +136,8 @@ public abstract class BaseMetaOptimizationAlgorithm extends Algorithm {
         PrintWriter writer;
         try {
             long time = System.currentTimeMillis();
-            String metricsOutputFile = (resultsFolder + System.getProperty("file.separator") + "metrics" + time + ".csv");
-            writer = new PrintWriter(metricsOutputFile, "UTF-8");
+            Path metricsOutputFile = (resultsFolder.resolve("metrics" + time + ".csv"));
+            writer = new PrintWriter(metricsOutputFile.toString(), "UTF-8");
             writer.println("Metrics");
             for (int i = 0; i < metrics.size(); ++i) {
                 Metric metric = metrics.get(i);
@@ -200,9 +197,9 @@ public abstract class BaseMetaOptimizationAlgorithm extends Algorithm {
             }
             writer.close();
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(IsmailAlgorithm.class.getName()).log(Level.SEVERE, null, ex);
+            logger.error("", ex);
         } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(IsmailAlgorithm.class.getName()).log(Level.SEVERE, null, ex);
+        	logger.error("", ex);
         }
 
         adjustPercentages();
@@ -274,7 +271,7 @@ public abstract class BaseMetaOptimizationAlgorithm extends Algorithm {
 //        } while (!removedExcess);
         currentPopulationSizes[rand.nextInt(currentPopulationSizes.length)] += remaining;
         if (remaining < 0) {
-            Logger.getLogger(BaseMetaOptimizationAlgorithm.class.getName()).log(Level.SEVERE, "Remaining is " + remaining);
+            logger.error("Remaining is " + remaining);
             throw new JMException("remaining is negative");
         }
     }

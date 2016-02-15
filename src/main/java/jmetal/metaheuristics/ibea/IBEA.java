@@ -311,7 +311,7 @@ public class IBEA extends Algorithm{
       } // while
       if (problem_ instanceof ServerSimulator) {
                 ((ServerSimulator) problem_).join();//blocks until all  the offsprings are evaluated
-                ((ServerSimulator) problem_).dumpCurrentPopulation("offspring"+System.currentTimeMillis(),offSpringSolutionSet);
+                ((ServerSimulator) problem_).dumpCurrentPopulation("offspring",System.currentTimeMillis(),offSpringSolutionSet);
       }
       // End Create a offSpring solutionSet
       solutionSet = offSpringSolutionSet;

@@ -257,7 +257,7 @@ public class MOCHC extends Algorithm {
             }
             if (problem_ instanceof ServerSimulator) {
                 ((ServerSimulator) problem_).join();//blocks until all  the offsprings are evaluated
-                ((ServerSimulator) problem_).dumpCurrentPopulation("offspring" + System.currentTimeMillis(), offspringPopulation);
+                ((ServerSimulator) problem_).dumpCurrentPopulation("offspring", System.currentTimeMillis(), offspringPopulation);
             }
             SolutionSet union = solutionSet.union(offspringPopulation);
             newGenerationSelection.setParameter("populationSize", populationSize);

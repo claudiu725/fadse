@@ -6,6 +6,7 @@ import org.apache.logging.log4j.Logger;
 import jmetal.base.Problem;
 import jmetal.problems.ProblemFactory;
 import jmetal.util.JMException;
+import ro.ulbsibiu.fadse.environment.Environment;
 import ro.ulbsibiu.fadse.environment.document.InputDocument;
 
 /**
@@ -15,7 +16,7 @@ import ro.ulbsibiu.fadse.environment.document.InputDocument;
 public class FadseProblemFactory {
 	static Logger logger = LogManager.getLogger(FadseProblemFactory.class);
 	
-	static Problem createFromInputDocument(InputDocument document) throws JMException
+	static Problem createFromInputDocument(InputDocument document, Environment env) throws JMException
 	{
 		Problem problem = null;
         logger.info("Simulator type is " + document.getSimulatorType());
@@ -35,7 +36,7 @@ public class FadseProblemFactory {
                     problemParams);
         } else {
             // is a simulator
-            Object[] problemParams = {}; // TODO
+            Object[] problemParams = { env };
             problem = (new ProblemFactory()).getProblem(problemName,
                     problemParams);
         }

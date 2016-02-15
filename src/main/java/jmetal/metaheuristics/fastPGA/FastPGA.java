@@ -113,7 +113,7 @@ public class FastPGA extends Algorithm{
       }
       if (problem_ instanceof ServerSimulator) {
                 ((ServerSimulator) problem_).join();//blocks until all  the offsprings are evaluated
-                ((ServerSimulator) problem_).dumpCurrentPopulation("offspring"+System.currentTimeMillis(),offSpringSolutionSet);
+                ((ServerSimulator) problem_).dumpCurrentPopulation("offspring",System.currentTimeMillis(),offSpringSolutionSet);
       }
       // Merge the populations
       candidateSolutionSet = solutionSet.union(offSpringSolutionSet);

@@ -169,7 +169,7 @@ public class SPEA2 extends Algorithm {
             //Added by HORIA
             if (problem_ instanceof ServerSimulator) {
                 ((ServerSimulator) problem_).join();//blocks until all  the offsprings are evaluated
-                ((ServerSimulator) problem_).dumpCurrentPopulation("offspring"+System.currentTimeMillis(),offSpringSolutionSet);
+                ((ServerSimulator) problem_).dumpCurrentPopulation("offspring",System.currentTimeMillis(),offSpringSolutionSet);
             }
             if (outputEveryPopulation) {
 					offSpringSolutionSet.printObjectivesToFile(outputPath

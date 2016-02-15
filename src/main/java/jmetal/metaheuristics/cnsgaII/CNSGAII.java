@@ -225,10 +225,10 @@ public class CNSGAII extends Algorithm {
 			((ServerSimulator) problem_).join();// blocks until all the
 												// offsprings are evaluated
 			((ServerSimulator) problem_).dumpCurrentPopulation("corrected"
-					+ System.currentTimeMillis(), population);
+					, System.currentTimeMillis(), population);
 			Ranking ranking_temp = new Ranking(population);
 			((ServerSimulator) problem_).dumpCurrentPopulation("pareto"
-					+ System.currentTimeMillis(), ranking_temp.getSubfront(0));
+					, System.currentTimeMillis(), ranking_temp.getSubfront(0));
 		}
 		// END WORKAROUND
 		// END added by Horia
@@ -308,7 +308,7 @@ public class CNSGAII extends Algorithm {
 				((ServerSimulator) problem_).join();// blocks until all the
 													// offsprings are evaluated
 				((ServerSimulator) problem_).dumpCurrentPopulation("offspring"
-						+ System.currentTimeMillis(), offspringPopulation);
+						, System.currentTimeMillis(), offspringPopulation);
 			}
 			// WORKAROUND
 			//System.out.println("RESEND");
@@ -320,7 +320,7 @@ public class CNSGAII extends Algorithm {
 				((ServerSimulator) problem_).join();// blocks until all the
 													// offsprings are evaluated
 				((ServerSimulator) problem_).dumpCurrentPopulation("corrected"
-						+ System.currentTimeMillis(), population);
+						, System.currentTimeMillis(), population);
 			}
 			// END WORKAROUND
 			// END added by Horia
@@ -400,7 +400,7 @@ public class CNSGAII extends Algorithm {
 				((ServerSimulator) problem_).dumpCurrentPopulation(population);
 				Ranking ranking_temp = new Ranking(population);
 				((ServerSimulator) problem_).dumpCurrentPopulation("pareto"
-						+ System.currentTimeMillis(),
+						, System.currentTimeMillis(),
 						ranking_temp.getSubfront(0));
 			} else {
 				if (outputEveryPopulation) {

@@ -22,7 +22,7 @@ import ro.ulbsibiu.fadse.environment.Individual;
 public class GapLogger {
 
     private static File file = new File("infeasible_log_" + System.currentTimeMillis() + ".txt");
-    private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss");
+    private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
 
     public static synchronized void logInfeasible(Individual ind, String reason) {
         BufferedWriter bw = null;

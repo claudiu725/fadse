@@ -221,11 +221,9 @@ public class MetaOptimizedCNSGAII extends Algorithm {
 		if (problem_ instanceof ServerSimulator) {
 			((ServerSimulator) problem_).join();// blocks until all the
 												// offsprings are evaluated
-			((ServerSimulator) problem_).dumpCurrentPopulation("corrected"
-					+ System.currentTimeMillis(), population);
+			((ServerSimulator) problem_).dumpCurrentPopulation("corrected", System.currentTimeMillis(), population);
 			Ranking ranking_temp = new Ranking(population);
-			((ServerSimulator) problem_).dumpCurrentPopulation("pareto"
-					+ System.currentTimeMillis(), ranking_temp.getSubfront(0));
+			((ServerSimulator) problem_).dumpCurrentPopulation("pareto", System.currentTimeMillis(), ranking_temp.getSubfront(0));
 		}
 		// END WORKAROUND
 		// END added by Horia
@@ -304,8 +302,7 @@ public class MetaOptimizedCNSGAII extends Algorithm {
 			if (problem_ instanceof ServerSimulator) {
 				((ServerSimulator) problem_).join();// blocks until all the
 													// offsprings are evaluated
-				((ServerSimulator) problem_).dumpCurrentPopulation("offspring"
-						+ System.currentTimeMillis(), offspringPopulation);
+				((ServerSimulator) problem_).dumpCurrentPopulation("offspring", System.currentTimeMillis(), offspringPopulation);
 			}
 			// WORKAROUND
 			System.out.println("RESEND");
@@ -316,8 +313,7 @@ public class MetaOptimizedCNSGAII extends Algorithm {
 			if (problem_ instanceof ServerSimulator) {
 				((ServerSimulator) problem_).join();// blocks until all the
 													// offsprings are evaluated
-				((ServerSimulator) problem_).dumpCurrentPopulation("corrected"
-						+ System.currentTimeMillis(), population);
+				((ServerSimulator) problem_).dumpCurrentPopulation("corrected", System.currentTimeMillis(), population);
 			}
 			// END WORKAROUND
 			// END added by Horia
@@ -396,8 +392,7 @@ public class MetaOptimizedCNSGAII extends Algorithm {
 			if (problem_ instanceof ServerSimulator) {
 				((ServerSimulator) problem_).dumpCurrentPopulation(population);
 				Ranking ranking_temp = new Ranking(population);
-				((ServerSimulator) problem_).dumpCurrentPopulation("pareto"
-						+ System.currentTimeMillis(),
+				((ServerSimulator) problem_).dumpCurrentPopulation("pareto", System.currentTimeMillis(),
 						ranking_temp.getSubfront(0));
 			} else {
 				if (outputEveryPopulation) {

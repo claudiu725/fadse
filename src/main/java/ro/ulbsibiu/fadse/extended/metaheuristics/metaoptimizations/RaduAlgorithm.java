@@ -10,8 +10,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import jmetal.base.Problem;
 import jmetal.base.Solution;
@@ -27,6 +27,8 @@ import ro.ulbsibiu.fadse.extended.problems.simulators.ServerSimulator;
  */
 public class RaduAlgorithm extends BaseMetaOptimizationAlgorithm {
 
+	Logger logger = LogManager.getLogger();
+	
     public RaduAlgorithm(Problem problem) {
         super(problem);        
     }
@@ -62,7 +64,7 @@ public class RaduAlgorithm extends BaseMetaOptimizationAlgorithm {
             }
 
             for (int i = 0; i < moas.size(); i++) {
-            	((ServerSimulator) problem_).dumpCurrentPopulation("off" + moas.get(i).getName() + System.currentTimeMillis(), offspringSets.get(i));
+            	((ServerSimulator) problem_).dumpCurrentPopulation("off" + moas.get(i).getName(), System.currentTimeMillis(), offspringSets.get(i));
             }
 
             masterPopulation = selectBestAccordingToPercentages(masterPopulation, offspringSets);
@@ -131,7 +133,7 @@ public class RaduAlgorithm extends BaseMetaOptimizationAlgorithm {
                         initialOffspringSets.set(i, initialOffspringSets.get(i).union(bestIndividuals));
                     }
                 } catch (JMException ex) {
-                    Logger.getLogger(RaduAlgorithm.class.getName()).log(Level.SEVERE, null, ex);
+                    logger.error("", ex);
                 }
 
                 //mark the individuals in the archive as selected 

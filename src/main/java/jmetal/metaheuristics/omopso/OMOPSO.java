@@ -350,7 +350,7 @@ public class OMOPSO extends Algorithm {
             }
             if (problem_ instanceof ServerSimulator) {
                 ((ServerSimulator) problem_).join();//blocks until all  the offsprings are evaluated
-                ((ServerSimulator) problem_).dumpCurrentPopulation("offspring" + System.currentTimeMillis(), particles_);
+                ((ServerSimulator) problem_).dumpCurrentPopulation("offspring", System.currentTimeMillis(), particles_);
             }
             //Actualize the archive
             for (int i = 0; i < particles_.size(); i++) {

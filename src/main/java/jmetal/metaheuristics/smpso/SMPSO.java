@@ -465,7 +465,7 @@ public class SMPSO extends Algorithm {
         if (problem_ instanceof ServerSimulator) {
             ((ServerSimulator) problem_).join();//blocks until all  the offsprings are evaluated
             String currentMiliseconds = "" + System.currentTimeMillis();
-            ((ServerSimulator) problem_).dumpCurrentPopulation("filled" + currentMiliseconds, particles_);
+            ((ServerSimulator) problem_).dumpCurrentPopulation("filled", currentMiliseconds, particles_);
             dumpCurrentSpeed("speed" + currentMiliseconds);
         }
 
@@ -522,7 +522,7 @@ public class SMPSO extends Algorithm {
             if (problem_ instanceof ServerSimulator) {
                 ((ServerSimulator) problem_).join();//blocks until all  the offsprings are evaluated             
                 String currentMiliseconds = "" + System.currentTimeMillis();
-                ((ServerSimulator) problem_).dumpCurrentPopulation("offspring" + currentMiliseconds, particles_);
+                ((ServerSimulator) problem_).dumpCurrentPopulation("offspring", currentMiliseconds, particles_);
                 dumpCurrentSpeed("speed" + currentMiliseconds);
             }
             //Actualize the archive
@@ -548,7 +548,7 @@ public class SMPSO extends Algorithm {
             if (problem_ instanceof ServerSimulator) {
                 ((ServerSimulator) problem_).join();//blocks until all  the offsprings are evaluated
                 String currentMiliseconds = "" + System.currentTimeMillis();
-                ((ServerSimulator) problem_).dumpCurrentPopulation("filled" + currentMiliseconds, leaders_);
+                ((ServerSimulator) problem_).dumpCurrentPopulation("filled", currentMiliseconds, leaders_);
                 dumpCurrentSpeed("speed" + currentMiliseconds);
             }
             else{

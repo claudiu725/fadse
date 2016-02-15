@@ -7,8 +7,9 @@ package ro.ulbsibiu.fadse.extended.metaheuristics.metaoptimizations;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import jmetal.base.Problem;
 import jmetal.base.Solution;
@@ -23,6 +24,8 @@ import ro.ulbsibiu.fadse.extended.problems.simulators.ServerSimulator;
  */
 public class IsmailAlgorithm extends BaseMetaOptimizationAlgorithm {
  
+	Logger logger = LogManager.getLogger();
+	
     public IsmailAlgorithm(Problem problem) {
         super(problem);        
     }
@@ -66,11 +69,11 @@ public class IsmailAlgorithm extends BaseMetaOptimizationAlgorithm {
                 ((ServerSimulator) problem_).join();
                 ((ServerSimulator) problem_).dumpCurrentPopulation(masterPopulation);
                 for (int i = 0; i < moas.size(); i++) {
-                	((ServerSimulator) problem_).dumpCurrentPopulation("off" + moas.get(i).getName() + System.currentTimeMillis(), offspringSets.get(i));
+                	((ServerSimulator) problem_).dumpCurrentPopulation("off" + moas.get(i).getName(), System.currentTimeMillis(), offspringSets.get(i));
                 }
             }
             
-            Logger.getLogger(this.getClass().getName()).log(Level.WARNING, "Evaluations until now " + evaluations);
+            logger.warn("Evaluations until now " + evaluations);
             updatePercentages(offspringSets);
         }
 

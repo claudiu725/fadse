@@ -22,6 +22,66 @@ import ro.ulbsibiu.fadse.extended.base.relation.RelationTree;
  */
 public class InputDocument implements Serializable {
 
+	public static class InputMetaOptimizedAlgorithm implements Serializable {
+        private String name;
+        private String configPath;
+        private Double initialPercentage;
+        private Double minimumPercentage;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getConfigPath() {
+            return configPath;
+        }
+
+        public void setConfigPath(String configPath) {
+            this.configPath = configPath;
+        }
+
+        public Double getInitialPercentage() {
+            return initialPercentage;
+        }
+
+        public void setInitialPercentage(Double initialPercentage) {
+            this.initialPercentage = initialPercentage;
+        }
+
+        public Double getMinimumPercentage() {
+            return minimumPercentage;
+        }
+
+        public void setMinimumPercentage(Double minimumPercentage) {
+            this.minimumPercentage = minimumPercentage;
+        }
+    }
+    
+    public static class InputMetric implements Serializable {
+        private String name;
+        private Double weight;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public Double getWeight() {
+            return weight;
+        }
+
+        public void setWeight(Double weight) {
+            this.weight = weight;
+        }
+    }
+	
     private Parameter[] parameters;
     private Parameter[] virtualParameters;
     private Map<String, Objective> objectives;

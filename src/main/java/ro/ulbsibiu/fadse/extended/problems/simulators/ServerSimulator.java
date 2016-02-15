@@ -385,18 +385,23 @@ public class ServerSimulator extends SimulatorWrapper {
     }
 
     public void dumpCurrentPopulation(SolutionSet population) {        
-        dumpCurrentPopulation("filled" + System.currentTimeMillis(), population);
+        dumpCurrentPopulation("filled", String.valueOf(System.currentTimeMillis()), population);
+    }
+    
+    public void dumpCurrentPopulation(String folder, long filename, SolutionSet population) {
+    	dumpCurrentPopulation(folder, String.valueOf(filename), population);
     }
 
-    public void dumpCurrentPopulation(String filename, SolutionSet population) {
+    public void dumpCurrentPopulation(String folder, String filename, SolutionSet population) {
         String result = (new Utils()).generateCSVHeadder(simulationStatus.getEnvironment());
         result += (new Utils()).generateCSV(population);
         
-        System.out.println("Result of the population (" + filename + "):\n" + result);
+        System.out.println("Result of the population (" + folder + "/" + filename + "):\n" + result);
         
         try {
             Files.createDirectories(environment.getResultsFolder());
-            BufferedWriter out = new BufferedWriter(new FileWriter(environment.getResultsFolder().resolve(filename + ".csv").toFile()));
+            File file = environment.getResultsFolder().resolve(folder).resolve(filename + ".csv").toFile();
+            BufferedWriter out = new BufferedWriter(new FileWriter(file));
             out.write(result);
             out.close();
         } catch (IOException e) {

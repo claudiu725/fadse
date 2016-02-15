@@ -302,9 +302,9 @@ public class MetaOptimizedNSGAII extends MetaOptimizedAlgorithm {
         }
         if (problem_ instanceof ServerSimulator) {
             ((ServerSimulator) problem_).join();//blocks until all  the offsprings are evaluated
-            ((ServerSimulator) problem_).dumpCurrentPopulation("corrected" + System.currentTimeMillis(), population);
+            ((ServerSimulator) problem_).dumpCurrentPopulation("corrected", System.currentTimeMillis(), population);
             Ranking ranking_temp = new Ranking(population);
-            ((ServerSimulator) problem_).dumpCurrentPopulation("pareto" + System.currentTimeMillis(), ranking_temp.getSubfront(0));
+            ((ServerSimulator) problem_).dumpCurrentPopulation("pareto", System.currentTimeMillis(), ranking_temp.getSubfront(0));
         }
         //END WORKAROUND
         //END added by Horia
@@ -370,7 +370,7 @@ public class MetaOptimizedNSGAII extends MetaOptimizedAlgorithm {
             //Added by HORIA
             if (problem_ instanceof ServerSimulator) {
                 ((ServerSimulator) problem_).join();//blocks until all  the offsprings are evaluated
-                ((ServerSimulator) problem_).dumpCurrentPopulation("offspring" + System.currentTimeMillis(), offspringPopulation);
+                ((ServerSimulator) problem_).dumpCurrentPopulation("offspring", System.currentTimeMillis(), offspringPopulation);
             }
             //WORKAROUND
             System.out.println("RESEND");
@@ -380,7 +380,7 @@ public class MetaOptimizedNSGAII extends MetaOptimizedAlgorithm {
             }
             if (problem_ instanceof ServerSimulator) {
                 ((ServerSimulator) problem_).join();//blocks until all  the offsprings are evaluated
-                ((ServerSimulator) problem_).dumpCurrentPopulation("corrected" + System.currentTimeMillis(), population);
+                ((ServerSimulator) problem_).dumpCurrentPopulation("corrected", System.currentTimeMillis(), population);
             }
             //END WORKAROUND
             //END added by Horia
@@ -435,7 +435,7 @@ public class MetaOptimizedNSGAII extends MetaOptimizedAlgorithm {
             } // if
             ((ServerSimulator) problem_).dumpCurrentPopulation(population);
             Ranking ranking_temp = new Ranking(population);
-            ((ServerSimulator) problem_).dumpCurrentPopulation("pareto" + System.currentTimeMillis(), ranking_temp.getSubfront(0));
+            ((ServerSimulator) problem_).dumpCurrentPopulation("pareto", System.currentTimeMillis(), ranking_temp.getSubfront(0));
             if (outputEveryPopulation) {
                 population.printObjectivesToFile(outputPath + System.currentTimeMillis() + ".csv");
             }

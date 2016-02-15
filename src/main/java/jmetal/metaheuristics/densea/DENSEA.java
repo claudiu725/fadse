@@ -101,7 +101,7 @@ public class DENSEA extends Algorithm {
             }
             if (problem_ instanceof ServerSimulator) {
                 ((ServerSimulator) problem_).join();//blocks until all  the offsprings are evaluated
-                ((ServerSimulator) problem_).dumpCurrentPopulation("offspring" + System.currentTimeMillis(), P3);
+                ((ServerSimulator) problem_).dumpCurrentPopulation("offspring", System.currentTimeMillis(), P3);
             }
 
             r = new Ranking(P3);

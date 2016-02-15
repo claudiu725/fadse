@@ -74,7 +74,7 @@ public class PESA2 extends Algorithm {
         //<-
         if (problem_ instanceof ServerSimulator) {
             ((ServerSimulator) problem_).join();//blocks until all  the offsprings are evaluated
-            ((ServerSimulator) problem_).dumpCurrentPopulation("offspring" + System.currentTimeMillis(), solutionSet);
+            ((ServerSimulator) problem_).dumpCurrentPopulation("offspring", System.currentTimeMillis(), solutionSet);
         }
         // Incorporate non-dominated solution to the archive
         for (int i = 0; i < solutionSet.size(); i++) {
@@ -105,7 +105,7 @@ public class PESA2 extends Algorithm {
             }
             if (problem_ instanceof ServerSimulator) {
                 ((ServerSimulator) problem_).join();//blocks until all  the offsprings are evaluated
-                ((ServerSimulator) problem_).dumpCurrentPopulation("offspring" + System.currentTimeMillis(), solutionSet);
+                ((ServerSimulator) problem_).dumpCurrentPopulation("offspring", System.currentTimeMillis(), solutionSet);
             }
 
             for (int i = 0; i < solutionSet.size(); i++) {
