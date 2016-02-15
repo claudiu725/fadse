@@ -1,28 +1,23 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package ro.ulbsibiu.fadse.environment.document;
 
+
 import java.io.Serializable;
-import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import ro.ulbsibiu.fadse.environment.Objective;
-import ro.ulbsibiu.fadse.environment.parameters.Parameter;
-import ro.ulbsibiu.fadse.environment.rule.Rule;
+import ro.ulbsibiu.fadse.environment.*;
+import ro.ulbsibiu.fadse.environment.parameters.*;
+import ro.ulbsibiu.fadse.environment.rule.*;
 import ro.ulbsibiu.fadse.extended.base.relation.RelationTree;
-
 /**
  *
  * @author Horia
  */
 public class InputDocument implements Serializable {
-
-	public static class InputMetaOptimizedAlgorithm implements Serializable {
+    
+    public static class InputMetaOptimizedAlgorithm implements Serializable {
         private String name;
         private String configPath;
         private Double initialPercentage;
@@ -81,7 +76,7 @@ public class InputDocument implements Serializable {
             this.weight = weight;
         }
     }
-	
+
     private Parameter[] parameters;
     private Parameter[] virtualParameters;
     private Map<String, Objective> objectives;
@@ -91,6 +86,9 @@ public class InputDocument implements Serializable {
     private String simulatorType;
     private String metaheuristicName;
     private String metaheuristicConfigPath;
+    private String metaheuristicType;
+    private List<InputMetaOptimizedAlgorithm> metaOptimizedAlgorithms;
+    private List<InputMetric> metrics;
     private String databaseIp;
     private String databasePort;
     private String databaseName;
@@ -264,6 +262,30 @@ public class InputDocument implements Serializable {
 
     public void setOutputPath(String outputPath) {
         this.outputPath = outputPath;
+    }
+
+    public String getMetaheuristicType() {
+        return metaheuristicType;
+    }
+
+    public void setMetaheuristicType(String metaheuristicType) {
+        this.metaheuristicType = metaheuristicType;
+    }
+
+    public List<InputMetaOptimizedAlgorithm> getMetaOptimizedAlgorithms() {
+        return metaOptimizedAlgorithms;
+    }
+
+    public void setMetaOptimizedAlgorithms(List<InputMetaOptimizedAlgorithm> metaOptimizedAlgorithms) {
+        this.metaOptimizedAlgorithms = metaOptimizedAlgorithms;
+    }
+
+    public List<InputMetric> getMetrics() {
+        return metrics;
+    }
+
+    public void setMetrics(List<InputMetric> metrics) {
+        this.metrics = metrics;
     }
     
 }

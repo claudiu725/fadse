@@ -36,13 +36,15 @@ public class Environment implements Serializable {
     
     private void init(Path inputFilePath)
     {
-    	inputDocument = (new XMLInputReader()).parse(inputFilePath);
+    	inputDocument = (new XMLInputReader()).parse(inputFilePath.toString());
         ConnectionPool.setInputDocument(inputDocument);
         String currentdir = System.getProperty("user.dir");
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_hh-mm-ss");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
         String date = dateFormat.format(new Date());
-        Path resultsFolder = Paths.get(currentdir, "results", date); 
+        Path resultsFolder = Paths.get(currentdir, "results", date);
         this.resultsFolder = resultsFolder.toString();
+        if (inputDocument.getOutputPath().isEmpty())
+        	inputDocument.setOutputPath(resultsFolder.toString());
         try {
 			Files.createDirectories(resultsFolder);
 		} catch (IOException e) {

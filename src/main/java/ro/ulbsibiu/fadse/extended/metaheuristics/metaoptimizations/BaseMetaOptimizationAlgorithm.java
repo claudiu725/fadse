@@ -11,7 +11,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Random;
 import java.util.StringTokenizer;
@@ -26,6 +28,7 @@ import jmetal.util.JMException;
 import ro.ulbsibiu.fadse.environment.parameters.CheckpointFileParameter;
 import ro.ulbsibiu.fadse.extended.metaheuristics.metaoptimizations.metaoptimized.MetaOptimizedAlgorithm;
 import ro.ulbsibiu.fadse.extended.metaheuristics.metaoptimizations.metrics.Metric;
+import ro.ulbsibiu.fadse.extended.problems.simulators.ServerSimulator;
 
 /**
  *
@@ -57,12 +60,14 @@ public abstract class BaseMetaOptimizationAlgorithm extends Algorithm {
         problem_ = problem;
         rand = new Random();
 
-        resultsFolder = (Path) getInputParameter("outputPath");
+        if (problem_ instanceof ServerSimulator) {
+            resultsFolder = Paths.get(((ServerSimulator) problem_).getEnvironment().getInputDocument().getOutputPath());
+        }
     }
 
     protected SolutionSet readOrCreateInitialSolutionSet() throws ClassNotFoundException, JMException {
 
-        SolutionSet masterPopulation = new SolutionSet(populationSize);;
+        SolutionSet masterPopulation = new SolutionSet(populationSize);
         CheckpointFileParameter fileParam = (CheckpointFileParameter) getInputParameter("checkpointFile");
         String file = "";
         if (fileParam != null) {
@@ -136,7 +141,9 @@ public abstract class BaseMetaOptimizationAlgorithm extends Algorithm {
         PrintWriter writer;
         try {
             long time = System.currentTimeMillis();
-            Path metricsOutputFile = (resultsFolder.resolve("metrics" + time + ".csv"));
+            Path dir = resultsFolder.resolve("metrics");
+            Files.createDirectories(dir);
+            Path metricsOutputFile = (dir.resolve(time + ".csv"));
             writer = new PrintWriter(metricsOutputFile.toString(), "UTF-8");
             writer.println("Metrics");
             for (int i = 0; i < metrics.size(); ++i) {
@@ -200,7 +207,9 @@ public abstract class BaseMetaOptimizationAlgorithm extends Algorithm {
             logger.error("", ex);
         } catch (UnsupportedEncodingException ex) {
         	logger.error("", ex);
-        }
+        } catch (IOException e) {
+        	logger.error("", e);
+		}
 
         adjustPercentages();
     }

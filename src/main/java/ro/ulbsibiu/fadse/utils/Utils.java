@@ -1,5 +1,9 @@
 package ro.ulbsibiu.fadse.utils;
 
+import java.io.File;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -202,5 +206,11 @@ public class Utils {
 
         }
         return params;
+    }
+    
+    public static String normalizePath(String path)
+    {
+    	String[] paths = path.split("/");
+    	return Paths.get(System.getProperty("user.dir")).resolve(String.join(File.separator, paths)).toString();
     }
 }

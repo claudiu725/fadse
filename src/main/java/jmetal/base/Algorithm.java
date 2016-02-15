@@ -24,20 +24,20 @@ public abstract class Algorithm implements Serializable {
   * Stores the operators used by the algorithm, such as selection, crossover,
   * etc.
   */
-  protected Map<String,Operator> operators_ = null;
+  protected Map<String,Operator> operators_ = new HashMap<String, Operator>();
   
  /** 
   * Stores algorithm specific parameters. For example, in NSGA-II these
   * parameters include the population size and the maximum number of function
   * evaluations.
   */
-  protected Map<String,Object> inputParameters_ = null;  
+  protected Map<String,Object> inputParameters_ = new HashMap<String, Object>();
   
   /** 
    * Stores output parameters, which are retrieved by Main object to 
    * obtain information from an algorithm.
    */
-  protected Map<String,Object> outPutParameters_ = null;
+  protected Map<String,Object> outPutParameters_ = new HashMap<String, Object>();
   
  /**   
   * Launches the execution of an specific algorithm.

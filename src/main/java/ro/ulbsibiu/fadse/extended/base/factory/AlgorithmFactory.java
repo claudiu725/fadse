@@ -24,10 +24,14 @@ public class AlgorithmFactory {
 	{
 		Problem problem = FadseProblemFactory.createFromInputDocument(document, env);
 		Properties properties = PropertiesFactory.createFromFile(document.getMetaheuristicConfigPath());
-        Settings settings = (new SettingsFactory()).getSettingsObject(document.getMetaheuristicName(), problem);
+		SettingsFactory settingsFactory = new SettingsFactory();
+		settingsFactory.setInputDocument(document);
+        Settings settings = settingsFactory.getSettingsObject(document.getMetaheuristicName(), problem);
         Algorithm algorithm = settings.configure(properties);
-        algorithm.getOperator("mutation").setParameter("environment", env);
-        algorithm.getOperator("crossover").setParameter("environment", env);
+        if (algorithm.getOperator("mutation") != null)
+        	algorithm.getOperator("mutation").setParameter("environment", env);
+        if (algorithm.getOperator("crossover") != null)
+        	algorithm.getOperator("crossover").setParameter("environment", env);
         
         if (document.getSimulatorParameter("forceFeasibleFirstGeneration") != null) {
             algorithm.setInputParameter("forceFeasibleFirstGeneration",

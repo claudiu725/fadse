@@ -49,7 +49,7 @@ import ro.ulbsibiu.fadse.io.XMLInputReader;
 public class TestXMLInputReader {
     public static void main(String[] args) {
         XMLInputReader inputReader = new XMLInputReader();
-        InputDocument inputDocument = inputReader.parse(Paths.get("configs/falsesimin.xml"));
+        InputDocument inputDocument = inputReader.parse(Paths.get("configs/falsesimin.xml").toString());
         System.out.println(inputDocument.getRules().get(0));
         Parameter[] parameters = new Parameter[2];
         parameters[0] = new IntegerParameter("l1size", "integer", "", new Int(16, 16, 128));

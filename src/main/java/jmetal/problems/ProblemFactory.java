@@ -6,6 +6,7 @@
 package jmetal.problems;
 
 import java.lang.reflect.Constructor;
+import java.util.Arrays;
 import java.util.Properties;
 
 import org.apache.logging.log4j.LogManager;
@@ -63,6 +64,7 @@ public class ProblemFactory {
         try {
             Class<?> problemClass = Class.forName(base + name);
             logger.info("Base+name: "+base+name);
+            logger.info("Params:" + Arrays.toString(params));
             Constructor[] constructors = problemClass.getConstructors();
             int i = 0;
             //find the constructor

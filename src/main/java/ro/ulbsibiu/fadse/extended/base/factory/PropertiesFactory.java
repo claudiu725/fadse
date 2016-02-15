@@ -17,10 +17,7 @@ public class PropertiesFactory {
 	static Properties createFromFile(String path)
 	{
 		Properties properties = new Properties();
-        String currentDir = System.getProperty("user.dir");
-        logger.info("Current folder is: " + currentDir);
         try {
-            path = currentDir+ File.separator + path;
             logger.info("Loading properties file " + path);
             properties.load(new FileInputStream(path));
         } catch (Exception e) {

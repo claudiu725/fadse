@@ -22,12 +22,13 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Scanner;
 import java.util.TreeMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import configuration_analysis.opt_delta.Prepare;
 import ro.ulbsibiu.fadse.extended.problems.simulators.SimulatorBase;
@@ -47,6 +48,8 @@ import stepstepgui.datastructures.YamlParameters;
  */
 public class GAPRunner extends SimulatorRunner {
 
+	Logger logger = LogManager.getLogger();
+	
     private File benchmarkDirectory;
     private static final long TIME_BETWEEN_PROCESS_CHECKS = 10000;
     private static final long TIMEOUT_TO_KILL_SIMULATION = 30000;
@@ -134,7 +137,7 @@ public class GAPRunner extends SimulatorRunner {
             // Add executable of simulator
             sbParamList.add(getMySimulator());
         } catch (IOException ex) {
-            Logger.getLogger(GAPRunner.class.getName()).log(Level.SEVERE, null, ex);
+            logger.error("", ex);
             sbParamList.add(
                     this.simulator.getInputDocument().getSimulatorParameter("simulator_executable"));
         }
@@ -1040,7 +1043,7 @@ public class GAPRunner extends SimulatorRunner {
             bw.append("\r\n" + line + "\r\n");
 
         } catch (IOException ex) {
-            Logger.getLogger(GAPRunner.class.getName()).log(Level.SEVERE, null, ex);
+            logger.error("", ex);
         } finally {
             try {
                 if (bw != null) {
@@ -1070,7 +1073,7 @@ public class GAPRunner extends SimulatorRunner {
             bw.append("\r\n");
 
         } catch (IOException ex) {
-            Logger.getLogger(GAPRunner.class.getName()).log(Level.SEVERE, null, ex);
+            logger.error("", ex);
         } finally {
             try {
                 if (bw != null) {

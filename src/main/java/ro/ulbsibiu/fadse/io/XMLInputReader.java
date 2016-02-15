@@ -1,151 +1,211 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package ro.ulbsibiu.fadse.io;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import org.w3c.dom.*;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
-import ro.ulbsibiu.fadse.environment.Objective;
 import ro.ulbsibiu.fadse.environment.document.InputDocument;
-import ro.ulbsibiu.fadse.environment.parameters.ConstantParameter;
-import ro.ulbsibiu.fadse.environment.parameters.DoubleParameter;
-import ro.ulbsibiu.fadse.environment.parameters.Exp2Parameter;
-import ro.ulbsibiu.fadse.environment.parameters.ExpresionParameter;
-import ro.ulbsibiu.fadse.environment.parameters.IntegerParameter;
-import ro.ulbsibiu.fadse.environment.parameters.Parameter;
-import ro.ulbsibiu.fadse.environment.parameters.PermutationParameter;
-import ro.ulbsibiu.fadse.environment.parameters.StringParameter;
-import ro.ulbsibiu.fadse.environment.parameters.VirtualParameter;
-import ro.ulbsibiu.fadse.environment.relation.IfRelation;
-import ro.ulbsibiu.fadse.environment.relation.Relation;
-import ro.ulbsibiu.fadse.environment.rule.AndRule;
-import ro.ulbsibiu.fadse.environment.rule.IfRule;
-import ro.ulbsibiu.fadse.environment.rule.RelationRule;
-import ro.ulbsibiu.fadse.environment.rule.Rule;
+import ro.ulbsibiu.fadse.environment.*;
+import ro.ulbsibiu.fadse.environment.parameters.*;
+import ro.ulbsibiu.fadse.environment.relation.*;
+import ro.ulbsibiu.fadse.environment.rule.*;
 import ro.ulbsibiu.fadse.extended.base.relation.RelationTree;
+import ro.ulbsibiu.fadse.utils.Utils;
 
 /**
  *
  * @author Horia
  */
 public class XMLInputReader {
-	Logger logger = LogManager.getLogger();
-	
-	public final static String metaheuristicConfigBasePath = 
-			System.getProperty("file.separator") + "configs" 
-    		+ System.getProperty("file.separator") + "metaheuristicConfig"
-    		+ System.getProperty("file.separator");
-	
-    public InputDocument parse(Path xmlFilePath) {
+    private Document doc;
+    private InputDocument inputDoc;
+
+    public InputDocument parse(String xmlFilePath) {
         try {
-        	logger.info("Using xml config: " + xmlFilePath);
-            InputDocument inputDoc = new InputDocument();
+            inputDoc = new InputDocument();
             DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
-            Document doc = docBuilder.parse(xmlFilePath.toFile());
+            doc = docBuilder.parse(new File(xmlFilePath));
 
             // normalize text representation
             doc.getDocumentElement().normalize();
 
-//SIMULATOR
-            NodeList simulator = doc.getElementsByTagName("simulator");
-            NamedNodeMap simulatorattributes = simulator.item(0).getAttributes();
-            String simulatorName = simulatorattributes.getNamedItem("name").getNodeValue();
-            logger.info("Using simulator " + simulatorName);
-            String simulatorType = simulatorattributes.getNamedItem("type").getNodeValue();
-            inputDoc.setSimulatorName(simulatorName);
-            inputDoc.setSimulatorType(simulatorType);
+            parseSimulator();
+            parseBenchmarks();
+            parseDatabase();
+            parseMetaheuristic();
+            parseSystemMetrics();
+            parseParametersVirtualParametersRulesRelations();
+            parseOutput();
+            
+            return inputDoc;
+        } catch (SAXParseException err) {
+            System.out.println("** Parsing error" + ", line "
+                    + err.getLineNumber() + ", uri " + err.getSystemId());
+            System.out.println(" " + err.getMessage());
 
-            NodeList simulatorParams = ((Element) simulator.item(0)).getElementsByTagName("parameter");
-            logger.info("Found " + simulatorParams.getLength() + " simulator parameters");
-            for (int i = 0; i < simulatorParams.getLength(); i++) {
-                NamedNodeMap simulatorParamattributes = simulatorParams.item(i).getAttributes();
-                inputDoc.addSimulatorParameter(simulatorParamattributes.getNamedItem("name").getNodeValue(), simulatorParamattributes.getNamedItem("value").getNodeValue());
+        } catch (SAXException e) {
+            Exception x = e.getException();
+            ((x == null) ? e : x).printStackTrace();
+
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+        //System.exit (0);
+        return null;
+
+    }
+    
+    private void parseSimulator() {
+        NodeList simulator = doc.getElementsByTagName("simulator");
+        NamedNodeMap simulatorattributes = simulator.item(0).getAttributes();
+        String simulatorName = simulatorattributes.getNamedItem("name").getNodeValue();
+        String simulatorType = simulatorattributes.getNamedItem("type").getNodeValue();
+        inputDoc.setSimulatorName(simulatorName);
+        inputDoc.setSimulatorType(simulatorType);
+
+        NodeList simulatorParams = ((Element) simulator.item(0)).getElementsByTagName("parameter");
+        for (int i = 0; i < simulatorParams.getLength(); i++) {
+            NamedNodeMap simulatorParamattributes = simulatorParams.item(i).getAttributes();
+            inputDoc.addSimulatorParameter(simulatorParamattributes.getNamedItem("name").getNodeValue(), simulatorParamattributes.getNamedItem("value").getNodeValue());
+        }
+    }
+    
+    private void parseBenchmarks() {
+        NodeList benchmarksNode = doc.getElementsByTagName("benchmarks");
+        if (benchmarksNode != null && benchmarksNode.getLength() > 0) {
+            NodeList benchmarks = ((Element) benchmarksNode.item(0)).getElementsByTagName("item");
+            LinkedList<String> values = new LinkedList<String>();
+            for (int i = 0; i < benchmarks.getLength(); i++) {
+                values.add(benchmarks.item(i).getAttributes().getNamedItem("name").getNodeValue());
             }
-//BENCHMARKS
-            NodeList benchmarksNode = doc.getElementsByTagName("benchmarks");
-            if (benchmarksNode != null && benchmarksNode.getLength() > 0) {
-            	logger.info("Using benchmarks");
-                NodeList benchmarks = ((Element) benchmarksNode.item(0)).getElementsByTagName("item");
-                LinkedList<String> values = new LinkedList<String>();
-                for (int i = 0; i < benchmarks.getLength(); i++) {
-                    values.add(benchmarks.item(i).getAttributes().getNamedItem("name").getNodeValue());
-                }
-                inputDoc.setBenchmarks(values);
+            inputDoc.setBenchmarks(values);
+        }
+    }
+    
+    private void parseDatabase() {
+        //<database ip="127.0.0.1" port="1527" name="FADS_DB" user="fadse" password="fadse"/>
+        NodeList databaseNode = doc.getElementsByTagName("database");            
+        NamedNodeMap databaseattributes = databaseNode.item(0).getAttributes();
+        String databaseIp = databaseattributes.getNamedItem("ip").getNodeValue();
+        String databasePort = databaseattributes.getNamedItem("port").getNodeValue();
+        String databaseName = databaseattributes.getNamedItem("name").getNodeValue();
+        String databaseUser = databaseattributes.getNamedItem("user").getNodeValue();
+        String databasePassword = databaseattributes.getNamedItem("password").getNodeValue();
+        inputDoc.setDatabaseIp(databaseIp);
+        inputDoc.setDatabaseName(databaseName);
+        inputDoc.setDatabasePassword(databasePassword);
+        inputDoc.setDatabasePort(databasePort);
+        inputDoc.setDatabaseUser(databaseUser);
+    }
+    
+    private void parseMetaheuristic() {
+        NodeList metaheuristicNode = doc.getElementsByTagName("metaheuristic");
+        NamedNodeMap metaheuristicattributes = metaheuristicNode.item(0).getAttributes();
+        String metaheuristicName = metaheuristicattributes.getNamedItem("name").getNodeValue();
+        String metaheuristicConfigPath = Utils.normalizePath(metaheuristicattributes.getNamedItem("config_path").getNodeValue());
+        inputDoc.setMetaheuristicName(metaheuristicName);
+        inputDoc.setMetaheuristicConfigPath(metaheuristicConfigPath);
+        
+        // meta-optimization
+        Node typeNode = metaheuristicattributes.getNamedItem("type");
+        if (typeNode != null && typeNode.getNodeValue().equals("MetaOptimization")) {
+            inputDoc.setMetaheuristicType("MetaOptimization");
+            inputDoc.setMetaOptimizedAlgorithms(parseMetaOptimizedAlgorithms());
+            inputDoc.setMetrics(parseMetrics());
+        }
+    }
+    
+    private List<InputDocument.InputMetaOptimizedAlgorithm> parseMetaOptimizedAlgorithms() {
+        List<InputDocument.InputMetaOptimizedAlgorithm> inputMetas = new ArrayList<>();
+        
+        NodeList metasNode = doc.getElementsByTagName("metaoptimized_algorithms");
+        if (metasNode != null && metasNode.getLength() > 0) {
+            NodeList metas = ((Element) metasNode.item(0)).getElementsByTagName("metaoptimized_algorithm");
+            for (int i = 0; i < metas.getLength(); ++i) {
+                InputDocument.InputMetaOptimizedAlgorithm inputMeta = 
+                    new InputDocument.InputMetaOptimizedAlgorithm();
+
+                inputMeta.setName(metas.item(i).getAttributes().getNamedItem("name").getNodeValue());
+                inputMeta.setConfigPath(Utils.normalizePath(metas.item(i).getAttributes().getNamedItem("config_path").getNodeValue()));
+                Node initialPercentageNode = metas.item(i).getAttributes().getNamedItem("initialPercentage");
+                if (initialPercentageNode != null)
+                    inputMeta.setInitialPercentage(Double.parseDouble(initialPercentageNode.getNodeValue()));
+                Node minimumPercentageNode = metas.item(i).getAttributes().getNamedItem("minimumPercentage");
+                if (minimumPercentageNode != null)
+                    inputMeta.setMinimumPercentage(Double.parseDouble(minimumPercentageNode.getNodeValue()));
+
+                inputMetas.add(inputMeta);
             }
-            else
-            {
-            	logger.info("Not using benchmarks");
+        }
+        
+        return inputMetas;
+    }
+    
+    private List<InputDocument.InputMetric> parseMetrics() {
+        List<InputDocument.InputMetric> inputMetrics = new ArrayList<>();
+        
+        NodeList metricsNode = doc.getElementsByTagName("metrics");
+        if (metricsNode != null && metricsNode.getLength() > 0) {
+            NodeList metrics = ((Element)metricsNode.item(0)).getElementsByTagName("metric");
+            for (int i = 0; i < metrics.getLength(); ++i) {
+                InputDocument.InputMetric inputMetric = 
+                    new InputDocument.InputMetric();
+
+                inputMetric.setName(metrics.item(i).getAttributes().getNamedItem("name").getNodeValue());
+                Node weightNode = metrics.item(i).getAttributes().getNamedItem("weight");
+                if (weightNode != null)
+                    inputMetric.setWeight(Double.parseDouble(weightNode.getNodeValue()));
+
+                inputMetrics.add(inputMetric);
             }
-//DATABASE
-            //<database ip="127.0.0.1" port="1527" name="FADS_DB" user="fadse" password="fadse"/>            
-        	NodeList databaseNode = doc.getElementsByTagName("database");
-        	Node databaseRootNode = databaseNode.item(0);
-        	if (databaseRootNode != null)
-        	{
-        		logger.info("Using the database");
-	            NamedNodeMap databaseattributes = databaseRootNode.getAttributes();
-	            String databaseIp = databaseattributes.getNamedItem("ip").getNodeValue();
-	            String databasePort = databaseattributes.getNamedItem("port").getNodeValue();
-	            String databaseName = databaseattributes.getNamedItem("name").getNodeValue();
-	            String databaseUser = databaseattributes.getNamedItem("user").getNodeValue();
-	            String databasePassword = databaseattributes.getNamedItem("password").getNodeValue();
-	            inputDoc.setDatabaseIp(databaseIp);
-	            inputDoc.setDatabaseName(databaseName);
-	            inputDoc.setDatabasePassword(databasePassword);
-	            inputDoc.setDatabasePort(databasePort);
-	            inputDoc.setDatabaseUser(databaseUser);
-        	}
-            else
-            {
-            	logger.info("Not using the database");
+        }
+        
+        return inputMetrics;
+    }
+    
+    private void parseSystemMetrics() {
+        NodeList systemMetrics = ((Element) doc.getElementsByTagName("system_metrics").item(0)).getElementsByTagName("system_metric");
+        Map<String, Objective> objectives = new HashMap<String, Objective>();
+        for (int i = 0; i < systemMetrics.getLength(); i++) {
+            Node metric = systemMetrics.item(i);
+            NamedNodeMap attributes = metric.getAttributes();
+            String name = attributes.getNamedItem("name").getNodeValue();
+            String type = attributes.getNamedItem("type").getNodeValue();
+            String unit = "";
+            if (attributes.getNamedItem("unit") != null) {
+                unit = attributes.getNamedItem("unit").getNodeValue();
             }
-//METAHEURISTIC
-            NodeList metaheuristicNode = doc.getElementsByTagName("metaheuristic");
-            Node metaheuristicRootNode = metaheuristicNode.item(0);
-            if (metaheuristicRootNode != null)
-            {
-	            NamedNodeMap metaheuristicattributes = metaheuristicRootNode.getAttributes();
-	            String metaheuristicName = metaheuristicattributes.getNamedItem("name").getNodeValue();
-	            String metaheuristicConfigPath = metaheuristicattributes.getNamedItem("config_path").getNodeValue();
-	            inputDoc.setMetaheuristicName(metaheuristicName);
-	            if(Paths.get(metaheuristicConfigPath).isAbsolute()) { //
-	            	inputDoc.setMetaheuristicConfigPath(metaheuristicConfigPath);
-	            } else {
-	            	inputDoc.setMetaheuristicConfigPath(metaheuristicConfigBasePath + metaheuristicConfigPath);       	
-	            }
-	            logger.info("Using metaheuristic " + metaheuristicName + " with config_path " + inputDoc.getMetaheuristicConfigPath());
+            String desired = "small";//default small if not specified
+            if (attributes.getNamedItem("desired") != null) {
+                desired = attributes.getNamedItem("desired").getNodeValue();
             }
-            else
-            {
-            	logger.warn("Didn't find metaheuristic in config file. Using NSGA-II by default.");
-            	inputDoc.setMetaheuristicName("NSGAII");
-            	inputDoc.setMetaheuristicConfigPath(metaheuristicConfigBasePath + "nsgaii.properties");
+            String description = "";
+            if (attributes.getNamedItem("description") != null) {
+                description = attributes.getNamedItem("description").getNodeValue();
             }
-//PARAMETERS
+            Objective obj = new Objective(name, type, unit, description, !desired.equalsIgnoreCase("small"));
+            objectives.put(name, obj);
+        }
+        inputDoc.setObjectives(objectives);
+    }
+    
+    private void parseParametersVirtualParametersRulesRelations() {
+        //PARAMETERS
 
             NodeList parameters = ((Element) doc.getElementsByTagName("parameters").item(0)).getElementsByTagName("parameter");
             Parameter[] params = new Parameter[parameters.getLength()];
-            logger.info("Found " + parameters.getLength() + " parameters");
             for (int i = 0; i < parameters.getLength(); i++) {
                 Node parameter = parameters.item(i);
                 NamedNodeMap attributes = parameter.getAttributes();
@@ -167,11 +227,11 @@ public class XMLInputReader {
                 } else if (type.equalsIgnoreCase("boolean")) {//it is an Integer parameter with 0/1 min/max value
                     p = createBooleanParameter(name, "boolean", description, parameter);
                 } else if (type.equalsIgnoreCase("on_off_mask")) {
-                    logger.error("Unsuported parameter type: " + type);
+                    System.err.println("Unsuported parameter type: " + type);
                 } else if (type.equalsIgnoreCase("float")) {
                     p = createFloatParameter(name, "float", description, parameter, params);
                 } else {
-                    logger.error("Unsuported parameter type: " + type);
+                    System.err.println("Unsuported parameter type: " + type);
                 }
                 if (p != null) {
                     params[i] = p;
@@ -180,12 +240,10 @@ public class XMLInputReader {
             }
             inputDoc.setParameters(params);
 //VIRTUAL PARAMETERS
-            Node virtualParametersRootNode = doc.getElementsByTagName("virtual_parameters").item(0);
-            if (virtualParametersRootNode != null)
-            {
-                NodeList virtualParameters = ((Element) virtualParametersRootNode).getElementsByTagName("parameter");
+            try {
+                System.out.println("EXTRACTING THE VIRTUAL PARAMS");
+                NodeList virtualParameters = ((Element) doc.getElementsByTagName("virtual_parameters").item(0)).getElementsByTagName("parameter");
                 Parameter[] virtualParams = new Parameter[virtualParameters.getLength()];
-                logger.info("Found " + virtualParameters.getLength() + " virtual parameters");
                 for (int i = 0; i < virtualParameters.getLength(); i++) {
                     Node parameter = virtualParameters.item(i);
                     NamedNodeMap attributes = parameter.getAttributes();
@@ -196,50 +254,22 @@ public class XMLInputReader {
                         virtualParams[i] = p;
                     }
                 }
-                logger.info("FOUND: "+virtualParams.length);
+                System.out.println("FOUND: "+virtualParams.length);
                 inputDoc.setVirtualParameters(virtualParams);
                 Parameter[] paramsTemp = new Parameter[params.length+virtualParams.length];
-                logger.info("NORMAL PARAMS: "+params.length);
+                System.out.println("NORMAL PARAMS: "+params.length);
                 System.arraycopy(params, 0, paramsTemp, 0, params.length);
                 System.arraycopy(virtualParams, 0, paramsTemp, params.length, virtualParams.length);
                 params = paramsTemp;
-                logger.info("NORMAL PARAMS (after): "+params.length);
+                System.out.println("NORMAL PARAMS (after): "+params.length);
+            } catch (Exception e) {
+                System.out.println("Problem at the virtual parameters (not fatal if you are not using them): " + e.getMessage());
             }
-            else
-            {
-            	logger.info("Not using virtual parameters");
-            }
-//SYSTEM METRICS
-            NodeList systemMetrics = ((Element) doc.getElementsByTagName("system_metrics").item(0)).getElementsByTagName("system_metric");
-            Map<String, Objective> objectives = new HashMap<String, Objective>();
-            logger.info("Found " + systemMetrics.getLength() + " system_metrics (objectives)");
-            for (int i = 0; i < systemMetrics.getLength(); i++) {
-                Node metric = systemMetrics.item(i);
-                NamedNodeMap attributes = metric.getAttributes();
-                String name = attributes.getNamedItem("name").getNodeValue();
-                String type = attributes.getNamedItem("type").getNodeValue();
-                String unit = "";
-                if (attributes.getNamedItem("unit") != null) {
-                    unit = attributes.getNamedItem("unit").getNodeValue();
-                }
-                String desired = "small";//default small if not specified
-                if (attributes.getNamedItem("desired") != null) {
-                    desired = attributes.getNamedItem("desired").getNodeValue();
-                }
-                String description = "";
-                if (attributes.getNamedItem("description") != null) {
-                    description = attributes.getNamedItem("description").getNodeValue();
-                }
-                Objective obj = new Objective(name, type, unit, description, !desired.equalsIgnoreCase("small"));
-                objectives.put(name, obj);
-            }
-            inputDoc.setObjectives(objectives);
 
 //RULES
             NodeList rules = ((Element) doc.getElementsByTagName("rules").item(0)).getElementsByTagName("rule");
             List<Rule> rulesList = new LinkedList<Rule>();
             String[] ruleTypes = {"greater-equal", "greater", "equal", "less-equal", "less", "not-equal"};
-            logger.info("Found " + rules.getLength() + " rules");
             for (int i = 0; i < rules.getLength(); i++) {//takes each rule
                 Element ruleNode = (Element) rules.item(i);//rule node repesents a <rule> element
 
@@ -274,86 +304,55 @@ public class XMLInputReader {
             inputDoc.setRules(rulesList);
 
 //RELATIONS
-            Node relationsRootNode = doc.getElementsByTagName("relations").item(0);
-            if (relationsRootNode != null)
-            {
-	            NodeList relations = ((Element) relationsRootNode).getElementsByTagName("relation");
-	            List<Relation> relationsList = new LinkedList<Relation>();
-            	logger.info("Found " + relations.getLength() + " relations");
-	            for (int i = 0; i < relations.getLength(); i++) {//takes each relation
-	                Element relationNode = (Element) relations.item(i);//relation node repesents a <relation> element
-	                Relation relation = getIfRelation(relationNode, params);//find relations of type<if>
-	                relationsList.add(relation);
-	                logger.info(relation);
-	            }
-	            //build the trees using the paramters and the relations
-	            RelationTree relationTree = new RelationTree();
-	            RelationTree relationTreeCopy = new RelationTree();
-	            //detect the root nodes
-	            for (int i = 0; i < params.length; i++) {
-	                boolean isRoot = true;
-	                for (int j = 0; j < relationsList.size(); j++) {
-	                    String[] dependentParams = relationsList.get(j).getChildrenNames();
-	                    for (int k = 0; k < dependentParams.length; k++) {
-	                        if (params[i].getName().equals(dependentParams[k])) {
-	                            isRoot = false;
-	                        }
-	                    }
-	                }
-	                if (isRoot) {
-	                    logger.info("ADD ROOT: " + i);
-	                    relationTree.addRootNode(i);
-	                    relationTreeCopy.addRootNode(i);
-	                }
-	                //add the subnodes
-	                addSubNodesToRelationTrees(relationTree, params, relationsList, i);
-	                addSubNodesToRelationTrees(relationTreeCopy, params, relationsList, i);
-	            }
-	            logger.info("RelationTree: " + relationTree);
-	            inputDoc.setRelationTree1(relationTree);
-	            inputDoc.setRelationTree2(relationTreeCopy);
+            NodeList relations = ((Element) doc.getElementsByTagName("relations").item(0)).getElementsByTagName("relation");
+            List<Relation> relationsList = new LinkedList<Relation>();
+            for (int i = 0; i < relations.getLength(); i++) {//takes each relation
+                Element relationNode = (Element) relations.item(i);//relation node repesents a <relation> element
+                Relation relation = getIfRelation(relationNode, params);//find relations of type<if>
+                relationsList.add(relation);
+                System.out.println(relation);
             }
-            else
-            {
-            	logger.info("Not using relations.");
+            //build the trees using the paramters and the relations
+            RelationTree relationTree = new RelationTree();
+            RelationTree relationTreeCopy = new RelationTree();
+            //detect the root nodes
+            for (int i = 0; i < params.length; i++) {
+                    boolean isRoot = true;
+                    for (int j = 0; j < relationsList.size(); j++) {
+                        String[] dependentParams = relationsList.get(j).getChildrenNames();
+                        for (int k = 0; k < dependentParams.length; k++) {
+                            if (params[i].getName().equals(dependentParams[k])) {
+                                isRoot = false;
+                            }
+                        }
+                    }
+                    if (isRoot) {
+                        System.out.println("ADD ROOT: " + i);
+                        relationTree.addRootNode(i);
+                        relationTreeCopy.addRootNode(i);
+                    }
+                    
+                try {
+                    //add the subnodes
+                    addSubNodesToRelationTrees(relationTree, params, relationsList, i);
+                    addSubNodesToRelationTrees(relationTreeCopy, params, relationsList, i);
+                } catch (Exception ex) {
+                    Logger.getLogger(XMLInputReader.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
+            System.out.println("RelationTree: " + relationTree);
+            inputDoc.setRelationTree1(relationTree);
+            inputDoc.setRelationTree2(relationTreeCopy);
 
 			// Uncomment this to see graphical representation
             // relationTree.printToScreen();
-
-            //OUTPUT
-            NodeList outputNode = doc.getElementsByTagName("output");
-            Node outputRootNode = outputNode.item(0);
-            if (outputRootNode != null)
-            {
-		        NamedNodeMap outputAttributes = outputRootNode.getAttributes();
-		        String outputPath = Paths.get(outputAttributes.getNamedItem("output_path").getNodeValue()).toString();           
-		        inputDoc.setOutputPath(outputPath);
-		        logger.info("Using output path:" + outputPath);
-            }
-            else
-            {
-            	String outputPath = System.getProperty("user.home") + System.getProperty("file.separator") + "default";
-            	logger.info("Using default output path: " + outputPath);
-            }
-            
-            return inputDoc;
-        } catch (SAXParseException err) {
-            logger.error("** Parsing error" + ", line "
-                    + err.getLineNumber() + ", uri " + err.getSystemId() 
-                    + " " + err.getMessage(), err);
-
-        } catch (SAXException e) {
-            Exception x = e.getException();
-            ((x == null) ? e : x).printStackTrace();
-            logger.error("SAXException", e);
-
-        } catch (Throwable t) {
-        	logger.catching(t);
-        }
-        //System.exit (0);
-        return null;
-
+    }
+    
+    private void parseOutput() {
+        NodeList outputNode = doc.getElementsByTagName("output");
+        NamedNodeMap outputAttributes = outputNode.item(0).getAttributes();
+        String outputPath = outputAttributes.getNamedItem("output_path").getNodeValue();
+    	inputDoc.setOutputPath(outputPath);
     }
 
     /**
@@ -381,13 +380,6 @@ public class XMLInputReader {
         p.setMinValue(getValue(minValue, params));
         p.setMaxValue(getValue(maxValue, params));
 
-        int divideBy = 1;
-        if (attributes.getNamedItem("divideBy") != null) {
-            String divide = attributes.getNamedItem("divideBy").getNodeValue();
-            divideBy = getValue(divide, params);
-        }
-        p.setDivideBy(divideBy);
-        
         return p;
     }
 
@@ -433,6 +425,17 @@ public class XMLInputReader {
         return p;
     }
 
+    public static void main(String args[]) {
+        XMLInputReader inputReader = new XMLInputReader();
+        InputDocument id = inputReader.parse("configs/falsesimin.xml");
+        System.out.println(id.getRelationTree1().findNode(0));
+        System.out.println(id.getRelationTree1().findNode(1));
+
+        System.out.println(id.getRelationTree1().findNode(2));
+
+
+    }
+
     /**
      *Creates a Exp2Parameter parameter. it will produce values like: 2,4,8,16,32,64 if min = 2 and max = 64
      * @param name name of the parameter - very important - used to identify the parameter from now on
@@ -456,7 +459,7 @@ public class XMLInputReader {
         NamedNodeMap attributes = parameter.getAttributes();
         String minValue = attributes.getNamedItem("min").getNodeValue();
         String maxValue = attributes.getNamedItem("max").getNodeValue();
-//        double stepI = 0.01;//default step
+        double stepI = 0.01;//default step
 //        if (attributes.getNamedItem("step") != null) {
 //            String step = attributes.getNamedItem("step").getNodeValue();
 //            stepI = Double.parseDouble(step);
