@@ -22,6 +22,7 @@ import jmetal.util.Ranking;
 import jmetal.util.Spea2Fitness;
 import ro.ulbsibiu.fadse.environment.parameters.CheckpointFileParameter;
 import ro.ulbsibiu.fadse.extended.problems.simulators.ServerSimulator;
+import ro.ulbsibiu.fadse.utils.Utils;
 
 /** 
  * This class representing the SPEA2 algorithm
@@ -140,9 +141,8 @@ public class SPEA2 extends Algorithm {
             Spea2Fitness spea = new Spea2Fitness(union);
             spea.fitnessAssign();
             archive = spea.environmentalSelection(archiveSize);
-            if (problem_ instanceof ServerSimulator) {
-                ((ServerSimulator) problem_).dumpCurrentPopulation(archive);
-            }
+            Utils.dumpCurrentPopulation(archive);
+            
             // Create a new offspringPopulation
             offSpringSolutionSet = new SolutionSet(populationSize);
             Solution[] parents = new Solution[2];
@@ -167,10 +167,9 @@ public class SPEA2 extends Algorithm {
                 evaluations++;
             } // while
             //Added by HORIA
-            if (problem_ instanceof ServerSimulator) {
-                ((ServerSimulator) problem_).join();//blocks until all  the offsprings are evaluated
-                ((ServerSimulator) problem_).dumpCurrentPopulation("offspring",System.currentTimeMillis(),offSpringSolutionSet);
-            }
+            Utils.join(problem_);
+            Utils.dumpCurrentPopulation("offspring",System.currentTimeMillis(),offSpringSolutionSet);
+            
             if (outputEveryPopulation) {
 					offSpringSolutionSet.printObjectivesToFile(outputPath
 							+ System.currentTimeMillis()+".csv");

@@ -1,8 +1,11 @@
 package ro.ulbsibiu.fadse.utils;
 
+import java.io.BufferedWriter;
 import java.io.File;
-import java.nio.file.FileSystem;
-import java.nio.file.FileSystems;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -11,22 +14,29 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import jmetal.base.Problem;
 import jmetal.base.Solution;
 import jmetal.base.SolutionSet;
 import jmetal.base.Variable;
 import jmetal.util.JMException;
+import jmetal.util.Ranking;
 import ro.ulbsibiu.fadse.environment.Environment;
 import ro.ulbsibiu.fadse.environment.Objective;
 import ro.ulbsibiu.fadse.environment.parameters.Parameter;
 import ro.ulbsibiu.fadse.environment.parameters.VirtualParameter;
+import ro.ulbsibiu.fadse.extended.metaheuristics.metaoptimizations.metaoptimized.MetaOptimizedAlgorithm;
+import ro.ulbsibiu.fadse.extended.problems.simulators.ServerSimulator;
 import ro.ulbsibiu.fadse.extended.problems.simulators.network.Message;
 import ro.ulbsibiu.fadse.extended.problems.simulators.network.server.status.SimulationStatus;
 
 public class Utils {
 
+	static Logger logger = LogManager.getLogger();
+	private static Environment environment;
     private Random r;
 
     public Random getRandom() {
@@ -36,7 +46,7 @@ public class Utils {
         return r;
     }
 
-    public String generateCSV(SolutionSet s) {
+    public static String generateCSV(SolutionSet s) {
         String csvOutput = "";
         for (int i = 0; i < s.size(); i++) {
             String csvLine = "";
@@ -45,7 +55,7 @@ public class Utils {
                 try {
                     csvLine += v.getValue() + ",";
                 } catch (JMException ex) {
-                    Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
+                    logger.error("", ex);
                     csvLine += "unknown" + ",";
                 }
             }
@@ -60,7 +70,7 @@ public class Utils {
         return csvOutput;
     }
 
-    public String generateCSVHeadder(Environment environment) {
+    public static String generateCSVHeadder(Environment environment) {
         String headder = "";
         for (Parameter p : environment.getInputDocument().getParameters()) {
             headder += p.getName() + ",";
@@ -169,7 +179,7 @@ public class Utils {
                 //System.out.printf("%d - %d", vars[i].getValue(), parameter.getValue());
                 params[i] = parameter;
             } catch (CloneNotSupportedException ex) {
-                Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, "cloning of the parameter was not supported", ex);
+                logger.error("cloning of the parameter was not supported", ex);
             }
         }
         return params;
@@ -188,7 +198,7 @@ public class Utils {
                 //System.out.printf("%d - %d", vars[i].getValue(), parameter.getValue());
                 params[i] = parameter;
             } catch (CloneNotSupportedException ex) {
-                Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, "cloning of the parameter was not supported", ex);
+            	logger.error("cloning of the parameter was not supported", ex);
             }
         }
         if (environment.getInputDocument().getVirtualParameters() != null) {
@@ -208,9 +218,78 @@ public class Utils {
         return params;
     }
     
+    public static void setEnv(Environment envrionment)
+    {
+    	Utils.environment = envrionment;
+    }
+    
+    public static Environment getEnv()
+    {
+    	return environment;
+    }
+    
     public static String normalizePath(String path)
     {
     	String[] paths = path.split("/");
     	return Paths.get(System.getProperty("user.dir")).resolve(String.join(File.separator, paths)).toString();
+    }
+
+    public static void dumpCurrentPopulation(SolutionSet population) {        
+        dumpCurrentPopulation("filled", String.valueOf(System.currentTimeMillis()), population);
+    }
+    
+    public static void dumpCurrentPopulation(String folder, SolutionSet population) {
+    	dumpCurrentPopulation(folder, System.currentTimeMillis(), population);
+    }
+    
+    public static void dumpCurrentPopulation(String folder, long filename, SolutionSet population) {
+    	dumpCurrentPopulation(folder, String.valueOf(filename), population);
+    }
+
+    public static void dumpCurrentPopulation(String folder, String filename, SolutionSet population) {
+        String result = Utils.generateCSVHeadder(getEnv());
+        result += Utils.generateCSV(population);
+        
+        System.out.println("Result of the population (" + folder + "/" + filename + "):\n" + result);
+        
+        try {
+        	Path dir = Paths.get(getEnv().getResultsFolder()).resolve(folder);
+            Files.createDirectories(dir);
+            File file = dir.resolve(filename + ".csv").toFile();
+            BufferedWriter out = new BufferedWriter(new FileWriter(file));
+            out.write(result);
+            out.close();
+        } catch (IOException e) {
+            logger.error("",e);
+        }
+    }
+    
+    public static void dumpMoasPopulations(List<MetaOptimizedAlgorithm> moas, List<SolutionSet> offspringSets)
+    {
+        for (int i = 0; i < moas.size(); i++) {
+        	Utils.dumpCurrentPopulation("off" + moas.get(i).getName(), System.currentTimeMillis(), offspringSets.get(i));
+        }
+    }
+    
+    public static void dumpCurrentPopulationAndRanked(SolutionSet population)
+    {
+		Utils.dumpCurrentPopulation("corrected"
+				, System.currentTimeMillis(), population);
+		Ranking ranking_temp = new Ranking(population);
+		Utils.dumpCurrentPopulation("pareto"
+				, System.currentTimeMillis(), ranking_temp.getSubfront(0));
+    }
+    
+    public static void join(Problem problem_)
+    {
+		if (problem_ instanceof ServerSimulator) {
+			((ServerSimulator) problem_).join();// blocks until all the
+												// offsprings are evaluated
+		}
+    }
+    
+    public static Path getOutputDirectory() 
+    {
+    	return Paths.get(getEnv().getInputDocument().getOutputPath());
     }
 }

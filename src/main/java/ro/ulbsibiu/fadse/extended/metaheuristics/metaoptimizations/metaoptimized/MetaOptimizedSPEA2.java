@@ -23,6 +23,7 @@ import jmetal.util.Ranking;
 import jmetal.util.Spea2Fitness;
 import ro.ulbsibiu.fadse.environment.parameters.CheckpointFileParameter;
 import ro.ulbsibiu.fadse.extended.problems.simulators.ServerSimulator;
+import ro.ulbsibiu.fadse.utils.Utils;
 
 /**
  *
@@ -173,7 +174,7 @@ public class MetaOptimizedSPEA2 extends MetaOptimizedAlgorithm {
             //archive = spea.environmentalSelection(archiveSize);
             archive = selectNextGeneration(union, archiveSize);
             
-            ((ServerSimulator) problem_).dumpCurrentPopulation(archive);
+            Utils.dumpCurrentPopulation(archive);
             // Create a new offspringPopulation
 //            offSpringSolutionSet = new SolutionSet(populationSize);
 //            Solution[] parents = new Solution[2];
@@ -209,7 +210,7 @@ public class MetaOptimizedSPEA2 extends MetaOptimizedAlgorithm {
             if (problem_ instanceof ServerSimulator) {
                 ((ServerSimulator) problem_).join();//blocks until all  the offsprings are evaluated
             }
-            ((ServerSimulator) problem_).dumpCurrentPopulation("offspring", System.currentTimeMillis(),offSpringSolutionSet);
+            Utils.dumpCurrentPopulation("offspring", System.currentTimeMillis(),offSpringSolutionSet);
             if (outputEveryPopulation) {
 					offSpringSolutionSet.printObjectivesToFile(outputPath
 							+ System.currentTimeMillis()+".csv");

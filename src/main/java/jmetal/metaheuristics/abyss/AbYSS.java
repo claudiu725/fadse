@@ -20,6 +20,7 @@ import jmetal.util.PseudoRandom;
 import jmetal.util.Spea2Fitness;
 import jmetal.util.archive.CrowdingArchive;
 import ro.ulbsibiu.fadse.extended.problems.simulators.ServerSimulator;
+import ro.ulbsibiu.fadse.utils.Utils;
 
 /**
  * This class implements the AbYSS algorithm. This algorithm is an adaptation
@@ -479,8 +480,9 @@ public class AbYSS extends Algorithm {
         } // fpr
         if (problem_ instanceof ServerSimulator) {
             ((ServerSimulator) problem_).join();//blocks until all  the offsprings are evaluated
-            ((ServerSimulator) problem_).dumpCurrentPopulation(solutionSet_);
         }
+        Utils.dumpCurrentPopulation(solutionSet_);
+        
         // STEP 3. Main loop
         int newSolutions = 0;
         while (evaluations_ < maxEvaluations) {
@@ -489,9 +491,7 @@ public class AbYSS extends Algorithm {
             while (newSolutions > 0) { // New solutions are created
                 referenceSetUpdate(false);
                 if (evaluations_ >= maxEvaluations) {
-                    if (problem_ instanceof ServerSimulator) {
-                        ((ServerSimulator) problem_).dumpCurrentPopulation(archive_);
-                    }
+                    Utils.dumpCurrentPopulation(archive_);
                     return archive_;
                 }
                 newSolutions = subSetGeneration();
@@ -548,8 +548,8 @@ public class AbYSS extends Algorithm {
             } // if
         if (problem_ instanceof ServerSimulator) {
             ((ServerSimulator) problem_).join();//blocks until all  the offsprings are evaluated
-            ((ServerSimulator) problem_).dumpCurrentPopulation(archive_);
         }
+        Utils.dumpCurrentPopulation(archive_);
         } // while
 
         // STEP 4. Return the archive

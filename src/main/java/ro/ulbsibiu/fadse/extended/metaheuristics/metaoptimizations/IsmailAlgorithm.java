@@ -17,6 +17,7 @@ import jmetal.base.SolutionSet;
 import jmetal.util.JMException;
 import jmetal.util.Ranking;
 import ro.ulbsibiu.fadse.extended.problems.simulators.ServerSimulator;
+import ro.ulbsibiu.fadse.utils.Utils;
 
 /**
  *
@@ -39,8 +40,8 @@ public class IsmailAlgorithm extends BaseMetaOptimizationAlgorithm {
              
         if (problem_ instanceof ServerSimulator) {
             ((ServerSimulator) problem_).join();
-            ((ServerSimulator) problem_).dumpCurrentPopulation(masterPopulation);
         }
+        Utils.dumpCurrentPopulation(masterPopulation);
 
         while (evaluations < maxEvaluations) {
             List<SolutionSet> offspringSets = new ArrayList<>();
@@ -67,11 +68,9 @@ public class IsmailAlgorithm extends BaseMetaOptimizationAlgorithm {
             
             if (problem_ instanceof ServerSimulator) {
                 ((ServerSimulator) problem_).join();
-                ((ServerSimulator) problem_).dumpCurrentPopulation(masterPopulation);
-                for (int i = 0; i < moas.size(); i++) {
-                	((ServerSimulator) problem_).dumpCurrentPopulation("off" + moas.get(i).getName(), System.currentTimeMillis(), offspringSets.get(i));
-                }
             }
+            Utils.dumpCurrentPopulation(masterPopulation);
+            Utils.dumpMoasPopulations(moas, offspringSets);
             
             logger.warn("Evaluations until now " + evaluations);
             updatePercentages(offspringSets);

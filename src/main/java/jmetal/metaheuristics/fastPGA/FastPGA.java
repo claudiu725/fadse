@@ -19,6 +19,7 @@ import jmetal.util.FPGAFitness;
 import jmetal.util.JMException;
 import jmetal.util.Ranking;
 import ro.ulbsibiu.fadse.extended.problems.simulators.ServerSimulator;
+import ro.ulbsibiu.fadse.utils.Utils;
 
 /*
 * This class implements the FPGA (Fast Pareto Genetic Algorithm).
@@ -83,10 +84,9 @@ public class FastPGA extends Algorithm{
       evaluations++;
       solutionSet.add(solution);            
     }
-    if (problem_ instanceof ServerSimulator) {
-            ((ServerSimulator) problem_).join();//blocks until all  the offsprings are evaluated
-            ((ServerSimulator) problem_).dumpCurrentPopulation(solutionSet);
-    }
+    Utils.join(problem_);
+    Utils.dumpCurrentPopulation(solutionSet);
+    
     //Begin the iterations
     Solution [] parents = new Solution[2];
     Solution [] offSprings;
@@ -111,10 +111,9 @@ public class FastPGA extends Algorithm{
         offSpringSolutionSet.add(offSprings[0]);
         offSpringSolutionSet.add(offSprings[1]);
       }
-      if (problem_ instanceof ServerSimulator) {
-                ((ServerSimulator) problem_).join();//blocks until all  the offsprings are evaluated
-                ((ServerSimulator) problem_).dumpCurrentPopulation("offspring",System.currentTimeMillis(),offSpringSolutionSet);
-      }
+      Utils.join(problem_);
+      Utils.dumpCurrentPopulation("offspring",System.currentTimeMillis(),offSpringSolutionSet);
+      
       // Merge the populations
       candidateSolutionSet = solutionSet.union(offSpringSolutionSet);
       
@@ -157,9 +156,7 @@ public class FastPGA extends Algorithm{
           stop = true;
         }
       }
-      if (problem_ instanceof ServerSimulator) {
-                ((ServerSimulator) problem_).dumpCurrentPopulation(solutionSet);
-      }
+      Utils.dumpCurrentPopulation(solutionSet);
     }
     
     setOutputParameter("evaluations",evaluations);

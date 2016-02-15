@@ -386,32 +386,6 @@ public class ServerSimulator extends SimulatorWrapper {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public void dumpCurrentPopulation(SolutionSet population) {        
-        dumpCurrentPopulation("filled", String.valueOf(System.currentTimeMillis()), population);
-    }
-    
-    public void dumpCurrentPopulation(String folder, long filename, SolutionSet population) {
-    	dumpCurrentPopulation(folder, String.valueOf(filename), population);
-    }
-
-    public void dumpCurrentPopulation(String folder, String filename, SolutionSet population) {
-        String result = (new Utils()).generateCSVHeadder(simulationStatus.getEnvironment());
-        result += (new Utils()).generateCSV(population);
-        
-        System.out.println("Result of the population (" + folder + "/" + filename + "):\n" + result);
-        
-        try {
-        	Path dir = Paths.get(environment.getResultsFolder()).resolve(folder);
-            Files.createDirectories(dir);
-            File file = dir.resolve(filename + ".csv").toFile();
-            BufferedWriter out = new BufferedWriter(new FileWriter(file));
-            out.write(result);
-            out.close();
-        } catch (IOException e) {
-            logger.error("",e);
-        }
-    }
-
     public Environment getEnvironment(){
         return this.environment;
     }

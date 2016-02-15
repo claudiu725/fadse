@@ -18,6 +18,7 @@ import jmetal.util.Distance;
 import jmetal.util.JMException;
 import jmetal.util.Ranking;
 import ro.ulbsibiu.fadse.extended.problems.simulators.ServerSimulator;
+import ro.ulbsibiu.fadse.utils.Utils;
 
 public class DENSEA extends Algorithm {
 
@@ -74,10 +75,8 @@ public class DENSEA extends Algorithm {
         } //for
         //<-
 
-        if (problem_ instanceof ServerSimulator) {
-            ((ServerSimulator) problem_).join();//blocks until all  the offsprings are evaluated
-            ((ServerSimulator) problem_).dumpCurrentPopulation(population);
-        }
+        Utils.join(problem_);
+        Utils.dumpCurrentPopulation(population);
         Ranking r;
 
         while (evaluations < maxEvaluations) {
@@ -99,10 +98,8 @@ public class DENSEA extends Algorithm {
                 P3.add(offSpring[0]);
                 P3.add(offSpring[1]);
             }
-            if (problem_ instanceof ServerSimulator) {
-                ((ServerSimulator) problem_).join();//blocks until all  the offsprings are evaluated
-                ((ServerSimulator) problem_).dumpCurrentPopulation("offspring", System.currentTimeMillis(), P3);
-            }
+            Utils.join(problem_);
+            Utils.dumpCurrentPopulation("offspring", System.currentTimeMillis(), P3);
 
             r = new Ranking(P3);
             for (int i = 0; i < r.getNumberOfSubfronts(); i++) {
@@ -132,9 +129,7 @@ public class DENSEA extends Algorithm {
             for (int i = 0; i < r.getNumberOfSubfronts(); i++) {
                 distance.crowdingDistanceAssignment(r.getSubfront(i), problem_.getNumberOfObjectives());
             }
-            if (problem_ instanceof ServerSimulator) {
-                ((ServerSimulator) problem_).dumpCurrentPopulation(population);
-            }
+            Utils.dumpCurrentPopulation(population);
         }
         r = new Ranking(population);
         return r.getSubfront(0);

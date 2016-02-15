@@ -21,6 +21,7 @@ import jmetal.base.operator.comparator.DominanceComparator;
 import jmetal.util.JMException;
 import jmetal.util.Ranking;
 import ro.ulbsibiu.fadse.extended.problems.simulators.ServerSimulator;
+import ro.ulbsibiu.fadse.utils.Utils;
 
 /**
  * This class representing the SPEA2 algorithm
@@ -274,10 +275,9 @@ public class IBEA extends Algorithm{
       evaluations++;
       solutionSet.add(newSolution);
     }
-    if (problem_ instanceof ServerSimulator) {
-            ((ServerSimulator) problem_).join();//blocks until all  the offsprings are evaluated
-            ((ServerSimulator) problem_).dumpCurrentPopulation(solutionSet);
-    }
+    Utils.join(problem_);
+    Utils.dumpCurrentPopulation(solutionSet);
+    
     while (evaluations < maxEvaluations){
       SolutionSet union = ((SolutionSet)solutionSet).union(archive);
       calculateFitness(union);
@@ -309,15 +309,12 @@ public class IBEA extends Algorithm{
         offSpringSolutionSet.add(offSpring[0]);
         evaluations++;
       } // while
-      if (problem_ instanceof ServerSimulator) {
-                ((ServerSimulator) problem_).join();//blocks until all  the offsprings are evaluated
-                ((ServerSimulator) problem_).dumpCurrentPopulation("offspring",System.currentTimeMillis(),offSpringSolutionSet);
-      }
+      Utils.join(problem_);
+      Utils.dumpCurrentPopulation("offspring",System.currentTimeMillis(),offSpringSolutionSet);
+      
       // End Create a offSpring solutionSet
       solutionSet = offSpringSolutionSet;
-      if (problem_ instanceof ServerSimulator) {
-                ((ServerSimulator) problem_).dumpCurrentPopulation(archive);
-      }
+      Utils.dumpCurrentPopulation(archive);
     } // while
 
     Ranking ranking = new Ranking(archive);

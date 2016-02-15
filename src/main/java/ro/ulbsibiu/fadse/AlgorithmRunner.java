@@ -12,6 +12,7 @@ import jmetal.util.JMException;
 import ro.ulbsibiu.fadse.environment.Environment;
 import ro.ulbsibiu.fadse.extended.base.factory.AlgorithmFactory;
 import ro.ulbsibiu.fadse.extended.problems.simulators.network.server.status.SimulationStatus;
+import ro.ulbsibiu.fadse.utils.Utils;
 
 /*
  *
@@ -63,6 +64,7 @@ public class AlgorithmRunner {
         // Runtime.getRuntime().addShutdownHook(new Thread(new
         // PerformCleanup()));
 
+    	Utils.setEnv(env);
         algorithm = AlgorithmFactory.createFromInputDocument(env.getInputDocument(), env);
         long initTime = System.currentTimeMillis();
         

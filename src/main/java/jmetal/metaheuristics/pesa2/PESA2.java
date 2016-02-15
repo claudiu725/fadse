@@ -14,7 +14,7 @@ import jmetal.base.SolutionSet;
 import jmetal.base.operator.selection.PESA2Selection;
 import jmetal.util.JMException;
 import jmetal.util.archive.AdaptiveGridArchive;
-import ro.ulbsibiu.fadse.extended.problems.simulators.ServerSimulator;
+import ro.ulbsibiu.fadse.utils.Utils;
 
 /**
  * This class implements the PESA2 algorithm. 
@@ -72,18 +72,15 @@ public class PESA2 extends Algorithm {
             solutionSet.add(solution);
         }
         //<-
-        if (problem_ instanceof ServerSimulator) {
-            ((ServerSimulator) problem_).join();//blocks until all  the offsprings are evaluated
-            ((ServerSimulator) problem_).dumpCurrentPopulation("offspring", System.currentTimeMillis(), solutionSet);
-        }
+        Utils.join(problem_);
+        Utils.dumpCurrentPopulation("offspring", System.currentTimeMillis(), solutionSet);
+        
         // Incorporate non-dominated solution to the archive
         for (int i = 0; i < solutionSet.size(); i++) {
             archive.add(solutionSet.get(i)); // Only non dominated are accepted by
             // the archive
         }
-        if (problem_ instanceof ServerSimulator) {
-            ((ServerSimulator) problem_).dumpCurrentPopulation(archive);
-        }
+        Utils.dumpCurrentPopulation(archive);
 
         // Clear the init solutionSet
         solutionSet.clear();
@@ -103,10 +100,8 @@ public class PESA2 extends Algorithm {
                 evaluations++;
                 solutionSet.add(offSpring[0]);
             }
-            if (problem_ instanceof ServerSimulator) {
-                ((ServerSimulator) problem_).join();//blocks until all  the offsprings are evaluated
-                ((ServerSimulator) problem_).dumpCurrentPopulation("offspring", System.currentTimeMillis(), solutionSet);
-            }
+            Utils.join(problem_);
+            Utils.dumpCurrentPopulation("offspring", System.currentTimeMillis(), solutionSet);
 
             for (int i = 0; i < solutionSet.size(); i++) {
                 archive.add(solutionSet.get(i));
@@ -114,9 +109,7 @@ public class PESA2 extends Algorithm {
 
             // Clear the solutionSet
             solutionSet.clear();
-            if (problem_ instanceof ServerSimulator) {
-                ((ServerSimulator) problem_).dumpCurrentPopulation(archive);
-            }
+            Utils.dumpCurrentPopulation(archive);
         } while (evaluations < maxEvaluations);
         //Return the  solutionSet of non-dominated individual
         return archive;

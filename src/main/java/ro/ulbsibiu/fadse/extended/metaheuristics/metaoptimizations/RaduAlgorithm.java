@@ -20,6 +20,7 @@ import jmetal.util.JMException;
 import jmetal.util.Ranking;
 import ro.ulbsibiu.fadse.extended.metaheuristics.metaoptimizations.metaoptimized.MetaOptimizedAlgorithm;
 import ro.ulbsibiu.fadse.extended.problems.simulators.ServerSimulator;
+import ro.ulbsibiu.fadse.utils.Utils;
 
 /**
  *
@@ -42,7 +43,7 @@ public class RaduAlgorithm extends BaseMetaOptimizationAlgorithm {
 
         if (problem_ instanceof ServerSimulator) {
             ((ServerSimulator) problem_).join();
-            ((ServerSimulator) problem_).dumpCurrentPopulation(masterPopulation);
+            Utils.dumpCurrentPopulation(masterPopulation);
         }
 
         while (evaluations < maxEvaluations) {
@@ -64,15 +65,15 @@ public class RaduAlgorithm extends BaseMetaOptimizationAlgorithm {
             }
 
             for (int i = 0; i < moas.size(); i++) {
-            	((ServerSimulator) problem_).dumpCurrentPopulation("off" + moas.get(i).getName(), System.currentTimeMillis(), offspringSets.get(i));
+            	Utils.dumpCurrentPopulation("off" + moas.get(i).getName(), System.currentTimeMillis(), offspringSets.get(i));
             }
 
             masterPopulation = selectBestAccordingToPercentages(masterPopulation, offspringSets);
             
             if (problem_ instanceof ServerSimulator) {
                 ((ServerSimulator) problem_).join();
-                ((ServerSimulator) problem_).dumpCurrentPopulation(masterPopulation);
             }
+            Utils.dumpCurrentPopulation(masterPopulation);
 
             updatePercentages(offspringSets);
         }

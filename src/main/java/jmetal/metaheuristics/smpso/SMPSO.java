@@ -33,6 +33,7 @@ import jmetal.util.archive.CrowdingArchive;
 import jmetal.util.wrapper.XInt;
 import ro.ulbsibiu.fadse.environment.parameters.CheckpointFileParameter;
 import ro.ulbsibiu.fadse.extended.problems.simulators.ServerSimulator;
+import ro.ulbsibiu.fadse.utils.Utils;
 
 public class SMPSO extends Algorithm {
 
@@ -462,12 +463,9 @@ public class SMPSO extends Algorithm {
             
             
         }
-        if (problem_ instanceof ServerSimulator) {
-            ((ServerSimulator) problem_).join();//blocks until all  the offsprings are evaluated
-            String currentMiliseconds = "" + System.currentTimeMillis();
-            ((ServerSimulator) problem_).dumpCurrentPopulation("filled", currentMiliseconds, particles_);
-            dumpCurrentSpeed("speed" + currentMiliseconds);
-        }
+        Utils.join(problem_);
+        Utils.dumpCurrentPopulation("filled", particles_);
+        //dumpCurrentSpeed("speed" + currentMiliseconds);
 
         //-> Step2. Initialize the speed_ of each particle to 0
         for (int i = 0; i < particlesSize_; i++) {
@@ -519,12 +517,9 @@ public class SMPSO extends Algorithm {
                 particles_.replace(i, newParticle);
 //                problem_.evaluate(particle);
             }
-            if (problem_ instanceof ServerSimulator) {
-                ((ServerSimulator) problem_).join();//blocks until all  the offsprings are evaluated             
-                String currentMiliseconds = "" + System.currentTimeMillis();
-                ((ServerSimulator) problem_).dumpCurrentPopulation("offspring", currentMiliseconds, particles_);
-                dumpCurrentSpeed("speed" + currentMiliseconds);
-            }
+            Utils.join(problem_);             
+            Utils.dumpCurrentPopulation("offspring", particles_);
+
             //Actualize the archive
             for (int i = 0; i < particles_.size(); i++) {
                 Solution particle = new Solution(particles_.get(i));
@@ -545,17 +540,15 @@ public class SMPSO extends Algorithm {
             distance_.crowdingDistanceAssignment(leaders_,
                     problem_.getNumberOfObjectives());
             iteration_++;
-            if (problem_ instanceof ServerSimulator) {
-                ((ServerSimulator) problem_).join();//blocks until all  the offsprings are evaluated
-                String currentMiliseconds = "" + System.currentTimeMillis();
-                ((ServerSimulator) problem_).dumpCurrentPopulation("filled", currentMiliseconds, leaders_);
-                dumpCurrentSpeed("speed" + currentMiliseconds);
-            }
-            else{
-            	if(outputEveryPopulation){
-            		particles_.printObjectivesToFile(outputPath+System.currentTimeMillis()+".csv");            	
-            	}
-            }
+            Utils.join(problem_);
+            Utils.dumpCurrentPopulation("filled", leaders_);
+            //dumpCurrentSpeed("speed" + currentMiliseconds);
+            
+//            else{
+//            	if(outputEveryPopulation){
+//            		particles_.printObjectivesToFile(outputPath+System.currentTimeMillis()+".csv");            	
+//            	}
+//            }
         }
         return this.leaders_;
     } // execute

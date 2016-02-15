@@ -32,6 +32,7 @@ import jmetal.util.PseudoRandom;
 import jmetal.util.archive.CrowdingArchive;
 import ro.ulbsibiu.fadse.environment.parameters.CheckpointFileParameter;
 import ro.ulbsibiu.fadse.extended.problems.simulators.ServerSimulator;
+import ro.ulbsibiu.fadse.utils.Utils;
 
 /**
  * This class representing an asychronous version of OMOPSO algorithm
@@ -302,10 +303,9 @@ public class OMOPSO extends Algorithm {
                 particles_.add(particle);
             }
         }
-        if (problem_ instanceof ServerSimulator) {
-            ((ServerSimulator) problem_).join();//blocks until all  the offsprings are evaluated
-            ((ServerSimulator) problem_).dumpCurrentPopulation(particles_);
-        }
+        Utils.join(problem_);
+        Utils.dumpCurrentPopulation(particles_);
+            
         //-> Step2. Initialize the speed_ of each particle to 0
         for (int i = 0; i < particlesSize_; i++) {
             for (int j = 0; j < problem_.getNumberOfVariables(); j++) {
@@ -348,10 +348,9 @@ public class OMOPSO extends Algorithm {
                 problem_.evaluate(particle);
                 problem_.evaluateConstraints(particle);
             }
-            if (problem_ instanceof ServerSimulator) {
-                ((ServerSimulator) problem_).join();//blocks until all  the offsprings are evaluated
-                ((ServerSimulator) problem_).dumpCurrentPopulation("offspring", System.currentTimeMillis(), particles_);
-            }
+            Utils.join(problem_);
+            Utils.dumpCurrentPopulation("offspring", System.currentTimeMillis(), particles_);
+            
             //Actualize the archive
             for (int i = 0; i < particles_.size(); i++) {
                 Solution particle = new Solution(particles_.get(i));
@@ -374,9 +373,7 @@ public class OMOPSO extends Algorithm {
             distance_.crowdingDistanceAssignment(leaders_,
                     problem_.getNumberOfObjectives());
             iteration_++;
-            if (problem_ instanceof ServerSimulator) {
-                ((ServerSimulator) problem_).dumpCurrentPopulation(leaders_);
-            }
+            Utils.dumpCurrentPopulation(leaders_);
         }
 
         return this.leaders_;

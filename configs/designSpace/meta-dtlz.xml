@@ -1,6 +1,5 @@
 <design_space>
-    <simulator name="ServerSimulator" type="simulator" ><!--type="synthetic"--><!--type can be synthetic or simulator-->
-        <parameter name="realSimulator" value = "DTLZ1"/>
+    <simulator name="DTLZ1" type="synthetic" ><!--type="synthetic"--><!--type can be synthetic or simulator-->
     </simulator>
     <parameters>
         <parameter name="p1" description="param1" type="float" min="0" max="1" step="0.1"/>
@@ -17,6 +16,9 @@
         <!--<system_metric name="o3" type="float" unit="" desired="small" />-->
         <!--<system_metric name="o4" type="float" unit="" desired="small" />-->
     </system_metrics>
+	<benchmarks>
+		<item name="" />
+	</benchmarks>
 	
     <database ip="127.0.0.1" port="3306" name="fadse" user="fadse_user" password="1234"/>
 

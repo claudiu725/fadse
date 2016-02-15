@@ -29,6 +29,7 @@ import ro.ulbsibiu.fadse.environment.parameters.CheckpointFileParameter;
 import ro.ulbsibiu.fadse.extended.metaheuristics.metaoptimizations.metaoptimized.MetaOptimizedAlgorithm;
 import ro.ulbsibiu.fadse.extended.metaheuristics.metaoptimizations.metrics.Metric;
 import ro.ulbsibiu.fadse.extended.problems.simulators.ServerSimulator;
+import ro.ulbsibiu.fadse.utils.Utils;
 
 /**
  *
@@ -59,10 +60,8 @@ public abstract class BaseMetaOptimizationAlgorithm extends Algorithm {
     public BaseMetaOptimizationAlgorithm(Problem problem) {
         problem_ = problem;
         rand = new Random();
-
-        if (problem_ instanceof ServerSimulator) {
-            resultsFolder = Paths.get(((ServerSimulator) problem_).getEnvironment().getInputDocument().getOutputPath());
-        }
+        
+        resultsFolder = Utils.getOutputDirectory();
     }
 
     protected SolutionSet readOrCreateInitialSolutionSet() throws ClassNotFoundException, JMException {

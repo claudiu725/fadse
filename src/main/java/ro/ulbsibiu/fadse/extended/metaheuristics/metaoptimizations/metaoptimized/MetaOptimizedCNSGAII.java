@@ -26,6 +26,7 @@ import ro.ulbsibiu.fadse.extended.base.operator.mutation.BitFlipMutationFuzzy;
 import ro.ulbsibiu.fadse.extended.base.operator.mutation.BitFlipMutationFuzzyVirtualParameters;
 import ro.ulbsibiu.fadse.extended.base.operator.mutation.BitFlipMutationRandomDefuzzifier;
 import ro.ulbsibiu.fadse.extended.problems.simulators.ServerSimulator;
+import ro.ulbsibiu.fadse.utils.Utils;
 
 /**
  * This class implements the NSGA-II algorithm.
@@ -211,8 +212,9 @@ public class MetaOptimizedCNSGAII extends Algorithm {
 		if (problem_ instanceof ServerSimulator) {
 			((ServerSimulator) problem_).join();// blocks until all the
 												// offsprings are evaluated
-			((ServerSimulator) problem_).dumpCurrentPopulation(population);
+	
 		}
+		Utils.dumpCurrentPopulation(population);
 		// WORKAROUND
 		for (int i = 0; i < populationSize; i++) {
 			Solution s = population.get(i);
@@ -221,10 +223,10 @@ public class MetaOptimizedCNSGAII extends Algorithm {
 		if (problem_ instanceof ServerSimulator) {
 			((ServerSimulator) problem_).join();// blocks until all the
 												// offsprings are evaluated
-			((ServerSimulator) problem_).dumpCurrentPopulation("corrected", System.currentTimeMillis(), population);
-			Ranking ranking_temp = new Ranking(population);
-			((ServerSimulator) problem_).dumpCurrentPopulation("pareto", System.currentTimeMillis(), ranking_temp.getSubfront(0));
 		}
+		Utils.dumpCurrentPopulation("corrected", System.currentTimeMillis(), population);
+		Ranking ranking_temp = new Ranking(population);
+		Utils.dumpCurrentPopulation("pareto", System.currentTimeMillis(), ranking_temp.getSubfront(0));
 		// END WORKAROUND
 		// END added by Horia
 		// ***********************************************MAIN
@@ -302,8 +304,8 @@ public class MetaOptimizedCNSGAII extends Algorithm {
 			if (problem_ instanceof ServerSimulator) {
 				((ServerSimulator) problem_).join();// blocks until all the
 													// offsprings are evaluated
-				((ServerSimulator) problem_).dumpCurrentPopulation("offspring", System.currentTimeMillis(), offspringPopulation);
 			}
+			Utils.dumpCurrentPopulation("offspring", System.currentTimeMillis(), offspringPopulation);
 			// WORKAROUND
 			System.out.println("RESEND");
 			for (int i = 0; i < populationSize; i++) {
@@ -313,8 +315,8 @@ public class MetaOptimizedCNSGAII extends Algorithm {
 			if (problem_ instanceof ServerSimulator) {
 				((ServerSimulator) problem_).join();// blocks until all the
 													// offsprings are evaluated
-				((ServerSimulator) problem_).dumpCurrentPopulation("corrected", System.currentTimeMillis(), population);
 			}
+			Utils.dumpCurrentPopulation("corrected", System.currentTimeMillis(), population);
 			// END WORKAROUND
 			// END added by Horia
 			// Create the solutionSet union of solutionSet and offSpring
@@ -389,17 +391,10 @@ public class MetaOptimizedCNSGAII extends Algorithm {
 					requiredEvaluations = evaluations;
 				} // if
 			} // if
-			if (problem_ instanceof ServerSimulator) {
-				((ServerSimulator) problem_).dumpCurrentPopulation(population);
-				Ranking ranking_temp = new Ranking(population);
-				((ServerSimulator) problem_).dumpCurrentPopulation("pareto", System.currentTimeMillis(),
-						ranking_temp.getSubfront(0));
-			} else {
-				if (outputEveryPopulation) {
-					population.printObjectivesToFile(outputPath
-							+ System.currentTimeMillis()+".csv");
-				}
-			}
+			Utils.dumpCurrentPopulation(population);
+			ranking_temp = new Ranking(population);
+			Utils.dumpCurrentPopulation("pareto", System.currentTimeMillis(),
+					ranking_temp.getSubfront(0));
 
 		} // while
 

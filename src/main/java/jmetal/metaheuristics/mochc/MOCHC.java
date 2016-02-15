@@ -26,6 +26,7 @@ import ro.ulbsibiu.fadse.environment.parameters.CheckpointFileParameter;
 import ro.ulbsibiu.fadse.extended.problems.simulators.ServerSimulator;
 import ro.ulbsibiu.fadse.extended.qualityIndicator.MetricsUtil;
 import ro.ulbsibiu.fadse.extended.qualityIndicator.TwoSetHypervolumeDifferenceResult;
+import ro.ulbsibiu.fadse.utils.Utils;
 
 /**
  *
@@ -232,10 +233,9 @@ public class MOCHC extends Algorithm {
         }
 
 
-        if (problem_ instanceof ServerSimulator) {
-            ((ServerSimulator) problem_).join();//blocks until all  the offsprings are evaluated
-            ((ServerSimulator) problem_).dumpCurrentPopulation(solutionSet);
-        }
+        Utils.join(problem_);//blocks until all  the offsprings are evaluated
+        Utils.dumpCurrentPopulation(solutionSet);
+        
         while (!condition) {
             offspringPopulation = new SolutionSet(populationSize);
             for (int i = 0; i < solutionSet.size() / 2; i++) {
@@ -255,10 +255,9 @@ public class MOCHC extends Algorithm {
                     System.out.println("Current Population size is: " + offspringPopulation.size());
                 }
             }
-            if (problem_ instanceof ServerSimulator) {
-                ((ServerSimulator) problem_).join();//blocks until all  the offsprings are evaluated
-                ((ServerSimulator) problem_).dumpCurrentPopulation("offspring", System.currentTimeMillis(), offspringPopulation);
-            }
+            Utils.join(problem_);
+            Utils.dumpCurrentPopulation("offspring", System.currentTimeMillis(), offspringPopulation);
+            
             SolutionSet union = solutionSet.union(offspringPopulation);
             newGenerationSelection.setParameter("populationSize", populationSize);
             newPopulation = (SolutionSet) newGenerationSelection.execute(union);
@@ -304,14 +303,7 @@ public class MOCHC extends Algorithm {
             iterations++;
 
             solutionSet = newPopulation;
-            if (problem_ instanceof ServerSimulator) {
-                ((ServerSimulator) problem_).dumpCurrentPopulation(solutionSet);
-            } else {
-                if (outputEveryPopulation) {
-                    solutionSet.printObjectivesToFile(outputPath
-                            + System.currentTimeMillis() + ".csv");
-                }
-            }
+            Utils.dumpCurrentPopulation(solutionSet);
             if (evaluations >= maxEvaluations) {
                 condition = true;
             }
