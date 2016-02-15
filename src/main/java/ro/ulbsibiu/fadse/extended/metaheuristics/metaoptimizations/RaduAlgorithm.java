@@ -41,10 +41,8 @@ public class RaduAlgorithm extends BaseMetaOptimizationAlgorithm {
         
         SolutionSet masterPopulation = readOrCreateInitialSolutionSet();
 
-        if (problem_ instanceof ServerSimulator) {
-            ((ServerSimulator) problem_).join();
-            Utils.dumpCurrentPopulation(masterPopulation);
-        }
+        Utils.join(problem_);
+        Utils.dumpCurrentPopulation(masterPopulation);
 
         while (evaluations < maxEvaluations) {
             List<SolutionSet> offspringSets = new ArrayList<>();
@@ -64,15 +62,11 @@ public class RaduAlgorithm extends BaseMetaOptimizationAlgorithm {
                 }
             }
 
-            for (int i = 0; i < moas.size(); i++) {
-            	Utils.dumpCurrentPopulation("off" + moas.get(i).getName(), System.currentTimeMillis(), offspringSets.get(i));
-            }
+            Utils.dumpMoasPopulations(moas, offspringSets);
 
             masterPopulation = selectBestAccordingToPercentages(masterPopulation, offspringSets);
             
-            if (problem_ instanceof ServerSimulator) {
-                ((ServerSimulator) problem_).join();
-            }
+            Utils.join(problem_);
             Utils.dumpCurrentPopulation(masterPopulation);
 
             updatePercentages(offspringSets);

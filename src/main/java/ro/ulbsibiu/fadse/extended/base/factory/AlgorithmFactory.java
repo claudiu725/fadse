@@ -45,6 +45,33 @@ public class AlgorithmFactory {
                     "forceMinimumPercentageFeasibleIndividuals", "0");
         }
 
+        
+        // Algorithm parameters work only for NSGA-II for other algorithms
+        // we need to define others, we have to see how to do it more easily
+        // probably with configuration files
+        if (env.getCheckpointFileParameter() != null
+                && !env.getCheckpointFileParameter().equals("")) {
+            algorithm.setInputParameter("checkpointFile",
+                    env.getCheckpointFileParameter());
+        }
+
+        String outputPath = env.getInputDocument().getOutputPath();
+        if (outputPath == null)
+        {
+        	// use the default environment output path 
+        	// if the output path is not present in the xml config
+        	outputPath = env.getResultsFolder();
+        	env.getInputDocument().setOutputPath(outputPath);
+        	logger.info("Using output folder " + outputPath);
+        }
+        else
+        {
+        	env.setResultsFolder(outputPath);
+        	logger.info("Overriding output folder " + outputPath);
+        }
+
+        algorithm.setInputParameter("outputPath", outputPath);
+        
         logger.info("Created an algorithm of class " + algorithm.getClass().getName());
 		return algorithm;
 	}

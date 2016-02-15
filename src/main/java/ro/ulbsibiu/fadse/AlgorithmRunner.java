@@ -67,40 +67,14 @@ public class AlgorithmRunner {
     	Utils.setEnv(env);
         algorithm = AlgorithmFactory.createFromInputDocument(env.getInputDocument(), env);
         long initTime = System.currentTimeMillis();
-        
-        // Algorithm parameters htey work only for NSGA-II for other algorithms
-        // we need to define others, we have to see how to do it more easily
-        // probably with configuration files
-        if (env.getCheckpointFileParameter() != null
-                && !env.getCheckpointFileParameter().equals("")) {
-            algorithm.setInputParameter("checkpointFile",
-                    env.getCheckpointFileParameter());
-        }
-
-        String outputPath = env.getInputDocument().getOutputPath();
-        if (outputPath == null)
-        {
-        	// use the default environment output path 
-        	// if the output path is not present in the xml config
-        	outputPath = env.getResultsFolder();
-        	env.getInputDocument().setOutputPath(outputPath);
-        	logger.info("Using output folder " + outputPath);
-        }
-        else
-        {
-        	env.setResultsFolder(outputPath);
-        	logger.info("Overriding output folder " + outputPath);
-        }
-
-        algorithm.setInputParameter("outputPath", outputPath);
 
         SimulationStatus.getInstance().setAlgorithm(algorithm);
         SimulationStatus.getInstance().setEnvironment(env);
         // Execute the Algorithm
         SolutionSet population = algorithm.execute();
 
-        String objectivesPath = Paths.get(outputPath).resolve("Objectives").toString();
-        String variablesPath = Paths.get(outputPath).resolve("Variables").toString();
+        String objectivesPath = Paths.get(env.getResultsFolder()).resolve("Objectives").toString();
+        String variablesPath = Paths.get(env.getResultsFolder()).resolve("Variables").toString();
         population.printObjectivesToFile(objectivesPath);
         population.printVariablesToFile(variablesPath);
 		long estimatedTime = System.currentTimeMillis() - initTime ;
