@@ -78,10 +78,10 @@ public class HypervolumeStopCondition extends StopCondition {
         File dir = currentdir.toFile();
         String xmlFileName = "falsesimin.xml";
         Environment env = new Environment(dir + System.getProperty("file.separator") + "configs" + System.getProperty("file.separator") + xmlFileName);
-        env.setResultsFolder(currentdir.resolve("test"));
+        env.setResultsFolder(currentdir.resolve("test").toString());
         HypervolumeStopCondition condition = new HypervolumeStopCondition(env);
-        Path resultsFolder = env.getResultsFolder();
-        List<Path> listOfPopulationFiles = MetricsUtil.getListOfFiles(resultsFolder, "filled");
+        String resultsFolder = env.getResultsFolder();
+        List<Path> listOfPopulationFiles = MetricsUtil.getListOfFiles(Paths.get(resultsFolder), "filled");
         for (int i = 0; i < listOfPopulationFiles.size(); i++) {
             List<Path> subLsit = listOfPopulationFiles.subList(0, i);
             if (condition.stopConditionFulfilled(subLsit)) {

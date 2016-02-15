@@ -42,6 +42,6 @@ public class AlgorithmFactory {
         }
 
         logger.info("Created an algorithm of class " + algorithm.getClass().getName());
-		return null;
+		return algorithm;
 	}
 }

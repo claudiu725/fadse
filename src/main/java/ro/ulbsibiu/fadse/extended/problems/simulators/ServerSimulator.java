@@ -10,6 +10,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -399,8 +400,8 @@ public class ServerSimulator extends SimulatorWrapper {
         System.out.println("Result of the population (" + folder + "/" + filename + "):\n" + result);
         
         try {
-            Files.createDirectories(environment.getResultsFolder());
-            File file = environment.getResultsFolder().resolve(folder).resolve(filename + ".csv").toFile();
+            Files.createDirectories(Paths.get(environment.getResultsFolder()));
+            File file = Paths.get(environment.getResultsFolder()).resolve(folder).resolve(filename + ".csv").toFile();
             BufferedWriter out = new BufferedWriter(new FileWriter(file));
             out.write(result);
             out.close();

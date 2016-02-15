@@ -2,6 +2,8 @@ package ro.ulbsibiu.fadse;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import jmetal.base.Algorithm;
@@ -73,7 +75,7 @@ public class AlgorithmRunner {
                     env.getCheckpointFileParameter());
         }
 
-        Path outputPath = env.getInputDocument().getOutputPath();
+        String outputPath = env.getInputDocument().getOutputPath();
         if (outputPath == null)
         {
         	// use the default environment output path 
@@ -95,8 +97,8 @@ public class AlgorithmRunner {
         // Execute the Algorithm
         SolutionSet population = algorithm.execute();
 
-        String objectivesPath = outputPath.resolve("Objectives").toString();
-        String variablesPath = outputPath.resolve("Variables").toString();
+        String objectivesPath = Paths.get(outputPath).resolve("Objectives").toString();
+        String variablesPath = Paths.get(outputPath).resolve("Variables").toString();
         population.printObjectivesToFile(objectivesPath);
         population.printVariablesToFile(variablesPath);
 		long estimatedTime = System.currentTimeMillis() - initTime ;

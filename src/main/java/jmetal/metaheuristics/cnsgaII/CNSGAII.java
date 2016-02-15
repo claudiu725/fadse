@@ -8,6 +8,7 @@ package jmetal.metaheuristics.cnsgaII;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -86,7 +87,7 @@ public class CNSGAII extends Algorithm {
 		if (output != null) {
 			outputEveryPopulation = (Boolean) output;
 		}
-		String outputPath = (String) getInputParameter("outputPath");
+		Path outputPath = (Path) getInputParameter("outputPath");
 		double reductionRate = (Double) getInputParameter("reductionRate");
 		// Initialize the variables
 		population = new SolutionSet(populationSize);
@@ -404,8 +405,7 @@ public class CNSGAII extends Algorithm {
 						ranking_temp.getSubfront(0));
 			} else {
 				if (outputEveryPopulation) {
-					population.printObjectivesToFile(outputPath
-							+ System.currentTimeMillis()+".csv");
+					population.printObjectivesToFile(outputPath.resolve(System.currentTimeMillis()+".csv").toString());
 				}
 			}
 

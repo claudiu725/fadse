@@ -100,7 +100,7 @@ public class InputDocument implements Serializable {
     private LinkedList<String> benchmarks;
     private RelationTree relationTree1;
     private RelationTree relationTree2;
-    private Path outputPath;
+    private String outputPath;
 
     public InputDocument() {
         this.simulatorParameters = new HashMap<String, String>();
@@ -258,11 +258,11 @@ public class InputDocument implements Serializable {
         this.virtualParameters = virtualParameters;
     }
     
-    public Path getOutputPath() {
+    public String getOutputPath() {
         return outputPath;
     }
 
-    public void setOutputPath(Path outputPath) {
+    public void setOutputPath(String outputPath) {
         this.outputPath = outputPath;
     }
     

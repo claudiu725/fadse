@@ -23,7 +23,7 @@ public class Environment implements Serializable {
     private CheckpointFileParameter checkpointFileParam;
     private String fuzzyInputFile;
     private InputDocument inputDocument;
-    private Path resultsFolder;
+    private String resultsFolder;
 
     public Environment(String inputFilePath)
     {
@@ -41,7 +41,8 @@ public class Environment implements Serializable {
         String currentdir = System.getProperty("user.dir");
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_hh-mm-ss");
         String date = dateFormat.format(new Date());
-        resultsFolder = Paths.get(currentdir, "results", date);
+        Path resultsFolder = Paths.get(currentdir, "results", date); 
+        this.resultsFolder = resultsFolder.toString();
         try {
 			Files.createDirectories(resultsFolder);
 		} catch (IOException e) {
@@ -50,9 +51,9 @@ public class Environment implements Serializable {
         logger.info("Output folder is " + resultsFolder.toString());
     }
     
-    public Path getAlgorithmFolder(String algorithmName)
+    public String getAlgorithmFolder(String algorithmName)
     {
-    	return resultsFolder.resolve(algorithmName + ".log");
+    	return Paths.get(resultsFolder).resolve(algorithmName + ".log").toString();
     }
 
     public String getNeighborsConfigFile() {
@@ -79,11 +80,11 @@ public class Environment implements Serializable {
         this.checkpointFileParam = checkpointFileParam;
     }
 
-    public Path getResultsFolder() {
+    public String getResultsFolder() {
         return resultsFolder;
     }
 
-    public void setResultsFolder(Path resultsFolder) {
+    public void setResultsFolder(String resultsFolder) {
         this.resultsFolder = resultsFolder;
     }
 

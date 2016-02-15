@@ -327,7 +327,7 @@ public class XMLInputReader {
             if (outputRootNode != null)
             {
 		        NamedNodeMap outputAttributes = outputRootNode.getAttributes();
-		        Path outputPath = Paths.get(outputAttributes.getNamedItem("output_path").getNodeValue());           
+		        String outputPath = Paths.get(outputAttributes.getNamedItem("output_path").getNodeValue()).toString();           
 		        inputDoc.setOutputPath(outputPath);
 		        logger.info("Using output path:" + outputPath);
             }
