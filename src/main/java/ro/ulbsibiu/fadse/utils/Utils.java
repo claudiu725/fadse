@@ -271,7 +271,7 @@ public class Utils {
         }
     }
     
-    public static void dumpCurrentPopulationAndRanked(SolutionSet population)
+    public static void dumpCurrentPopulationAndFirstParetoFront(SolutionSet population)
     {
 		Utils.dumpCurrentPopulation("corrected"
 				, System.currentTimeMillis(), population);

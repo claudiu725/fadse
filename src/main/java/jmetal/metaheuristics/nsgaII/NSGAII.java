@@ -323,7 +323,7 @@ public class NSGAII extends Algorithm {
                     requiredEvaluations = evaluations;
                 } // if
             } // if
-            Utils.dumpCurrentPopulationAndRanked(population);
+            Utils.dumpCurrentPopulationAndFirstParetoFront(population);
 
         } // while
 

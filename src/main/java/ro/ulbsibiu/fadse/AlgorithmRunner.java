@@ -61,9 +61,7 @@ public class AlgorithmRunner {
     public void run(Environment env) throws JMException, SecurityException,
             IOException, IllegalArgumentException, IllegalAccessException,
             ClassNotFoundException {
-        // Runtime.getRuntime().addShutdownHook(new Thread(new
-        // PerformCleanup()));
-
+    	
     	Utils.setEnv(env);
         algorithm = AlgorithmFactory.createFromInputDocument(env.getInputDocument(), env);
         long initTime = System.currentTimeMillis();

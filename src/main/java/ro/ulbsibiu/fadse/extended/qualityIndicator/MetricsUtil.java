@@ -575,6 +575,10 @@ public class MetricsUtil {
         input.close();
         return pop;
     }
+    
+    public static List<Path> getListOfFiles(Path folderPath) {
+    	return getListOfFiles(folderPath, "");
+    }
 
     public static List<Path> getListOfFiles(Path folderPath, String prefix) {
         List<Path> listOfPopulationFiles = new ArrayList<>();

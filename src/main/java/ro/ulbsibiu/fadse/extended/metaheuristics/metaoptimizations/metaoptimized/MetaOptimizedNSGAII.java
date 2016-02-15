@@ -369,9 +369,7 @@ public class MetaOptimizedNSGAII extends MetaOptimizedAlgorithm {
             }
             
             //Added by HORIA
-            if (problem_ instanceof ServerSimulator) {
-                ((ServerSimulator) problem_).join();//blocks until all  the offsprings are evaluated
-            }
+            Utils.join(problem_);
             Utils.dumpCurrentPopulation("offspring", System.currentTimeMillis(), offspringPopulation);
             //WORKAROUND
             System.out.println("RESEND");
@@ -379,9 +377,7 @@ public class MetaOptimizedNSGAII extends MetaOptimizedAlgorithm {
                 Solution s = population.get(i);
                 problem_.evaluate(s);
             }
-            if (problem_ instanceof ServerSimulator) {
-                ((ServerSimulator) problem_).join();//blocks until all  the offsprings are evaluated
-            }
+            Utils.join(problem_);
             Utils.dumpCurrentPopulation("corrected", System.currentTimeMillis(), population);
             //END WORKAROUND
             //END added by Horia

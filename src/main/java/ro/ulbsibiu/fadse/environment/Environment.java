@@ -24,6 +24,11 @@ public class Environment implements Serializable {
     private String fuzzyInputFile;
     private InputDocument inputDocument;
     private String resultsFolder;
+    
+    public Environment()
+    {
+    	
+    }
 
     public Environment(String inputFilePath)
     {

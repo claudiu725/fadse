@@ -61,5 +61,5 @@
     </rules>
 	<relations>
 	</relations>
-	<output output_path="gap" />	
+	<output output_path="" />	
 </design_space>

@@ -216,7 +216,7 @@ public class CNSGAII extends Algorithm {
 		}
 
 		Utils.join(problem_);
-		Utils.dumpCurrentPopulationAndRanked(population);
+		Utils.dumpCurrentPopulationAndFirstParetoFront(population);
 		// WORKAROUND
 		for (int i = 0; i < populationSize; i++) {
 			Solution s = population.get(i);
@@ -386,7 +386,7 @@ public class CNSGAII extends Algorithm {
 					requiredEvaluations = evaluations;
 				} // if
 			} // if
-			Utils.dumpCurrentPopulationAndRanked(population);
+			Utils.dumpCurrentPopulationAndFirstParetoFront(population);
 
 		} // while
 

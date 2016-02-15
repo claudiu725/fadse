@@ -9,8 +9,9 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.StringTokenizer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import jmetal.base.Algorithm;
 import jmetal.base.Operator;
@@ -33,6 +34,7 @@ import ro.ulbsibiu.fadse.utils.Utils;
  */
 public class MetaOptimizedCNSGAII extends Algorithm {
 
+	Logger logger = LogManager.getLogger();
 	/**
 	 * stores the problem to solve
 	 */
@@ -103,7 +105,6 @@ public class MetaOptimizedCNSGAII extends Algorithm {
 		// POPULATION****************************************************
 		// Create the initial solutionSet
 		Solution newSolution;
-		// Added by HORIA
 		CheckpointFileParameter fileParam = (CheckpointFileParameter) getInputParameter("checkpointFile");
 		String file = "";
 		if (fileParam != null) {
@@ -113,8 +114,7 @@ public class MetaOptimizedCNSGAII extends Algorithm {
 		int feasiblePercentage = Integer
 				.parseInt((String) getInputParameter("forceMinimumPercentageFeasibleIndividuals"));
 		if (file != null && !file.equals("")) {
-			Logger.getLogger(MetaOptimizedCNSGAII.class.getName()).log(Level.WARNING,
-					"Using a checkpoint file: " + file);
+			logger.warn("Using a checkpoint file: " + file);
 			int i = 0;
 			try (BufferedReader input = new BufferedReader(new FileReader(file))) {
 				String line = null; // not declared within while loop
@@ -138,8 +138,7 @@ public class MetaOptimizedCNSGAII extends Algorithm {
 							"Checkpoint file does not have enough elements to fill the entire population");
 				}
 			} catch (IOException ex) {
-				Logger.getLogger(MetaOptimizedCNSGAII.class.getName()).log(
-						Level.SEVERE,
+				logger.error(
 						"Checkpoint file does not have enough elements to fill the entire population ["
 								+ i + "<" + populationSize
 								+ "]. Filling it with random individuals");
@@ -207,13 +206,9 @@ public class MetaOptimizedCNSGAII extends Algorithm {
                                 System.out.println("Current Population Count is: "+population.size());
 				i++;
 			} // for
-				// Added by HORIA
+				
 		}
-		if (problem_ instanceof ServerSimulator) {
-			((ServerSimulator) problem_).join();// blocks until all the
-												// offsprings are evaluated
-	
-		}
+		Utils.join(problem_);
 		Utils.dumpCurrentPopulation(population);
 		// WORKAROUND
 		for (int i = 0; i < populationSize; i++) {
@@ -300,11 +295,7 @@ public class MetaOptimizedCNSGAII extends Algorithm {
 
 				} // if
 			} // for
-				// Added by HORIA
-			if (problem_ instanceof ServerSimulator) {
-				((ServerSimulator) problem_).join();// blocks until all the
-													// offsprings are evaluated
-			}
+			Utils.join(problem_);
 			Utils.dumpCurrentPopulation("offspring", System.currentTimeMillis(), offspringPopulation);
 			// WORKAROUND
 			System.out.println("RESEND");
@@ -312,15 +303,12 @@ public class MetaOptimizedCNSGAII extends Algorithm {
 				Solution s = population.get(i);
 				problem_.evaluate(s);
 			}
-			if (problem_ instanceof ServerSimulator) {
-				((ServerSimulator) problem_).join();// blocks until all the
-													// offsprings are evaluated
-			}
+			Utils.join(problem_);
 			Utils.dumpCurrentPopulation("corrected", System.currentTimeMillis(), population);
 			// END WORKAROUND
 			// END added by Horia
 			// Create the solutionSet union of solutionSet and offSpring
-			union = ((SolutionSet) population).union(offspringPopulation);
+			union = population.union(offspringPopulation);
 			// Ranking the union
 			Ranking ranking = new Ranking(union);
 			int remain = populationSize;
@@ -391,10 +379,7 @@ public class MetaOptimizedCNSGAII extends Algorithm {
 					requiredEvaluations = evaluations;
 				} // if
 			} // if
-			Utils.dumpCurrentPopulation(population);
-			ranking_temp = new Ranking(population);
-			Utils.dumpCurrentPopulation("pareto", System.currentTimeMillis(),
-					ranking_temp.getSubfront(0));
+			Utils.dumpCurrentPopulationAndFirstParetoFront(population);
 
 		} // while
 
