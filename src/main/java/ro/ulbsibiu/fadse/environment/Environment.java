@@ -7,6 +7,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -39,14 +41,39 @@ public class Environment implements Serializable {
         init(inputFilePath);
     }
     
+	public static String generateResultsFolder(InputDocument document)
+	{
+		List<String> names = new LinkedList<>();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+        String date = dateFormat.format(new Date());
+        names.add(date);
+		if (document.getMetaOptimizedAlgorithms() != null && !document.getMetaOptimizedAlgorithms().isEmpty())
+        {
+        	for (InputDocument.InputMetaOptimizedAlgorithm child : document.getMetaOptimizedAlgorithms())
+        	names.add(child.getName());
+        }
+        else
+        {
+        	names.add(document.getMetaheuristicName());
+        }
+		if (document.getSimulatorType().equals("synthetic"))
+		{
+			names.add(document.getSimulatorName());
+		}
+		else
+		{
+			names.add(document.getSimulatorParameters().entrySet().iterator().next().getValue());
+		}
+		return String.join("_", names);
+	}
+    
     private void init(Path inputFilePath)
     {
     	inputDocument = (new XMLInputReader()).parse(inputFilePath.toString());
         ConnectionPool.setInputDocument(inputDocument);
         String currentdir = System.getProperty("user.dir");
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
-        String date = dateFormat.format(new Date());
-        Path resultsFolder = Paths.get(currentdir, "results", date);
+        String outputName = generateResultsFolder(inputDocument);
+        Path resultsFolder = Paths.get(currentdir, "results", outputName);
         this.resultsFolder = resultsFolder.toString();
         if (inputDocument.getOutputPath().isEmpty())
         	inputDocument.setOutputPath(resultsFolder.toString());

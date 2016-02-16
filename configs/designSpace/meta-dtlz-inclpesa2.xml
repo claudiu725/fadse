@@ -1,0 +1,50 @@
+<design_space>
+    <simulator name="DTLZ1" type="synthetic" ><!--type="synthetic"--><!--type can be synthetic or simulator-->
+    </simulator>
+    <parameters>
+        <parameter name="p1" description="param1" type="float" min="0" max="1" step="0.1"/>
+        <parameter name="p2" description="param2" type="float" min="0" max="1" step="0.1"/>
+        <parameter name="p3" description="param3" type="float" min="0" max="1" step="0.1"/>
+        <parameter name="p4" description="param4" type="float" min="0" max="1" step="0.1"/>
+        <parameter name="p5" description="param5" type="float" min="0" max="1" step="0.1"/>
+        <parameter name="p6" description="param6" type="float" min="0" max="1" step="0.1"/>
+        <parameter name="p7" description="param7" type="float" min="0" max="1" step="0.1"/>      
+    </parameters>
+	<system_metrics>
+        <system_metric name="o1" type="float" unit="" desired="small"/>
+        <system_metric name="o2" type="float" unit="" desired="small"/>
+        <!--<system_metric name="o3" type="float" unit="" desired="small" />-->
+        <!--<system_metric name="o4" type="float" unit="" desired="small" />-->
+    </system_metrics>
+	<benchmarks>
+		<item name="" />
+	</benchmarks>
+	
+    <database ip="127.0.0.1" port="3306" name="fadse" user="fadse_user" password="1234"/>
+
+	<metaheuristic type="MetaOptimization" name="RaduAlgorithm" config_path="configs/metaheuristicConfig/radualg.properties">
+		<!-- in .properties -population size
+							-max evaluations
+							-default minimum percentage
+		-->
+		<metaoptimized_algorithms>
+			<metaoptimized_algorithm name="NSGAII" config_path="configs/metaheuristicConfig/monsgaii.properties" initialPercentage="0.4" minimumPercentage="0.2"/>
+			<metaoptimized_algorithm name="PESA2" config_path="configs/metaheuristicConfig/pesa2.properties" initialPercentage="0.4" minimumPercentage="0.2"/>
+			<!-- daca nu se specifica minimumPercentage se ia din .properties de la metaoptimization-->
+			<!-- daca nu se specifica initialPercentage pentru unele metaheuristics atunci restul se imparte in mod egal intre ele-->
+			<metaoptimized_algorithm name="SPEA2" config_path="configs/metaheuristicConfig/mospeaii.properties" minimumPercentage="0.2"/>
+			<!-- sa calculeze automat initialPercentage pt ultimul MO si sa crape daca suma lor nu da 1 sau daca nu sunt pozitive -->
+		</metaoptimized_algorithms>
+		<metrics>
+			<metric name="TwoSetDifferenceHypervolume" weight="0.7"/>
+			<metric name="Coverage"/>
+			<!-- sa calculeze automat weight pt ultimul metric si sa crape daca suma lor nu da 1 sau daca nu sunt pozitive -->
+		</metrics>
+	</metaheuristic>
+
+    <rules> 
+    </rules>
+	<relations>
+	</relations>
+	<output output_path="" />
+</design_space>

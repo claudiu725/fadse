@@ -10,8 +10,9 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.StringTokenizer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import jmetal.base.Operator;
 import jmetal.base.Problem;
@@ -31,6 +32,8 @@ import ro.ulbsibiu.fadse.utils.Utils;
  */
 public class MetaOptimizedSPEA2 extends MetaOptimizedAlgorithm {
     
+	Logger logger = LogManager.getLogger();
+	
     public static final int TOURNAMENTS_ROUNDS = 1;
 
     private final Problem problem_;
@@ -86,18 +89,12 @@ public class MetaOptimizedSPEA2 extends MetaOptimizedAlgorithm {
     @Override
     public SolutionSet execute() throws JMException, ClassNotFoundException {
         int populationSize, archiveSize, maxEvaluations, evaluations;
-        Operator crossoverOperator, mutationOperator, selectionOperator;
         SolutionSet solutionSet, archive, offSpringSolutionSet;
 
         //Read the params
         populationSize = (Integer) getInputParameter("populationSize");
         archiveSize = (Integer) getInputParameter("archiveSize");
         maxEvaluations = (Integer) getInputParameter("maxEvaluations");
-
-        //Read the operators
-        crossoverOperator = operators_.get("crossover");
-        mutationOperator = operators_.get("mutation");
-        selectionOperator = operators_.get("selection");
 
         boolean outputEveryPopulation = false;
         Object output = getInputParameter("outputEveryPopulation");
@@ -120,7 +117,7 @@ public class MetaOptimizedSPEA2 extends MetaOptimizedAlgorithm {
             file = fileParam.GetCheckpointFile();
         }
         if (file != null && !file.equals("")) {
-            Logger.getLogger(SPEA2.class.getName()).log(Level.WARNING, "Using a checkpoint file: " + file);
+            logger.warn("Using a checkpoint file: " + file);
             int i = 0;
             try {
                 BufferedReader input = new BufferedReader(new FileReader(file));
@@ -140,8 +137,9 @@ public class MetaOptimizedSPEA2 extends MetaOptimizedAlgorithm {
                     solutionSet.add(newSolution);
                     i++;
                 } //while
+                input.close();
             } catch (IOException ex) {
-                Logger.getLogger(SPEA2.class.getName()).log(Level.SEVERE, "Checkpoint file does not have enough elements to fill the entire population [" + i + "<" + populationSize + "]. Filling it with random individuals");
+                logger.error("Checkpoint file does not have enough elements to fill the entire population [" + i + "<" + populationSize + "]. Filling it with random individuals");
                 while (i < populationSize) {
                     newSolution = new Solution(problem_);
                     problem_.evaluate(newSolution);
@@ -168,36 +166,10 @@ public class MetaOptimizedSPEA2 extends MetaOptimizedAlgorithm {
         //END added by Horia
 
         while (evaluations < maxEvaluations) {
-            SolutionSet union = ((SolutionSet) solutionSet).union(archive);            
-            //Spea2Fitness spea = new Spea2Fitness(union);
-            //spea.fitnessAssign();
-            //archive = spea.environmentalSelection(archiveSize);
+            SolutionSet union = ((SolutionSet) solutionSet).union(archive);
             archive = selectNextGeneration(union, archiveSize);
             
             Utils.dumpCurrentPopulation(archive);
-            // Create a new offspringPopulation
-//            offSpringSolutionSet = new SolutionSet(populationSize);
-//            Solution[] parents = new Solution[2];
-//            while (offSpringSolutionSet.size() < populationSize) {
-//                int j = 0;
-//                do {
-//                    j++;
-//                    parents[0] = (Solution) selectionOperator.execute(archive);
-//                } while (j < SPEA2.TOURNAMENTS_ROUNDS); // do-while
-//                int k = 0;
-//                do {
-//                    k++;
-//                    parents[1] = (Solution) selectionOperator.execute(archive);
-//                } while (k < SPEA2.TOURNAMENTS_ROUNDS); // do-while
-//
-//                //make the crossover
-//                Solution[] offSpring = (Solution[]) crossoverOperator.execute(parents);
-//                mutationOperator.execute(offSpring[0]);
-//                problem_.evaluate(offSpring[0]);
-//                problem_.evaluateConstraints(offSpring[0]);
-//                offSpringSolutionSet.add(offSpring[0]);
-//                evaluations++;
-//            } // while
             offSpringSolutionSet = generateOffsprings(archive, populationSize);
             for (int i = 0; i < offSpringSolutionSet.size(); ++i) {
                 Solution offSpring = offSpringSolutionSet.get(i);
@@ -207,9 +179,7 @@ public class MetaOptimizedSPEA2 extends MetaOptimizedAlgorithm {
             }
             
             //Added by HORIA
-            if (problem_ instanceof ServerSimulator) {
-                ((ServerSimulator) problem_).join();//blocks until all  the offsprings are evaluated
-            }
+            Utils.join(problem_);
             Utils.dumpCurrentPopulation("offspring", System.currentTimeMillis(),offSpringSolutionSet);
             if (outputEveryPopulation) {
 					offSpringSolutionSet.printObjectivesToFile(outputPath

@@ -109,11 +109,11 @@ public class CoverageFromTwoFolders {
     public static void coverageFromTwoFolders(Metadata metadata, Path folder1, Path folder2, Path output)
     {
     	try {
+    		Files.createDirectories(output);
+    		
 			List<Path> listOfPopulationFiles1 = MetricsUtil.getListOfFiles(folder1);
 			List<Path> listOfPopulationFiles2 = MetricsUtil.getListOfFiles(folder2);
 
-			Path metricsFolder = output.resolve("metricsComposed").resolve(String.valueOf(System.currentTimeMillis()));
-			Files.createDirectories(metricsFolder);
 			List<double[][]> parsedFiles1 = MetricsUtil.parseObjectiveFiles(metadata,  listOfPopulationFiles1);
 			List<double[][]> parsedFiles2 = MetricsUtil.parseObjectiveFiles(metadata,  listOfPopulationFiles2);
 			int minSize = Math.min(parsedFiles1.size(), parsedFiles2.size());

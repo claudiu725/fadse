@@ -71,6 +71,7 @@ public class AdaptiveGrid {
     
     for (int i = 0; i < hypercubes_.length;i++)
       hypercubes_[i] = 0;
+
   } //AdaptativeGrid
    
   
@@ -349,7 +350,7 @@ public class AdaptiveGrid {
       } // if
     } // for
         
-    occupied_ = new int[total];        
+    occupied_ = new int[total];
     int base = 0;
     for (int i = 0; i < hypercubes_.length;i++){
       if (hypercubes_[i] > 0){             

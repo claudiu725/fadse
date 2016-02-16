@@ -47,8 +47,8 @@ public class RaduAlgorithm extends BaseMetaOptimizationAlgorithm {
         while (evaluations < maxEvaluations) {
             List<SolutionSet> offspringSets = new ArrayList<>();
             updatePopulationSizes();
-            for (int i = 0; i < moas.size(); ++i) {
-                SolutionSet offsprings = moas.get(i).generateOffsprings(masterPopulation,
+            for (int i = 0; i < getMoas().size(); ++i) {
+                SolutionSet offsprings = getMoas().get(i).generateOffsprings(masterPopulation,
                         currentPopulationSizes[i]);
                 offspringSets.add(offsprings);
             }
@@ -62,7 +62,7 @@ public class RaduAlgorithm extends BaseMetaOptimizationAlgorithm {
                 }
             }
 
-            Utils.dumpMoasPopulations(moas, offspringSets);
+            Utils.dumpMoasPopulations(getMoas(), offspringSets);
 
             masterPopulation = selectBestAccordingToPercentages(masterPopulation, offspringSets);
             
@@ -78,7 +78,7 @@ public class RaduAlgorithm extends BaseMetaOptimizationAlgorithm {
 
     private SolutionSet selectBestAccordingToPercentages(SolutionSet initialParents, List<SolutionSet> initialOffspringSets) {
 
-        int[] stillToTakeForMOA = new int[moas.size()];
+        int[] stillToTakeForMOA = new int[getMoas().size()];
         
         //copy parents' and offsprings' sets so that the initials are not "damaged" 
         SolutionSet parents = (new SolutionSet()).union(initialParents);
@@ -118,8 +118,8 @@ public class RaduAlgorithm extends BaseMetaOptimizationAlgorithm {
             }
 
             //for each moa select best individuals according to the specific selection operator in a number stillToTakeForMOA[i]
-            for (int i = 0; i < moas.size(); ++i) {
-                MetaOptimizedAlgorithm moa = moas.get(i);
+            for (int i = 0; i < getMoas().size(); ++i) {
+                MetaOptimizedAlgorithm moa = getMoas().get(i);
                 SolutionSet bestIndividuals = new SolutionSet();
                 try {
                     if (stillToTakeForMOA[i] > 0) {
@@ -139,7 +139,7 @@ public class RaduAlgorithm extends BaseMetaOptimizationAlgorithm {
             }
 
             //initialize an array for the single selected individuals
-            int[] okSelectedIndividualsForMOA = new int[moas.size()];
+            int[] okSelectedIndividualsForMOA = new int[getMoas().size()];
             //total number of single selected individuals
             int okIndividualsNumber = 0;
             //total number of multiple selected individuals
@@ -163,7 +163,7 @@ public class RaduAlgorithm extends BaseMetaOptimizationAlgorithm {
             
             //compute the "weight" according to document, out of the still to take x need to be from moa1, y from moa2 etc
             int nrStillToTake = 0;
-            for (int i = 0; i < moas.size(); i++) {
+            for (int i = 0; i < getMoas().size(); i++) {
                 stillToTakeForMOA[i] = offspringSets.get(i).size() - okSelectedIndividualsForMOA[i];
                 nrStillToTake += stillToTakeForMOA[i];
             }
@@ -171,7 +171,7 @@ public class RaduAlgorithm extends BaseMetaOptimizationAlgorithm {
             double weightForSelection = stillToTake / (double) nrStillToTake;
 
             int excess = stillToTake;
-            for (int i = 0; i < moas.size(); i++) {
+            for (int i = 0; i < getMoas().size(); i++) {
                 stillToTakeForMOA[i] = (int) (stillToTakeForMOA[i] * weightForSelection + 0.5); //round up
                 excess -= stillToTakeForMOA[i];
             }
@@ -179,7 +179,7 @@ public class RaduAlgorithm extends BaseMetaOptimizationAlgorithm {
             
             //can we substract the excess from only one?
             do {
-                int random = rand.nextInt(moas.size());
+                int random = rand.nextInt(getMoas().size());
                 int stillToTakeFromThis = stillToTakeForMOA[random];
                 if (stillToTakeFromThis + excess >= 0) {
                     stillToTakeForMOA[random] += excess;

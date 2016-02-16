@@ -90,7 +90,7 @@ public class NSGAII extends Algorithm {
         if (output != null) {
             outputEveryPopulation = (Boolean) output;
         }
-        Path outputPath = (Path) getInputParameter("outputPath");
+        String outputPath = (String) getInputParameter("outputPath");
 
         //Initialize the variables
         population = new SolutionSet(populationSize);
@@ -196,7 +196,7 @@ public class NSGAII extends Algorithm {
             //Added by HORIA
         }
         Utils.join(problem_);//blocks until all  the offsprings are evaluated
-        Utils.dumpCurrentPopulation(population);
+        //Utils.dumpCurrentPopulation(population);
         
         //WORKAROUND
         for (int i = 0; i < populationSize; i++) {

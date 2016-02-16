@@ -47,7 +47,7 @@ public abstract class BaseMetaOptimizationAlgorithm extends Algorithm {
     protected double[] minimumPercentages;
     protected double[] weights;
 
-    protected List<MetaOptimizedAlgorithm> moas;
+    private List<MetaOptimizedAlgorithm> moas;
     protected List<Metric> metrics;
 
     protected int maxEvaluations;
@@ -123,8 +123,8 @@ public abstract class BaseMetaOptimizationAlgorithm extends Algorithm {
         populationSize = (Integer) getInputParameter("populationSize");
         maxEvaluations = (Integer) getInputParameter("maxEvaluations");
 
-        moas = (List<MetaOptimizedAlgorithm>) getInputParameter("moas");
-        currentPopulationSizes = new int[moas.size()];
+        setMoas((List<MetaOptimizedAlgorithm>) getInputParameter("moas"));
+        currentPopulationSizes = new int[getMoas().size()];
         metrics = (List<Metric>) getInputParameter("metrics");
 
         currentPercentages = (double[]) getInputParameter("initialPercentages");
@@ -133,12 +133,12 @@ public abstract class BaseMetaOptimizationAlgorithm extends Algorithm {
     }
 
     protected void updatePercentages(List<SolutionSet> offspringSets) {
-        double[][] metricValues = new double[metrics.size()][moas.size()];
+        double[][] metricValues = new double[metrics.size()][getMoas().size()];
 
         PrintWriter writer;
         try {
             long time = System.currentTimeMillis();
-            Path dir = resultsFolder.resolve("metrics");
+            Path dir = resultsFolder.resolve("metaOptimizationMetrics");
             Files.createDirectories(dir);
             Path metricsOutputFile = (dir.resolve(time + ".csv"));
             writer = new PrintWriter(metricsOutputFile.toString(), "UTF-8");
@@ -146,11 +146,11 @@ public abstract class BaseMetaOptimizationAlgorithm extends Algorithm {
             for (int i = 0; i < metrics.size(); ++i) {
                 Metric metric = metrics.get(i);
                 double sum = 0.0;
-                for (int j = 0; j < moas.size(); ++j) {
-                    MetaOptimizedAlgorithm moa = moas.get(j);
+                for (int j = 0; j < getMoas().size(); ++j) {
+                    MetaOptimizedAlgorithm moa = getMoas().get(j);
 
                     SolutionSet theRest = new SolutionSet(populationSize);
-                    for (int jj = 0; jj < moas.size(); ++jj) {
+                    for (int jj = 0; jj < getMoas().size(); ++jj) {
                         if (jj != j) {
                             theRest = theRest.union(offspringSets.get(jj));
                         }
@@ -165,25 +165,25 @@ public abstract class BaseMetaOptimizationAlgorithm extends Algorithm {
 
                 double maxMetric = 0;
                 if (sum > 0) {
-                    for (int j = 0; j < moas.size(); ++j) {
+                    for (int j = 0; j < getMoas().size(); ++j) {
                         if (metricValues[i][j] > maxMetric) {
                             maxMetric = metricValues[i][j];
                         }
                     }
-                    for (int j = 0; j < moas.size(); ++j) {
+                    for (int j = 0; j < getMoas().size(); ++j) {
                         if (metricValues[i][j] == 0) {
                             metricValues[i][j] = maxMetric / 10;
                             sum += maxMetric / 10;
                         }
                     }
                 } else {
-                    for (int j = 0; j < moas.size(); ++j) {
+                    for (int j = 0; j < getMoas().size(); ++j) {
                         metricValues[i][j] = 1;
                         sum++;
                     }
                 }
 
-                for (int j = 0; j < moas.size(); ++j) {
+                for (int j = 0; j < getMoas().size(); ++j) {
                     metricValues[i][j] /= sum;
                 }
             }
@@ -192,7 +192,7 @@ public abstract class BaseMetaOptimizationAlgorithm extends Algorithm {
             // poate ar fi mai bine cva de genu
             //      nouaValoare = beta * nouValoare + (1 - beta) * vecheaValoare
             //      sa fie o trecere mai lina intre valori ????
-            for (int j = 0; j < moas.size(); ++j) {
+            for (int j = 0; j < getMoas().size(); ++j) {
                 currentPercentages[j] = 0.0;
                 for (int i = 0; i < metrics.size(); ++i) {
                     currentPercentages[j] += weights[i] * metricValues[i][j];
@@ -216,7 +216,7 @@ public abstract class BaseMetaOptimizationAlgorithm extends Algorithm {
 
         // se aduc la valoarea minima acele procentaje care sunt sub prag
         // se contorizeaza cat surplus s-a adunat
-        for (int i = 0; i < moas.size(); ++i) {
+        for (int i = 0; i < getMoas().size(); ++i) {
             if (currentPercentages[i] < minimumPercentages[i]) {
                 excess += minimumPercentages[i] - currentPercentages[i];
                 currentPercentages[i] = minimumPercentages[i];
@@ -228,7 +228,7 @@ public abstract class BaseMetaOptimizationAlgorithm extends Algorithm {
         while (excess > 0) {
             // se calculeaza din cate procentaje se poate scadea
             int count = 0;
-            for (int i = 0; i < moas.size(); ++i) {
+            for (int i = 0; i < getMoas().size(); ++i) {
                 if (currentPercentages[i] > minimumPercentages[i]) {
                     count++;
                 }
@@ -236,7 +236,7 @@ public abstract class BaseMetaOptimizationAlgorithm extends Algorithm {
 
             // se imparte in mod egal surplusul la toate cele contorizate
             double diff = excess / count;
-            for (int i = 0; i < moas.size(); ++i) {
+            for (int i = 0; i < getMoas().size(); ++i) {
                 // daca se poate se scade intreaga portie de surplus
                 if (currentPercentages[i] - diff >= minimumPercentages[i]) {
                     excess -= diff;
@@ -281,4 +281,12 @@ public abstract class BaseMetaOptimizationAlgorithm extends Algorithm {
             throw new JMException("remaining is negative");
         }
     }
+
+	public List<MetaOptimizedAlgorithm> getMoas() {
+		return moas;
+	}
+
+	public void setMoas(List<MetaOptimizedAlgorithm> moas) {
+		this.moas = moas;
+	}
 }

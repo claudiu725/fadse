@@ -13,6 +13,7 @@ import ro.ulbsibiu.fadse.environment.Environment;
 import ro.ulbsibiu.fadse.extended.base.factory.AlgorithmFactory;
 import ro.ulbsibiu.fadse.extended.problems.simulators.network.server.status.SimulationStatus;
 import ro.ulbsibiu.fadse.extended.qualityIndicator.Metadata;
+import ro.ulbsibiu.fadse.extended.qualityIndicator.MetricsHelper;
 import ro.ulbsibiu.fadse.utils.Utils;
 
 /*
@@ -65,9 +66,8 @@ public class AlgorithmRunner {
     	
     	Utils.setEnv(env);
         algorithm = AlgorithmFactory.createFromInputDocument(env.getInputDocument(), env);
-        Metadata metadata = Metadata.loadFromEnvironment(env);
-        metadata.populationSize = (Integer) algorithm.getInputParameter("populationSize");
-        metadata.maxEvaluations = (Integer) algorithm.getInputParameter("maxEvaluations");
+        Metadata metadata = Metadata.loadFromEnvironment(env, algorithm);
+
         metadata.save(Paths.get(env.getResultsFolder()));
         long initTime = System.currentTimeMillis();
 
@@ -85,6 +85,8 @@ public class AlgorithmRunner {
         logger.info("Total execution time: " + estimatedTime + "ms");
         logger.info("Objectives values have been writen to file " + objectivesPath);
         logger.info("Variables values have been writen to file " + variablesPath);
+        
+        MetricsHelper.computeAll(Paths.get(env.getResultsFolder()));
     } // main
 } // main
 

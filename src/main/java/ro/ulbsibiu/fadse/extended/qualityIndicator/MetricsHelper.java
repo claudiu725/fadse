@@ -2,6 +2,7 @@ package ro.ulbsibiu.fadse.extended.qualityIndicator;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -9,28 +10,37 @@ import org.apache.logging.log4j.Logger;
 public class MetricsHelper {
 
 	static Logger logger = LogManager.getLogger();
+
 	public MetricsHelper() {
 	}
-	
+
 	public static void main(String[] args) {
-		String path = "2016-02-16_09-56-57";
-		if (args.length >= 2)
-			path = args[1];
+		if (args.length < 1)
+		{
+			logger.error("Please provide the results folder");
+			return;
+		}
+		String path = args[0];
 		Path output = Paths.get(System.getProperty("user.dir"), "results", path);
 		computeAll(output);
 	}
-	
-	public static void computeAll(Path resultsFolder)
-	{
+
+	public static void computeAll(Path resultsFolder) {
+		logger.info("Building metrics for " + resultsFolder.toString());
 		Metadata metadata = Metadata.load(resultsFolder);
-		logger.info(MetricsUtil.getListOfFiles(resultsFolder.resolve("offMONSGAII")).size());
-		CoverageFromTwoFolders.coverageFromTwoFolders(metadata,
-				resultsFolder.resolve("offMONSGAII"),
-				resultsFolder.resolve("offMOSPEA2"),
-				resultsFolder.resolve("comparison1")
-				);
-		MetricsUtil.getListOfFiles(resultsFolder.resolve("filled"));
-		MetricsUtil.computeHypervolumeAndSevenPoint(metadata, resultsFolder.resolve("metricsComputed"), resultsFolder.resolve("filled"));
+		Path offMONSGAIIPath = resultsFolder.resolve("offMONSGAII");
+		Path offMOSPEAIIPath = resultsFolder.resolve("offMOSPEA2");
+		Path metricsComputedFolder = resultsFolder.resolve("metricsComputed");
+		Path corrected = resultsFolder.resolve("corrected");
+		Path filled = resultsFolder.resolve("filled");
+		Path metricsComputed = resultsFolder.resolve("metricsComputed");
+		if (offMONSGAIIPath.toFile().exists())
+			CoverageFromTwoFolders.coverageFromTwoFolders(metadata, offMONSGAIIPath, offMOSPEAIIPath, metricsComputedFolder);
+		if (filled.toFile().exists())
+			MetricsUtil.computeHypervolumeAndSevenPoint(metadata, metricsComputed, filled);
+		else if (corrected.toFile().exists())
+			MetricsUtil.computeHypervolumeAndSevenPoint(metadata, metricsComputed, corrected);
+		logger.info("Done building metrics for " + resultsFolder.toString());
 	}
-	
+
 }

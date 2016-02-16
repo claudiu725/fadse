@@ -46,8 +46,8 @@ public class IsmailAlgorithm extends BaseMetaOptimizationAlgorithm {
         while (evaluations < maxEvaluations) {
             List<SolutionSet> offspringSets = new ArrayList<>();
             updatePopulationSizes();
-            for (int i = 0; i < moas.size(); ++i) {
-                SolutionSet offsprings = moas.get(i).generateOffsprings(masterPopulation,
+            for (int i = 0; i < getMoas().size(); ++i) {
+                SolutionSet offsprings = getMoas().get(i).generateOffsprings(masterPopulation,
                         populationSize);
                 offspringSets.add(selectRandom(masterPopulation.union(offsprings), currentPopulationSizes[i]));
             }
@@ -70,7 +70,7 @@ public class IsmailAlgorithm extends BaseMetaOptimizationAlgorithm {
                 ((ServerSimulator) problem_).join();
             }
             Utils.dumpCurrentPopulation(masterPopulation);
-            Utils.dumpMoasPopulations(moas, offspringSets);
+            Utils.dumpMoasPopulations(getMoas(), offspringSets);
             
             logger.warn("Evaluations until now " + evaluations);
             updatePercentages(offspringSets);
