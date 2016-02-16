@@ -9,6 +9,7 @@ import org.apache.logging.log4j.Logger;
 
 import ro.ulbsibiu.fadse.environment.Environment;
 import ro.ulbsibiu.fadse.environment.parameters.CheckpointFileParameter;
+import ro.ulbsibiu.fadse.extended.qualityIndicator.Metadata;
 import ro.ulbsibiu.fadse.extended.qualityIndicator.MetricsHelper;
 import ro.ulbsibiu.fadse.extended.qualityIndicator.MetricsUtil;
 import ro.ulbsibiu.fadse.tools.monitor.SwingMonitor;
@@ -136,7 +137,7 @@ public class Boot {
             {
             	logger.error("Error", ex);
             }
-            MetricsHelper.computeAll(env);
+            //MetricsHelper.computeAll(Paths.get(env.getInputDocument().getOutputPath()));
         }
     }
 }

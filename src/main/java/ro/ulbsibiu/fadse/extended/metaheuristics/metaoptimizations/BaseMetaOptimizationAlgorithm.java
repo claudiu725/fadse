@@ -13,7 +13,6 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.Random;
 import java.util.StringTokenizer;
@@ -28,7 +27,6 @@ import jmetal.util.JMException;
 import ro.ulbsibiu.fadse.environment.parameters.CheckpointFileParameter;
 import ro.ulbsibiu.fadse.extended.metaheuristics.metaoptimizations.metaoptimized.MetaOptimizedAlgorithm;
 import ro.ulbsibiu.fadse.extended.metaheuristics.metaoptimizations.metrics.Metric;
-import ro.ulbsibiu.fadse.extended.problems.simulators.ServerSimulator;
 import ro.ulbsibiu.fadse.utils.Utils;
 
 /**

@@ -33,7 +33,14 @@
  */
 package ro.ulbsibiu.fadse.extended.qualityIndicator;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.List;
+
+import jmetal.base.SolutionSet;
 
 /**
  *
@@ -97,5 +104,38 @@ public class CoverageFromTwoFolders {
         } else {
             System.out.println("Directory was not created");
         }*/
+    }
+    
+    public static void coverageFromTwoFolders(Metadata metadata, Path folder1, Path folder2, Path output)
+    {
+    	try {
+			List<Path> listOfPopulationFiles1 = MetricsUtil.getListOfFiles(folder1);
+			List<Path> listOfPopulationFiles2 = MetricsUtil.getListOfFiles(folder2);
+
+			Path metricsFolder = output.resolve("metricsComposed").resolve(String.valueOf(System.currentTimeMillis()));
+			Files.createDirectories(metricsFolder);
+			List<double[][]> parsedFiles1 = MetricsUtil.parseObjectiveFiles(metadata,  listOfPopulationFiles1);
+			List<double[][]> parsedFiles2 = MetricsUtil.parseObjectiveFiles(metadata,  listOfPopulationFiles2);
+			int minSize = Math.min(parsedFiles1.size(), parsedFiles2.size());
+
+			FileWriter coverageFile = new FileWriter(output.resolve("coverage.csv").toFile());
+			BufferedWriter outCov = new BufferedWriter(coverageFile);
+			outCov.write("Coverage of population 1 ("+folder1.toString()+") over population 2 ("+folder2.toString()+"),");
+			outCov.write("Coverage of population 2 ("+folder2.toString()+") over population 1 ("+folder1.toString()+")");
+			outCov.newLine();
+			for (int i = 0; i < minSize; i++) {
+			    SolutionSet pop1 = MetricsUtil.readPopulation(metadata, listOfPopulationFiles1.get(i).toString());
+			    SolutionSet pop2 = MetricsUtil.readPopulation(metadata, listOfPopulationFiles2.get(i).toString());
+
+			    //TODO write result to csv file
+			    outCov.write(""+CoverageOfTwoSets.computeCoverage(pop1, pop2)+",");
+			    outCov.write(""+CoverageOfTwoSets.computeCoverage(pop2, pop1)+"");
+			    outCov.newLine();
+			    outCov.flush();
+			}
+			outCov.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     }
 }

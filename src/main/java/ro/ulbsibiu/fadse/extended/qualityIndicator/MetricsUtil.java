@@ -402,6 +402,11 @@ public class MetricsUtil {
         result.FirstHyperVolume = firstHV;
         return result;
     }
+    
+    public static List<double[][]> parseObjectiveFiles(Metadata metadata, List<Path> listOfPopulationFiles) throws FileNotFoundException, IOException
+    {
+    	return parseFiles(metadata.numberOfObjectives, metadata.populationSize, listOfPopulationFiles);
+    }
 
     public static List<double[][]> parseFiles(int nrOfobejctives, int populationSize, List<Path> listOfPopulationFiles) throws FileNotFoundException, IOException {
         boolean skipFile = false;
@@ -438,13 +443,13 @@ public class MetricsUtil {
                     } catch (NumberFormatException e) {
                         skipFile = true;
                     }
-                    for (int k = 0; k < nrOfobejctives; k++) {
-
-                        if (objectives[k] <= 0) {
-                            System.out.println("Skip file");
-                            skipFile = true;
-                        }
-                    }
+//                    for (int k = 0; k < nrOfobejctives; k++) {
+//
+//                        if (objectives[k] <= 0) {
+//                            System.out.println("Skip file");
+//                            skipFile = true;
+//                        }
+//                    }
                     //now we shoud have in the objectives the last "nrOfObjectives" values from a line
                     //we have to determine the maximum for each objective
                     if (!skipLine) {
@@ -530,6 +535,11 @@ public class MetricsUtil {
         }
     }
 
+    public static SolutionSet readPopulation(Metadata metadata, String path) throws FileNotFoundException, IOException
+    {
+    	return readPopulation(path, metadata.populationSize, metadata.numberOfObjectives);
+    }
+    
     public static SolutionSet readPopulation(String pathToFile, int populationSize, int nrOfObjectives) throws FileNotFoundException, IOException {
         File filePop1 = new File(pathToFile);
         SolutionSet pop = new SolutionSet(populationSize);
@@ -557,12 +567,12 @@ public class MetricsUtil {
             } catch (NumberFormatException e) {
                 skipLine = true;
             }
-            for (int k = 0; k < nrOfObjectives; k++) {
-                if (sPop1.getObjective(k) <= 0) {
-                    System.out.println("Skip file");
-                    skipLine = true;
-                }
-            }
+//            for (int k = 0; k < nrOfObjectives; k++) {
+//                if (sPop1.getObjective(k) <= 0) {
+//                    System.out.println("Skip file");
+//                    skipLine = true;
+//                }
+//            }
             //now we shoud have in the objectives the last "nrOfObjectives" values from a line
             //we have to determine the maximum for each objective
             if (!skipLine) {
@@ -582,11 +592,11 @@ public class MetricsUtil {
 
     public static List<Path> getListOfFiles(Path folderPath, String prefix) {
         List<Path> listOfPopulationFiles = new ArrayList<>();
-        for (Path file : folderPath) {
-            if (file.toFile().isFile() 
-            		&& file.getFileName().startsWith(prefix) 
-            		&& file.getFileName().endsWith(".csv")) {
-                listOfPopulationFiles.add(file);
+        for (File file : folderPath.toFile().listFiles()) {
+            if (file.isFile() 
+            		&& file.getName().startsWith(prefix) 
+            		&& file.getName().endsWith(".csv")) {
+                listOfPopulationFiles.add(file.toPath());
             }
         }
         listOfPopulationFiles.sort(new Comparator<Path>() {

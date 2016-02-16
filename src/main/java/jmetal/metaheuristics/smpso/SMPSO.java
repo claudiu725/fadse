@@ -14,8 +14,9 @@ import java.io.IOException;
 import java.util.Comparator;
 import java.util.StringTokenizer;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import jmetal.base.Algorithm;
 import jmetal.base.Operator;
@@ -32,10 +33,11 @@ import jmetal.util.PseudoRandom;
 import jmetal.util.archive.CrowdingArchive;
 import jmetal.util.wrapper.XInt;
 import ro.ulbsibiu.fadse.environment.parameters.CheckpointFileParameter;
-import ro.ulbsibiu.fadse.extended.problems.simulators.ServerSimulator;
 import ro.ulbsibiu.fadse.utils.Utils;
 
 public class SMPSO extends Algorithm {
+	
+	Logger logger = LogManager.getLogger();
 
     /**
      * Stores the problem to solve
@@ -384,7 +386,7 @@ public class SMPSO extends Algorithm {
         }
 
         if (file != null && !file.equals("")) {
-            Logger.getLogger(SMPSO.class.getName()).log(Level.WARNING, "Using a checkpoint file: " + file);
+            logger.warn("Using a checkpoint file: " + file);
             int i = 0;
             try {
                 //read population
@@ -412,7 +414,7 @@ public class SMPSO extends Algorithm {
                 }
 
             } catch (IOException ex) {
-                Logger.getLogger(SMPSO.class.getName()).log(Level.SEVERE, "Checkpoint file does not have enough elements to fill the entire population [" + i + "<" + particlesSize_ + "]. Filling it with random individuals");
+                logger.error("Checkpoint file does not have enough elements to fill the entire population [" + i + "<" + particlesSize_ + "]. Filling it with random individuals");
                 while (i < particlesSize_) {
                     Solution particle = new Solution(problem_);
                     problem_.evaluate(particle);
@@ -447,7 +449,7 @@ public class SMPSO extends Algorithm {
                         infeasible_counter++;
                         
                         if((infeasible_counter - last_infeasible_counter) % 200 == 0) {
-                            Logger.getLogger(SMPSO.class.getName()).log(Level.INFO, "Last " + (infeasible_counter - last_infeasible_counter) + " solutions infeasible or constraints infeasible - trying... " + infeasible_counter);
+                            logger.info("Last " + (infeasible_counter - last_infeasible_counter) + " solutions infeasible or constraints infeasible - trying... " + infeasible_counter);
                         }
                         
                         if(infeasible_counter < 100000)  {
@@ -496,7 +498,7 @@ public class SMPSO extends Algorithm {
                 //Compute the speed_
                 computeSpeed(iteration_, maxIterations_);
             } catch (IOException ex) {
-                Logger.getLogger(SMPSO.class.getName()).log(Level.SEVERE, null, ex);
+                logger.error("", ex);
             }
 
             //Compute the new positions for the particles_
