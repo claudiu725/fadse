@@ -11,8 +11,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import ro.ulbsibiu.fadse.environment.Environment;
 import ro.ulbsibiu.fadse.environment.document.InputDocument;
@@ -25,6 +26,8 @@ import ro.ulbsibiu.fadse.extended.qualityIndicator.MetricsUtil;
  */
 public class HypervolumeStopCondition extends StopCondition {
 
+	Logger logger = LogManager.getLogger();
+	
     public HypervolumeStopCondition(Environment environment) {
         super(environment);
     }
@@ -44,32 +47,26 @@ public class HypervolumeStopCondition extends StopCondition {
 
         HypervolumeNoTruePareto hypervolume = new HypervolumeNoTruePareto();
 
-        try {
-            List<Double> hypValues = new ArrayList<Double>();
-            List<double[][]> parsedFiles = MetricsUtil.parseFiles(nrOfobejctives, populationSize, listOfPopulationFiles);//TODO repalce 100 with real size of pop
-            double[] maxObjectives = MetricsUtil.getmaxObjectives(nrOfobejctives, parsedFiles);
-            for (double[][] parsedFile : parsedFiles) {
-                //repairing Pareto optimal set = removing objectives with the value 0 and replacing them with the first individual of the current pop
-                MetricsUtil.repairParetoOptimalSet(parsedFile, populationSize, nrOfobejctives);
-                double value = hypervolume.hypervolume(parsedFile, maxObjectives, nrOfobejctives);
-                hypValues.add(0, value);
+        List<Double> hypValues = new ArrayList<Double>();
+		List<double[][]> parsedFiles = MetricsUtil.parseFiles(nrOfobejctives, populationSize, listOfPopulationFiles);//TODO repalce 100 with real size of pop
+		double[] maxObjectives = MetricsUtil.getmaxObjectives(nrOfobejctives, parsedFiles);
+		for (double[][] parsedFile : parsedFiles) {
+		    //repairing Pareto optimal set = removing objectives with the value 0 and replacing them with the first individual of the current pop
+		    MetricsUtil.repairParetoOptimalSet(parsedFile, populationSize, nrOfobejctives);
+		    double value = hypervolume.hypervolume(parsedFile, maxObjectives, nrOfobejctives);
+		    hypValues.add(0, value);
 //                System.out.println(hypValues.get(0));
-            }
-            double sum = 0;
-            if (hypValues.size() > X) {
-                for (int i = 1; i <= X; i++) {
-                    sum += hypValues.get(0) - hypValues.get(i);
-                }
-            } else {
-                sum = Integer.MAX_VALUE;
-            }
+		}
+		double sum = 0;
+		if (hypValues.size() > X) {
+		    for (int i = 1; i <= X; i++) {
+		        sum += hypValues.get(0) - hypValues.get(i);
+		    }
+		} else {
+		    sum = Integer.MAX_VALUE;
+		}
 //            System.out.println("SUM: " + sum);
-            result = sum < treshold;
-        } catch (FileNotFoundException ex) {
-           Logger.getLogger(HypervolumeStopCondition.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(HypervolumeStopCondition.class.getName()).log(Level.SEVERE, null, ex);
-        }
+		result = sum < treshold;
         return result;
     }
 

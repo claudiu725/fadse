@@ -41,6 +41,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -206,31 +207,47 @@ public class MetricsUtil {
         }
         outFiles.close();
     }
+    
+    public static void computeHypervolumeAndSevenPoint(Metadata metadata, Path metricsFolder, Path folder)
+    {
+    	List<Path> listOfPopulationFiles = MetricsUtil.getListOfFiles(folder);
+    	List<double[][]> parsedFiles = MetricsUtil.parseObjectiveFiles(metadata, listOfPopulationFiles);
+    	computeHypervolumeAndSevenPoint(metadata.numberOfObjectives, metadata.populationSize, metricsFolder, parsedFiles);
+    }
+    
+    public static void computeHypervolumeAndSevenPoint(Metadata metadata, Path metricsFolder, List<Path> folders) throws FileNotFoundException, IOException
+    {
+    	List<Path> listOfPopulationFiles = MetricsUtil.getListOfFilesFromFolders(folders);
+    	List<double[][]> parsedFiles = MetricsUtil.parseObjectiveFiles(metadata, listOfPopulationFiles);
+    	computeHypervolumeAndSevenPoint(metadata.numberOfObjectives, metadata.populationSize, metricsFolder, parsedFiles);
+    }
 
-    public static void computeMetrics(int nrOfobejctives, int populationSize, File metricsFolder, LinkedList parsedFiles) throws FileNotFoundException, IOException {
+    public static void computeHypervolumeAndSevenPoint(int nrOfobejctives, int populationSize, Path metricsFolder, List<double[][]> parsedFiles) {
         double[] maxObjectives = getmaxObjectives(nrOfobejctives, parsedFiles);
         //we have all the required values
         //compute hypervolume for all the files
         computeHypervolumeAndSevenPoint(nrOfobejctives, populationSize, maxObjectives, metricsFolder, "hypervolume.csv", "7point.csv", parsedFiles);
     }
 
-    public static void computeHypervolumeAndSevenPoint(int nrOfobejctives, int populationSize, double[] maxObjectives, File metricsFolder, String hypervolumeFileName, String sevenPointFileName, List<double[][]> parsedFiles) {
+    public static void computeHypervolumeAndSevenPoint(int nrOfobejctives, int populationSize, double[] maxObjectives, Path metricsFolder, String hypervolumeFileName, String sevenPointFileName, List<double[][]> parsedFiles) {
         long StartTime = System.currentTimeMillis();
         HypervolumeNoTruePareto hypervolume = new HypervolumeNoTruePareto();
         SevenPointAverageDistance sevenPointAverageDistance = new SevenPointAverageDistance();
-        String fPath = metricsFolder.getAbsolutePath() + System.getProperty("file.separator");
+        File hypervolumeFile = metricsFolder.resolve(hypervolumeFileName).toFile();
+        File sevenPointFile = metricsFolder.resolve(sevenPointFileName).toFile();
 
         try {
-            FileWriter hypervolumeFile = new FileWriter(fPath + hypervolumeFileName);
-            FileWriter sevenPointFile = new FileWriter(fPath + sevenPointFileName);
-            BufferedWriter outHyp = new BufferedWriter(hypervolumeFile);
-            BufferedWriter out7P = new BufferedWriter(sevenPointFile);
-            outHyp.write("Hypervolume per generation (" + fPath + hypervolumeFileName + "),");
-            outHyp.write("Hypervolume for all generated individuals (" + fPath + hypervolumeFileName + ")");
+        	Files.createDirectories(metricsFolder);
+            FileWriter hypervolumeFileWriter = new FileWriter(hypervolumeFile);
+            FileWriter sevenPointFileWriter = new FileWriter(sevenPointFile);
+            BufferedWriter outHyp = new BufferedWriter(hypervolumeFileWriter);
+            BufferedWriter out7P = new BufferedWriter(sevenPointFileWriter);
+            outHyp.write("Hypervolume per generation (" + hypervolumeFile.getAbsolutePath() + "),");
+            outHyp.write("Hypervolume for all generated individuals (" + sevenPointFile.getAbsolutePath() + ")");
             outHyp.newLine();
 
-            out7P.write("7 Point Average Distance per generation (" + fPath + sevenPointFileName + "),");
-            out7P.write("7 Point Average Distance for all generated individuals (" + fPath + sevenPointFileName + ")");
+            out7P.write("7 Point Average Distance per generation (" + hypervolumeFile.getAbsolutePath() + "),");
+            out7P.write("7 Point Average Distance for all generated individuals (" + sevenPointFile.getAbsolutePath() + ")");
             out7P.newLine();
             double[][] allInd = (double[][]) parsedFiles.get(0);
             repairParetoOptimalSet(allInd, populationSize, nrOfobejctives);
@@ -268,7 +285,7 @@ public class MetricsUtil {
             outHyp.close();
             out7P.close();
 
-            FileWriter fstream = new FileWriter(metricsFolder.getAbsolutePath() + System.getProperty("file.separator") + "info.txt");
+            FileWriter fstream = new FileWriter(metricsFolder.resolve("info.txt").toFile());
             BufferedWriter out = new BufferedWriter(fstream);
             out.write("Number of files: " + parsedFiles.size());
 
@@ -403,46 +420,47 @@ public class MetricsUtil {
         return result;
     }
     
-    public static List<double[][]> parseObjectiveFiles(Metadata metadata, List<Path> listOfPopulationFiles) throws FileNotFoundException, IOException
+    public static List<double[][]> parseObjectiveFiles(Metadata metadata, List<Path> listOfPopulationFiles)
     {
     	return parseFiles(metadata.numberOfObjectives, metadata.populationSize, listOfPopulationFiles);
     }
 
-    public static List<double[][]> parseFiles(int nrOfobejctives, int populationSize, List<Path> listOfPopulationFiles) throws FileNotFoundException, IOException {
+    public static List<double[][]> parseFiles(int nrOfobejctives, int populationSize, List<Path> listOfPopulationFiles) {
         boolean skipFile = false;
         double[] objectives;
         LinkedList<double[][]> parsedFiles = new LinkedList<>();
-        for (int i = 0; i < listOfPopulationFiles.size(); i++) {
-            skipFile = false;
-            if (listOfPopulationFiles.get(i).toFile().isFile()) {// one file
+        try {
+			for (int i = 0; i < listOfPopulationFiles.size(); i++) {
+			    skipFile = false;
+			    if (listOfPopulationFiles.get(i).toFile().isFile()) {// one file
 //                System.out.println("Computing metrics for: " + listOfFiles[i].getName());
-                double[][] paretoOptimalSet = new double[populationSize][nrOfobejctives];//TODO
-                BufferedReader input = new BufferedReader(new FileReader(listOfPopulationFiles.get(i).toFile()));
-                String line = null; //not declared within while loop
-                line = input.readLine();//skip the headder
-                int lineCounter = 0;
-                boolean skipLine = false;
-                while ((line = input.readLine()) != null && lineCounter < populationSize) {
+			        double[][] paretoOptimalSet = new double[populationSize][nrOfobejctives];//TODO
+			        BufferedReader input = new BufferedReader(new FileReader(listOfPopulationFiles.get(i).toFile()));
+			        String line = null; //not declared within while loop
+			        line = input.readLine();//skip the headder
+			        int lineCounter = 0;
+			        boolean skipLine = false;
+			        while ((line = input.readLine()) != null && lineCounter < populationSize) {
 
-                    skipLine = false;
-                    objectives = new double[nrOfobejctives];
-                    StringTokenizer tokenizer = new StringTokenizer(line, ",");
-                    try {
-                        while (tokenizer.hasMoreTokens()) {
-                            for (int k = 0; k < nrOfobejctives - 1; k++) {
-                                objectives[k] = objectives[k + 1];//shifting the objectives values with one position
-                            }
-                            objectives[nrOfobejctives - 1] = Double.parseDouble(tokenizer.nextToken());//ading at the end of the array the newest value
+			            skipLine = false;
+			            objectives = new double[nrOfobejctives];
+			            StringTokenizer tokenizer = new StringTokenizer(line, ",");
+			            try {
+			                while (tokenizer.hasMoreTokens()) {
+			                    for (int k = 0; k < nrOfobejctives - 1; k++) {
+			                        objectives[k] = objectives[k + 1];//shifting the objectives values with one position
+			                    }
+			                    objectives[nrOfobejctives - 1] = Double.parseDouble(tokenizer.nextToken());//ading at the end of the array the newest value
 //                        System.out.println(objectives[nrOfobejctives - 1]);
-                            if (objectives[nrOfobejctives - 1] >= 1.7976931348623157E+306) {
-                                skipLine = true;
-                                System.out.println("Skip line:" + objectives[nrOfobejctives - 1]);
-                            }
+			                    if (objectives[nrOfobejctives - 1] >= 1.7976931348623157E+306) {
+			                        skipLine = true;
+			                        System.out.println("Skip line:" + objectives[nrOfobejctives - 1]);
+			                    }
 
-                        }
-                    } catch (NumberFormatException e) {
-                        skipFile = true;
-                    }
+			                }
+			            } catch (NumberFormatException e) {
+			                skipFile = true;
+			            }
 //                    for (int k = 0; k < nrOfobejctives; k++) {
 //
 //                        if (objectives[k] <= 0) {
@@ -450,25 +468,28 @@ public class MetricsUtil {
 //                            skipFile = true;
 //                        }
 //                    }
-                    //now we shoud have in the objectives the last "nrOfObjectives" values from a line
-                    //we have to determine the maximum for each objective
-                    if (!skipLine) {
+			            //now we shoud have in the objectives the last "nrOfObjectives" values from a line
+			            //we have to determine the maximum for each objective
+			            if (!skipLine) {
 
-                        //now in objectives we have all the objectives of one line - we now have to add them to a population
+			                //now in objectives we have all the objectives of one line - we now have to add them to a population
 //                        System.out.print(Arrays.toString(objectives) + "#");
 //                        System.out.println("");
-                        paretoOptimalSet[lineCounter] = objectives;
-                        lineCounter++;
-                    }
-                }
-                input.close();
-                if (!skipFile) {
-                    parsedFiles.add(paretoOptimalSet);
-                } else {
-                    System.out.println("Skiped file " + listOfPopulationFiles.get(i).getFileName() + " it contained values of 0 for objectives");
-                }
-            }
-        }
+			                paretoOptimalSet[lineCounter] = objectives;
+			                lineCounter++;
+			            }
+			        }
+			        input.close();
+			        if (!skipFile) {
+			            parsedFiles.add(paretoOptimalSet);
+			        } else {
+			            System.out.println("Skiped file " + listOfPopulationFiles.get(i).getFileName() + " it contained values of 0 for objectives");
+			        }
+			    }
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
         return parsedFiles;
     }
 
@@ -588,6 +609,16 @@ public class MetricsUtil {
     
     public static List<Path> getListOfFiles(Path folderPath) {
     	return getListOfFiles(folderPath, "");
+    }
+    
+    public static List<Path> getListOfFilesFromFolders(List<Path> folderPaths)
+    {
+    	List<Path> populationFiles = new LinkedList<>();
+    	for (Path path : folderPaths)
+    	{
+    		populationFiles.addAll(getListOfFiles(path));
+    	}
+    	return populationFiles;
     }
 
     public static List<Path> getListOfFiles(Path folderPath, String prefix) {

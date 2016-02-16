@@ -47,7 +47,7 @@ public class HypervolumeFromNFolders {
 
         if (result != null) {
             for (int i = 0; i < result.NrFolders; i++) {
-                MetricsUtil.computeHypervolumeAndSevenPoint(result.NrObjectives, result.PopulationSizeN[i], result.MaxObjectives, result.MetricsFolder, "hypervolume" + i + ".csv", "7point" + i + ".csv", result.ParsedFilesN.get(i));
+                MetricsUtil.computeHypervolumeAndSevenPoint(result.NrObjectives, result.PopulationSizeN[i], result.MaxObjectives, result.MetricsFolder.toPath(), "hypervolume" + i + ".csv", "7point" + i + ".csv", result.ParsedFilesN.get(i));
             }
         }
         else{

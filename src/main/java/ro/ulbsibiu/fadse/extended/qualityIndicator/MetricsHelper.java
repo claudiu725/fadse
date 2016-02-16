@@ -13,7 +13,7 @@ public class MetricsHelper {
 	}
 	
 	public static void main(String[] args) {
-		String path = "2016-02-15_21-27-39";
+		String path = "2016-02-16_09-56-57";
 		if (args.length >= 2)
 			path = args[1];
 		Path output = Paths.get(System.getProperty("user.dir"), "results", path);
@@ -29,6 +29,8 @@ public class MetricsHelper {
 				resultsFolder.resolve("offMOSPEA2"),
 				resultsFolder.resolve("comparison1")
 				);
+		MetricsUtil.getListOfFiles(resultsFolder.resolve("filled"));
+		MetricsUtil.computeHypervolumeAndSevenPoint(metadata, resultsFolder.resolve("metricsComputed"), resultsFolder.resolve("filled"));
 	}
 	
 }
