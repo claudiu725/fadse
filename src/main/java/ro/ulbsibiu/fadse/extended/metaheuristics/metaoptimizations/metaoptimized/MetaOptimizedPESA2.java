@@ -3,7 +3,7 @@ package ro.ulbsibiu.fadse.extended.metaheuristics.metaoptimizations.metaoptimize
 import jmetal.base.Problem;
 import jmetal.base.Solution;
 import jmetal.base.SolutionSet;
-import jmetal.base.operator.comparator.CrowdingDistanceComparator;
+import jmetal.base.operator.comparator.RankComparator;
 import jmetal.base.operator.crossover.Crossover;
 import jmetal.base.operator.mutation.Mutation;
 import jmetal.base.operator.selection.PESA2Selection;
@@ -161,7 +161,7 @@ public class MetaOptimizedPESA2 extends MetaOptimizedAlgorithm {
 
 	@Override
 	public SolutionSet selectNextGeneration(SolutionSet union, int count) throws JMException {
-		union.sort(new CrowdingDistanceComparator());
+		union.sort(new RankComparator());
 		SolutionSet offsprings = new SolutionSet(count);
 		for (int i=0; i < count; i++)
 		{

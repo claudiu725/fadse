@@ -6,10 +6,12 @@
 package ro.ulbsibiu.fadse.extended.metaheuristics.metaoptimizations;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -135,14 +137,19 @@ public abstract class BaseMetaOptimizationAlgorithm extends Algorithm {
     protected void updatePercentages(List<SolutionSet> offspringSets) {
         double[][] metricValues = new double[metrics.size()][getMoas().size()];
 
-        PrintWriter writer;
+        BufferedWriter percentagesWriter = null;
+		BufferedWriter moasMetricsWriter = null;
+		BufferedWriter adjustedPercentagesWriter = null;
         try {
             long time = System.currentTimeMillis();
             Path dir = resultsFolder.resolve("metaOptimizationMetrics");
             Files.createDirectories(dir);
-            Path metricsOutputFile = (dir.resolve(time + ".csv"));
-            writer = new PrintWriter(metricsOutputFile.toString(), "UTF-8");
-            writer.println("Metrics");
+            Path percentagesPath = dir.resolve("percentages.csv");
+            Path adjustedPercentagesPath = dir.resolve("adjustedPercentages.csv");
+            Path moasMetricsPath = dir.resolve("moasMetrics.csv");
+            percentagesWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(percentagesPath.toFile(), true),"UTF-8"));
+            adjustedPercentagesWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(adjustedPercentagesPath.toFile(), true),"UTF-8"));
+            moasMetricsWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(moasMetricsPath.toFile(), true),"UTF-8"));
             for (int i = 0; i < metrics.size(); ++i) {
                 Metric metric = metrics.get(i);
                 double sum = 0.0;
@@ -158,10 +165,10 @@ public abstract class BaseMetaOptimizationAlgorithm extends Algorithm {
 
                     metricValues[i][j] = metric.compute(offspringSets.get(j), theRest);
                     sum += metricValues[i][j];
-                    writer.print(metricValues[i][j] + ";");
+                    moasMetricsWriter.write(metricValues[i][j] + ",");
                 }
 
-                writer.println();
+                moasMetricsWriter.newLine();
 
                 double maxMetric = 0;
                 if (sum > 0) {
@@ -188,7 +195,6 @@ public abstract class BaseMetaOptimizationAlgorithm extends Algorithm {
                 }
             }
 
-            writer.println("Percentages;");
             // poate ar fi mai bine cva de genu
             //      nouaValoare = beta * nouValoare + (1 - beta) * vecheaValoare
             //      sa fie o trecere mai lina intre valori ????
@@ -197,9 +203,20 @@ public abstract class BaseMetaOptimizationAlgorithm extends Algorithm {
                 for (int i = 0; i < metrics.size(); ++i) {
                     currentPercentages[j] += weights[i] * metricValues[i][j];
                 }
-                writer.print(currentPercentages[j] + ";");
+                percentagesWriter.write(currentPercentages[j] + ",");
             }
-            writer.close();
+            percentagesWriter.newLine();
+            
+            adjustPercentages();
+            for (int j = 0; j < getMoas().size(); ++j)
+            {
+            	adjustedPercentagesWriter.write(currentPercentages[j] + ",");
+            }
+            adjustedPercentagesWriter.newLine();
+            
+            moasMetricsWriter.close();
+            percentagesWriter.close();
+            adjustedPercentagesWriter.close();
         } catch (FileNotFoundException ex) {
             logger.error("", ex);
         } catch (UnsupportedEncodingException ex) {
@@ -207,8 +224,6 @@ public abstract class BaseMetaOptimizationAlgorithm extends Algorithm {
         } catch (IOException e) {
         	logger.error("", e);
 		}
-
-        adjustPercentages();
     }
 
     protected void adjustPercentages() {
