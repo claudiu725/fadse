@@ -323,7 +323,7 @@ public class ServerSimulator extends SimulatorWrapper {
                 try {
                     String currentdir = System.getProperty("user.dir");
                     File dir = new File(currentdir);
-                    Wini ini = new Wini(new File(dir + System.getProperty("file.separator") + "configs" + System.getProperty("file.separator") + "fadseConfig.ini"));
+                    Wini ini = new Wini(new File(Utils.getIniPath()));
                     int time = ini.get("RedistributeCheck", "timeSeconds", int.class);
                     Thread.sleep(time * 1000);
                 } catch (IOException ex) {

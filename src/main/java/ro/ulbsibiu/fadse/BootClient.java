@@ -5,12 +5,14 @@ package ro.ulbsibiu.fadse;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ini4j.Wini;
 
 import ro.ulbsibiu.fadse.extended.problems.simulators.network.client.IndividualReceiver;
+import ro.ulbsibiu.fadse.utils.Utils;
 
 /*
  * This file is part of the FADSE tool.
@@ -56,11 +58,19 @@ public class BootClient {
     public static void main(String[] args) {
         try {
             IndividualReceiver indReceiver;
-            //args[0] = client always; args[1] can be port number
-            if(args.length<2){
-            indReceiver = new IndividualReceiver();
+            //args[0] = client always; args[1] can be port number; args[2] may be ini path
+            if (args.length > 2)
+            {
+            	Utils.setIniPath(Paths.get(System.getProperty("user.dir"), "configs", args[2]).toString());
+            }
+            else
+            {
+            	Utils.setIniPath(Paths.get(System.getProperty("user.dir"), "configs", "fadseConfig.ini").toString());
+            }
+            if(args.length > 1){
+            	indReceiver = new IndividualReceiver(Integer.parseInt(args[1]));
             } else {
-                indReceiver = new IndividualReceiver(Integer.parseInt(args[1]));
+            	indReceiver = new IndividualReceiver();
             }
             Thread t = new Thread(indReceiver);
             t.setDaemon(true);
@@ -76,7 +86,7 @@ public class BootClient {
                     long elapsedTimeSinceNoMessage = System.currentTimeMillis() - indReceiver.connectionWaitStartTime;
                     String currentdir = System.getProperty("user.dir");
                     File dir = new File(currentdir);
-                    String iniPath = dir + System.getProperty("file.separator") + "configs" + System.getProperty("file.separator") + "fadseConfig.ini";
+                    String iniPath = Utils.getIniPath();
                     logger.info("Using ini " + iniPath);
                     Wini ini = new Wini(new File(iniPath));
                     int time = ini.get("Watchdog", "time", int.class);

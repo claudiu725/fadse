@@ -13,6 +13,7 @@ import ro.ulbsibiu.fadse.extended.qualityIndicator.Metadata;
 import ro.ulbsibiu.fadse.extended.qualityIndicator.MetricsHelper;
 import ro.ulbsibiu.fadse.extended.qualityIndicator.MetricsUtil;
 import ro.ulbsibiu.fadse.tools.monitor.SwingMonitor;
+import ro.ulbsibiu.fadse.utils.Utils;
 
 /*
  * 
@@ -77,6 +78,14 @@ public class Boot {
         	logger.info("Starting server");
             String currentdir = System.getProperty("user.dir");
             Path dir = Paths.get(currentdir);
+            if (args.length > 2)
+            {
+                Utils.setIniPath(dir.resolve("configs").resolve(args[2]).toString());
+            }
+            else
+            {
+            	Utils.setIniPath(Paths.get(System.getProperty("user.dir"), "configs", "fadseConfig.ini").toString());
+            }
 
              //String xmlFileName = "falsesimin.xml";
             String xmlFileName = "gapdistsimin_radu.xml";
@@ -106,16 +115,9 @@ public class Boot {
             String neighborConfig = dir.resolve("configs")
             		.resolve("neighbor")
             		.resolve("simpleNeighborConfig.xml").toString();
-            for (int i = 1; i < args.length; i++) {
-                if (args[i].endsWith(".xml")) {
-                    neighborConfig = args[i];
-                } else if (args[i].endsWith(".csv")) {
-                    checkpointFile = args[i];
-                } else if (args[i].endsWith(".spd")) { //for SMPSO speed checkpointFile
-                    secondFile = args[i];
-                } else if (args[i].endsWith(".fcl")) {
-                    fuzzyConfigFile = args[i];
-                }
+            if (args.length > 1)
+            {
+            	neighborConfig = dir.resolve("configs").resolve("neighbor").resolve(args[1]).toString();
             }
 
             logger.info("Using environment file " + environmentConfigFile);

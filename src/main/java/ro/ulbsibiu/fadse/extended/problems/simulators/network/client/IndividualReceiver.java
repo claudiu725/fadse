@@ -23,6 +23,7 @@ import ro.ulbsibiu.fadse.environment.document.InputDocument;
 import ro.ulbsibiu.fadse.extended.problems.SimulatorWrapper;
 import ro.ulbsibiu.fadse.extended.problems.simulators.network.Message;
 import ro.ulbsibiu.fadse.persistence.ConnectionPool;
+import ro.ulbsibiu.fadse.utils.Utils;
 
 /**
  *
@@ -43,7 +44,7 @@ public class IndividualReceiver implements Runnable {
     	logger.info("Creating IndividualReceiver");
         String currentdir = System.getProperty("user.dir");
         File dir = new File(currentdir);
-        String iniPath = dir + System.getProperty("file.separator") + "configs" + System.getProperty("file.separator") + "fadseConfig.ini";
+        String iniPath = Utils.getIniPath();
         logger.info("Using ini " + iniPath);
         Wini ini = new Wini(new File(iniPath));
         init(ini.get("Client", "listenPort", int.class));

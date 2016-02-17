@@ -22,6 +22,7 @@ import org.ini4j.Wini;
 
 import ro.ulbsibiu.fadse.extended.problems.simulators.network.Message;
 import ro.ulbsibiu.fadse.extended.problems.simulators.network.server.status.SimulationStatus;
+import ro.ulbsibiu.fadse.utils.Utils;
 
 /**
  *
@@ -39,7 +40,7 @@ public class ResultsReceiver implements Runnable {
         results = Collections.synchronizedList(new LinkedList<Message>());
         String currentdir = System.getProperty("user.dir");
         File dir = new File(currentdir);
-        Wini ini = new Wini(new File(dir + System.getProperty("file.separator") + "configs" + System.getProperty("file.separator") + "fadseConfig.ini"));
+        Wini ini = new Wini(new File(Utils.getIniPath()));
         serverSocket = new ServerSocket(ini.get("Server", "listenPort", int.class));
         Logger.getLogger(ResultsReceiver.class.getName()).log(Level.CONFIG, "listening on port - " + ini.get("Server", "listenPort", int.class));
     }

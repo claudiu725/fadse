@@ -14,9 +14,9 @@
     </simulator>
     <benchmarks>
 	    <item name="default-mibench-netw-dijkstra" />
-        <item name="default-mibench-cons-jpeg-encode" />
+        <!--item name="default-mibench-cons-jpeg-encode" />
         <item name="default-mibench-offi-stringsearch" />
-        <item name="default-mibench-auto-qsort" />    
+        <item name="default-mibench-auto-qsort" /-->    
 	<!--<item name="default-mibench-tele-gsm-encode" />
         <item name="default-mibench-secu-rijndael-encode-nounroll" />
         <item name="default-mibench-secu-rijndael-decode-nounroll" />
@@ -31,10 +31,11 @@
 							-default minimum percentage
 		-->
 		<metaoptimized_algorithms>
-			<metaoptimized_algorithm name="NSGAII" config_path="configs/metaheuristicConfig/monsga2int.properties" initialPercentage="0.4" minimumPercentage="0.2"/>
+			<metaoptimized_algorithm name="NSGAII" config_path="configs/metaheuristicConfig/monsga2int.properties" initialPercentage="0.33" minimumPercentage="0.2"/>
 			<!-- daca nu se specifica minimumPercentage se ia din .properties de la metaoptimization-->
 			<!-- daca nu se specifica initialPercentage pentru unele metaheuristics atunci restul se imparte in mod egal intre ele-->
-			<metaoptimized_algorithm name="SPEA2" config_path="configs/metaheuristicConfig/mospea2int.properties" minimumPercentage="0.2"/>
+			<metaoptimized_algorithm name="SPEA2" config_path="configs/metaheuristicConfig/mospea2int.properties" initialPercentage="0.33" minimumPercentage="0.2"/>
+			<metaoptimized_algorithm name="PESA2" config_path="configs/metaheuristicConfig/mopesa2int.properties" minimumPercentage="0.2"/>
 			<!-- sa calculeze automat initialPercentage pt ultimul MO si sa crape daca suma lor nu da 1 sau daca nu sunt pozitive -->
 		</metaoptimized_algorithms>
 		<metrics>

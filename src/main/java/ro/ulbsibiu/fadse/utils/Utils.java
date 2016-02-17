@@ -37,7 +37,12 @@ public class Utils {
 
 	static Logger logger = LogManager.getLogger();
 	private static Environment environment;
-    private Random r;
+	private static String iniPath;
+    public static void setIniPath(String iniPath) {
+		Utils.iniPath = iniPath;
+	}
+
+	private Random r;
 
     public Random getRandom() {
         if (r == null) {
@@ -291,5 +296,10 @@ public class Utils {
     public static Path getOutputDirectory() 
     {
     	return Paths.get(getEnv().getInputDocument().getOutputPath());
+    }
+    
+    public static String getIniPath()
+    {
+    	return iniPath;
     }
 }

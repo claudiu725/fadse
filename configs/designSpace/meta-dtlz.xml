@@ -28,10 +28,10 @@
 							-default minimum percentage
 		-->
 		<metaoptimized_algorithms>
-			<metaoptimized_algorithm name="NSGAII" config_path="configs/metaheuristicConfig/monsgaii.properties" initialPercentage="0.4" minimumPercentage="0.2"/>
+			<metaoptimized_algorithm name="NSGAII" config_path="configs/metaheuristicConfig/monsga2real.properties" initialPercentage="0.4" minimumPercentage="0.2"/>
 			<!-- daca nu se specifica minimumPercentage se ia din .properties de la metaoptimization-->
 			<!-- daca nu se specifica initialPercentage pentru unele metaheuristics atunci restul se imparte in mod egal intre ele-->
-			<metaoptimized_algorithm name="SPEA2" config_path="configs/metaheuristicConfig/mospeaii.properties" minimumPercentage="0.2"/>
+			<metaoptimized_algorithm name="SPEA2" config_path="configs/metaheuristicConfig/mospea2real.properties" minimumPercentage="0.2"/>
 			<!-- sa calculeze automat initialPercentage pt ultimul MO si sa crape daca suma lor nu da 1 sau daca nu sunt pozitive -->
 		</metaoptimized_algorithms>
 		<metrics>

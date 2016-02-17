@@ -73,7 +73,7 @@ public class StatusObserver implements Runnable {
 
             String currentdir = System.getProperty("user.dir");
             File dir = new File(currentdir);
-            Wini ini = new Wini(new File(dir + System.getProperty("file.separator") + "configs" + System.getProperty("file.separator") + "fadseConfig.ini"));
+            Wini ini = new Wini(new File(Utils.getIniPath()));
             serverSocket = new ServerSocket(ini.get("Monitor", "listenPort", int.class));
             logger.info("Monitor Started ... listening on port: " + ini.get("Monitor", "listenPort", int.class));
             while (true) {

@@ -47,6 +47,7 @@ import org.ini4j.Wini;
 
 import ro.ulbsibiu.fadse.environment.Individual;
 import ro.ulbsibiu.fadse.extended.problems.simulators.network.Message;
+import ro.ulbsibiu.fadse.utils.Utils;
 
 /**
  *
@@ -77,7 +78,7 @@ public class MessageSender {
         m.setClientListenport(n.getPort());
         String currentdir = System.getProperty("user.dir");
         File dir = new File(currentdir);
-        Wini ini = new Wini(new File(dir + System.getProperty("file.separator") + "configs" + System.getProperty("file.separator") + "fadseConfig.ini"));
+        Wini ini = new Wini(new File(Utils.getIniPath()));
         m.setServerIP(InetAddress.getByName(ini.get("Server", "ip")));
         m.setServerListenPort(ini.get("Server", "listenPort", int.class));
         out = new ObjectOutputStream(socket.getOutputStream());

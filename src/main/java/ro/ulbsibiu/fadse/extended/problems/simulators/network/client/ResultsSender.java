@@ -62,9 +62,12 @@ public class ResultsSender {
         } catch (IOException ex) {
             logger.error("IOException", ex);
         } finally {
-            out.close();
-            in.close();
-            socket.close();
+        	if (out != null)
+        		out.close();
+        	if (in != null)
+        		in.close();
+        	if (socket != null)
+        		socket.close();
         }
     }
 }
