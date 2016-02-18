@@ -22,7 +22,7 @@
 	
     <database ip="127.0.0.1" port="3306" name="fadse" user="fadse_user" password="1234"/>
 
-	<metaheuristic name="NSGAII" config_path="configs/metaheuristicConfig/nsgaii.properties" />
+	<metaheuristic name="PESA2" config_path="configs/metaheuristicConfig/pesa2real.properties" />
 
     <rules> 
     </rules>

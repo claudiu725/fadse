@@ -62,7 +62,7 @@ public class Environment implements Serializable {
 		}
 		else
 		{
-			names.add(document.getSimulatorParameters().entrySet().iterator().next().getValue());
+			names.add(document.getSimulatorParameters().get("realSimulator"));
 		}
 		return String.join("_", names);
 	}
